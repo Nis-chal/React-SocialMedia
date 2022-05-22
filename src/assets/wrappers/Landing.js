@@ -216,6 +216,20 @@ const wrapper = styled.aside`
     text-transform: uppercase;
   }
 
+  .two {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    background-color: black;
+    padding: 9%;
+    padding-top: 2%;
+    column-gap: 2%;
+    row-gap: 2%;
+  }
+
+  .two > img {
+    max-height: 172px;
+  }
+
 
 
 `;

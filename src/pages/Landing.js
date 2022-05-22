@@ -1,5 +1,13 @@
 import Wrapper from "../assets/wrappers/Landing";
 import Video from "../assets/videos/NeonBg.mp4";
+import miles from "../assets/images/miles.jpg"
+import wolverine from "../assets/images/wolverine0.jpg"
+import ironfist from "../assets/images/ironfist.jpg"
+import scarlet from "../assets/images/scarlet.jpg"
+import hulk from "../assets/images/hulk.jpg"
+import deadpool from "../assets/images/deadpool.png"
+import venom from "../assets/images/venom.jpg"
+import thor from "../assets/images/thor.jpg"
 
 
 
@@ -57,6 +65,18 @@ const Landing = () =>{
         <button className="GetStarted">Get Started</button>
 
         <div className="featured">FEATURED</div>
+      </section>
+
+
+      <section className="two">
+        <img src={miles} alt="" />
+        <img src={ironfist} alt="" />
+        <img src={scarlet} alt="" />
+        <img src={wolverine} alt="" />
+        <img src={hulk} alt="" />
+        <img src={deadpool} alt="" />
+        <img src={venom} alt="" />
+        <img src={thor} alt="" />
       </section>
 
     </Wrapper>
