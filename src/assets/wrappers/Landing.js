@@ -268,6 +268,98 @@ const wrapper = styled.aside`
       }
     }
 
+    .four {
+    background-color: blue;
+
+    background-color: black;
+    padding-inline: 10%;
+
+    & > .Patners {
+      padding-top: 10px;
+      font-family: "MADE Soulmaze Outline Regular";
+      font-size: 2rem;
+      position: relative;
+      bottom: -10px;
+
+      &::after {
+        content: "patners with";
+        font-family: inherit;
+
+        position: relative;
+        bottom: -25px;
+        left: 0;
+        font-size: 2rem;
+        color: transparent;
+        -webkit-text-stroke: 0.3px rgba(255, 255, 255, 0.497);
+
+        text-transform: uppercase;
+      }
+
+      &::before {
+        content: "patners with";
+        font-family: inherit;
+        color: #d2d4f2;
+
+        position: absolute;
+        bottom: -15px;
+        left: 0;
+        font-size: 2rem;
+
+        text-transform: uppercase;
+      }
+    }
+
+    .line-left {
+      background-color: white;
+      height: 1px;
+      width: 100%;
+      margin-top: 40px;
+    }
+    .line-right {
+      background-color: white;
+      height: 1px;
+      width: 100%;
+      margin-bottom: 10px;
+    }
+
+    .getstarted-btn {
+      margin-top: 20px;
+      white-space: nowrap;
+      justify-content: center;
+      display: flex;
+      font-family: Arial, Helvetica, sans-serif;
+      word-wrap: normal;
+      font-weight: bolder;
+
+      align-items: center;
+
+    
+
+      width: clamp(90px, 50%, 270px);
+      text-transform: uppercase;
+      color: white;
+      background-color: transparent;
+
+      border-style: solid;
+      border-width: 1px 1px 1px 1px;
+      border-color: #00d8ff;
+      border-radius: 5px 5px 5px 5px;
+      box-shadow: 0px 32px 32px 5px rgb(4 4 4 / 42%);
+      padding: 12px 87px 12px 87px;
+    }
+
+    .million {
+      color: #00d8ff;
+    }
+
+    .brands {
+      background-color: black;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      align-items: center;
+    }
+  }
+
     @media screen and (max-width: 700px) {
       .two {
         grid-template-columns: repeat(2, 1fr);

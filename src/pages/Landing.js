@@ -127,6 +127,8 @@ const Landing = () =>{
 
       </section>
 
+      
+
     </Wrapper>
     );
 };
