@@ -193,6 +193,52 @@ Matt’Studio specialises in creating responsive mobile apps, web & mobile desig
 
       </section>
 
+
+      <section className="footer">
+
+          <div className="footer-content">
+            <ul className="d-flex navbar-link">
+              <li className="logo">
+                <span className="circle-border">N</span> <span>WINKLE MEDIA</span>
+              </li>
+              <li>Services</li>
+              <li>Get started</li>
+            
+            </ul>
+            <div className="footer-icon">
+              <span>
+                <SiInstagram className="fab" />
+              </span>
+              &nbsp;
+              &nbsp;
+              &nbsp;
+              &nbsp;
+            
+              <span>
+                <SiBehance className="fab" />
+              </span>
+            </div>
+            <ul className="footer-link">
+              <li className="footer-title">located</li>
+              <li className="footer-text">kathmandu, Nepal</li>
+              <li className="footer-title">WhatsApp:</li>
+              <li className="footer-text">+977 9823447627</li>
+              <li className="footer-title">Mail:</li>
+              <li className="footer-text">Nischal@gmail.com</li>
+            </ul>
+          </div>
+
+        <div className="line-right"></div>
+
+        <div className="copyright">
+          Copyrights © 2022 Winkle’Media. All rights reserved.
+        </div>
+
+
+      </section>
+
+      
+
       
 
     </Wrapper>

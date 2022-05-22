@@ -583,6 +583,45 @@ const wrapper = styled.aside`
 
     }
   }
+  .footer{
+    background-color: black;
+    padding-inline: 10%;
+    padding-block: 7%;
+    text-align: center;
+    
+    &>.footer-content{
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 50px;
+
+      & .footer-title{
+        font-weight: bold;
+        font-size:0.8rem;
+        margin-top: 20px;
+      text-align: end;
+  
+      }
+  
+      & .footer-text{
+        font-weight: normal;
+        font-size:0.8rem;
+        margin-top: 5px;
+        color:white;
+      text-align: end;
+  
+      }
+    }
+
+    &> .line-right {
+      background-color: white;
+      height: 1px;
+      width: 100%;
+      margin-bottom: 10px;
+    }
+
+  }
 
     @media screen and (max-width: 700px) {
       .two {
