@@ -17,6 +17,10 @@ import samsung from "../assets/images/samsung.webp"
 import fourf from "../assets/images/4f.webp"
 
 
+import jurrasic from "../assets/images/dino1.jpg"
+import avatar from "../assets/images/avatar0.jpg"
+
+
 
 
 import { SiInstagram, SiBehance } from "react-icons/si";
@@ -124,6 +128,26 @@ const Landing = () =>{
         <span className="million">*Along with 1 million users</span>
 
         <button  className="getstarted-btn" >get started</button>
+
+      </section>
+
+
+      <section className="five">
+        <div className="five-content">
+          <span className="circle-b">N</span> 
+          <div className="Why"></div>
+
+        </div>
+          <p className="five-p">
+Matt’Studio specialises in creating responsive mobile apps, web & mobile design, data design and much more. Our aim is to make the product as user friendly as possible, so that user anyone can find anything within their finger reach. Yet at the same time we are not forgetting about the stunning visuals which will allows to enjoy the application and please every eye.          
+</p>
+<p className="five-p">We often help start ups to get their first site live! Don’t be shy send a question!</p>
+
+<p className="five-p">Check out our services.</p>
+
+<img src={jurrasic} className="bigimg-left" alt="" />
+<img src={avatar} className="bigimg-right" alt="" />
+
 
       </section>
 

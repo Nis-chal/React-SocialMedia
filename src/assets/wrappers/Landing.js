@@ -360,6 +360,98 @@ const wrapper = styled.aside`
     }
   }
 
+  .five {
+    background-color: black;
+    padding-inline: 10%;
+    padding-top: 5%;
+    /* background-color: #ab89c7; */
+    height: max-content;
+    overflow: hidden;
+
+    & > .five-p {
+      font-size: clamp(0.4rem , calc(0.4rem + 2vw), 21px);
+      line-height: clamp(1.5rem,calc(1.5rem + 1vw),40px);
+      font-style: inherit;
+      padding-right: 5%;
+      padding-top: 30px;
+    }
+
+    & > .bigimg-left {
+      width: 70%;
+      max-height: 470px;
+      margin-block: 30px;
+    }
+    & > .bigimg-right {
+      width: 70%;
+      max-height: 470px;
+      text-align: end;
+      float: right;
+    }
+
+    & > .five-content {
+      display: flex;
+      align-items: center;
+
+      gap: 10px;
+
+      .circle-b {
+        min-width: 53px;
+        min-height: 53px;
+
+        display: flex;
+        box-shadow: 0px 0px 21px rgb(255 255 255 / 26%);
+
+        justify-content: center;
+        align-items: center;
+        font-weight: 900;
+
+        border-radius: 50px;
+        border: 1.7px solid white;
+      }
+
+      & > .Why {
+        font-family: "MADE Soulmaze Outline Regular";
+        font-size: clamp(1.5rem,calc(0.3rem + 2vw),2rem);
+        position: relative;
+        top: -20px;
+        color: wheat;
+        
+      }
+
+      &>.Why::before {
+        content: "Why choose winkle";
+        font-size: inherit !important;
+        white-space: nowrap;
+        width: 100%;
+        font-family: inherit;
+        color: #d2d4f2;
+        word-break: keep-all;
+
+        position: absolute;
+        bottom: -15px;
+        left: 0;
+        font-size: 2rem;
+
+        text-transform: uppercase;
+      }
+
+      &>.Why::after {
+        content: "Why choose winkle";
+        font-size: inherit !important;
+        white-space: nowrap;
+
+        position: relative;
+        bottom: -25px;
+        left: 0;
+        font-size: 2rem;
+        color: transparent;
+        -webkit-text-stroke: 0.3px rgba(255, 255, 255, 0.497);
+
+        text-transform: uppercase;
+      }
+    }
+  }
+
     @media screen and (max-width: 700px) {
       .two {
         grid-template-columns: repeat(2, 1fr);
