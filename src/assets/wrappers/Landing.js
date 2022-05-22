@@ -452,6 +452,86 @@ const wrapper = styled.aside`
     }
   }
 
+  .six {
+    background-color: black;
+    padding-inline: 10%;
+    position: relative;
+    padding-block: 80px;
+
+    & > .barcode {
+      width: 70px;
+    }
+
+    & > .about {
+      font-family: "MADE Soulmaze Outline Regular";
+      font-size: 2rem;
+      position: relative;
+      color: wheat;
+      margin-bottom: 30px;
+
+      &::before {
+        content: "about";
+        white-space: nowrap;
+        width: 100%;
+        font-family: inherit;
+        color: #d2d4f2;
+        word-break: keep-all;
+
+        font-size: 2rem;
+
+        text-transform: uppercase;
+      }
+
+      &::after{
+        content: "about";
+        font-family: inherit;
+        white-space: nowrap;
+        position: absolute;
+        left: 0;
+        top: 20px;
+
+        
+        font-size: 2rem;
+        color: transparent;
+        -webkit-text-stroke: 0.3px rgba(255, 255, 255, 0.497);
+
+        text-transform: uppercase;
+
+      }
+    }
+
+    &>.grid-3{
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      row-gap: 20px;
+      padding-bottom: 40px;
+      
+
+      
+
+      &>.bnumber{
+        color: #00d8ff;
+        font-family: "MADE Soulmaze Outline Regular";
+        font-size: clamp(25px, calc(25px + 3vw),4rem) ;
+      }
+      &>.mtext{
+        font-size: 1.2rem;
+        font-weight: 500;
+        letter-spacing: 0.2rem;
+        text-shadow: 2px 2px 8px rgba(255, 255, 255, 0.662);
+      }
+    }
+
+    & > .six-p {
+      font-size: clamp(0.4rem , calc(0.4rem + 2vw), 21px);
+      line-height: 40px;
+      font-style: inherit;
+      padding-right: 5%;
+      padding-top: 30px;
+    }
+
+  }
+
     @media screen and (max-width: 700px) {
       .two {
         grid-template-columns: repeat(2, 1fr);

@@ -21,6 +21,10 @@ import jurrasic from "../assets/images/dino1.jpg"
 import avatar from "../assets/images/avatar0.jpg"
 
 
+import barcode from "../assets/images/barcode.webp"
+
+
+
 
 
 import { SiInstagram, SiBehance } from "react-icons/si";
@@ -149,6 +153,26 @@ Matt’Studio specialises in creating responsive mobile apps, web & mobile desig
 <img src={avatar} className="bigimg-right" alt="" />
 
 
+      </section>
+
+      <section className="six">
+        <img src={barcode} alt="" className="barcode"/>
+        <div className="about"></div>
+
+        <div className="grid-3">
+          <div className="bnumber">8</div>
+          <div className="bnumber">100+</div>
+          <div className="bnumber">1,000+</div>
+          <div className="mtext">Years of <br /> Excellence</div>
+          <div className="mtext">Daily <br /> Newusers</div>
+          <div className="mtext">Weekly <br /> Posts</div>
+
+
+
+        </div>
+
+        <p className="six-p">Matt’Studio officially founded in April 2021, as an advertising agency. Mainly creating Web & Mobile products of various scope, although the studio is freshly opened – Mateusz the owner has 8+ years of experience within UX / UI area, and has worked for big clients such as Samsung, CocaCola, 4F, Ikea, P&G, Wealth & lots more – Mateusz also, achieved Samsung design awards in years 2018-2019.</p>
+        <p className="six-p">Numerous of contacts allow to push the business above the boundaries. We work everyday and we want to make sure that our clients are satisfied as possible with the final result.</p>
       </section>
 
       
