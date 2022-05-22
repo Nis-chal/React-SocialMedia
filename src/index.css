@@ -101,6 +101,125 @@ code {
     monospace;
 }
 
+.form {
+  width: 90vw;
+  max-width: var(--fixed-width);
+  background: var(--black-900);
+  border-radius: var(--borderRadius);
+  box-shadow: var(--shadow-2);
+  padding: 2rem 2.5rem;
+  margin: 3rem auto;
+  transition: var(--transition);
+}
+.form:hover {
+  box-shadow: var(--shadow-4);
+}
+.form-label {
+  display: block;
+  font-size: var(--smallText);
+  margin-bottom: 0.5rem;
+  text-transform: capitalize;
+  letter-spacing: var(--letterSpacing);
+}
+.form-input,
+.form-textarea,
+.form-select {
+  width: 100%;
+  padding: 0.375rem 0.75rem;
+  border-radius: var(--borderRadius);
+  background: var(--black-900);
+  border: 1px solid var(--grey-200);
+  color: rgb(188, 185, 185);
+}
+.form-input,
+.form-select,
+.btn-block {
+  height: 35px;
+}
+.form-row {
+  margin-bottom: 1rem;
+}
+
+.form-textarea {
+  height: 7rem;
+}
+::placeholder {
+  font-family: inherit;
+  color: var(--grey-400);
+}
+.form-alert {
+  color: var(--red-dark);
+  letter-spacing: var(--letterSpacing);
+  text-transform: capitalize;
+}
+/* alert */
+
+/* button */
+.btn {
+  cursor: pointer;
+  color: var(--white);
+  background: var(--primary-500);
+  border: transparent;
+  border-radius: var(--borderRadius);
+  letter-spacing: var(--letterSpacing);
+  padding: 0.375rem 0.75rem;
+  box-shadow: var(--shadow-2);
+  transition: var(--transition);
+  text-transform: capitalize;
+  display: inline-block;
+}
+.btn:hover {
+  background: var(--primary-700);
+  box-shadow: var(--shadow-3);
+}
+.btn-hipster {
+  color: var(--primary-500);
+  background: var(--primary-200);
+}
+.btn-hipster:hover {
+  color: var(--primary-200);
+  background: var(--primary-700);
+}
+.btn-block {
+  width: 100%;
+}
+.btn-hero {
+  font-size: 1.25rem;
+  padding: 0.5rem 1.25rem;
+}
+.btn-danger {
+  background: var(--red-light);
+  color: var(--red-dark);
+}
+.btn-danger:hover {
+  background: var(--red-dark);
+  color: var(--white);
+}
+
+.btn-getstarted{
+  margin-top: 20px;
+  white-space: nowrap;
+  justify-content: center;
+  display: flex;
+  font-family: Arial, Helvetica, sans-serif;
+  word-wrap: normal;
+  font-weight: bolder;
+
+  align-items: center;
+
+  text-transform: uppercase;
+  color: var(--white);
+  background-color: transparent;
+
+  border-style: solid;
+  border-width: 1px 1px 1px 1px;
+  border-color: var(--secondary-500);
+  border-radius: 5px 5px 5px 5px;
+  
+}
+
+/* button */
+
 
 @keyframes fadeOut {
   0% {
