@@ -23,6 +23,9 @@ import avatar from "../assets/images/avatar0.jpg"
 
 import barcode from "../assets/images/barcode.webp"
 
+import handvideo from "../assets/videos/hand_neon.mp4"
+
+
 
 
 
@@ -173,6 +176,21 @@ Matt’Studio specialises in creating responsive mobile apps, web & mobile desig
 
         <p className="six-p">Matt’Studio officially founded in April 2021, as an advertising agency. Mainly creating Web & Mobile products of various scope, although the studio is freshly opened – Mateusz the owner has 8+ years of experience within UX / UI area, and has worked for big clients such as Samsung, CocaCola, 4F, Ikea, P&G, Wealth & lots more – Mateusz also, achieved Samsung design awards in years 2018-2019.</p>
         <p className="six-p">Numerous of contacts allow to push the business above the boundaries. We work everyday and we want to make sure that our clients are satisfied as possible with the final result.</p>
+      </section>
+
+      <section className="seven">
+        <video className="footer-bg" autoPlay muted loop>
+          <source type="video/mp4" src={handvideo} />
+        </video>
+
+        <div className="linear-gradient"></div>
+
+        <div className="quote">
+          <div>"The best thing to hold</div>
+          <div>onto in life is each other"</div>
+
+        </div>
+
       </section>
 
       

@@ -532,6 +532,58 @@ const wrapper = styled.aside`
 
   }
 
+  .seven{
+    position: relative;
+    height: 40vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 70vh;
+    /* min-height: 100vh; */
+    width: 100%;
+    overflow: hidden;
+
+   
+    background-size: cover;
+    background-position: center;
+
+    &>.footer-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+   
+
+
+    }
+
+    &>.linear-gradient{
+      height: 100%;
+      width: 100%;
+      z-index: 2;
+      background-image: linear-gradient(
+      135deg,
+      rgb(1, 3, 0.2) 0%,
+      rgb(9, 3, 15, 0.3) 100%
+      ) !important;
+    }
+
+    &>.quote{
+      padding: 10%;
+      position: absolute;
+      text-align: center;
+      font-family: "MADE Soulmaze Outline Regular";
+      color: #D1D3F2;
+      font-size: clamp(1rem, calc(1rem + 2vw),2.5rem) ;
+      z-index: 3;
+        text-shadow: 2px 2px 8px rgba(255, 255, 255, 0.662);
+
+
+    }
+  }
+
     @media screen and (max-width: 700px) {
       .two {
         grid-template-columns: repeat(2, 1fr);
