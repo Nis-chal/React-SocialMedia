@@ -230,6 +230,53 @@ const wrapper = styled.aside`
     max-height: 172px;
   }
 
+  .three {
+    background-color: black;
+    padding-right: 4%;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+
+    & > span {
+      position: absolute;
+      margin-right: clamp(10px, 10%, 47px);
+      text-transform: uppercase;
+      font-weight: lighter;
+      font-family: "MADE Soulmaze Outline Regular";
+    }
+    & > svg {
+      margin-left: auto;
+      display: block;
+
+      height: 150px;
+      letter-spacing: 0.52em;
+
+      & > text {
+        transform-origin: 50% 50%;
+        animation: rotate 10s linear infinite;
+      }
+    }
+  }
+
+  @keyframes rotate {
+      from {
+        transform: rotate(0);
+      }
+
+      to {
+        transform: rotate(-360deg);
+      }
+    }
+
+    @media screen and (max-width: 700px) {
+      .two {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .two > img {
+        max-height: 104px;
+      }
+    }
+
 
 
 `;
