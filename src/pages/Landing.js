@@ -32,6 +32,7 @@ import handvideo from "../assets/videos/hand_neon.mp4"
 
 import { SiInstagram, SiBehance } from "react-icons/si";
 import { FaLinkedinIn, FaHeart, FaGrinTongueWink } from "react-icons/fa";
+import {Link} from 'react-router-dom'
 
 
 const Landing = () =>{
@@ -80,7 +81,7 @@ const Landing = () =>{
           </span>
           = World
         </div>
-        <button className="GetStarted">Get Started</button>
+        <Link to="/auth/register"  className="GetStarted">Get Started</Link>
 
         <div className="featured">FEATURED</div>
       </section>
