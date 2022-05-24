@@ -24,6 +24,8 @@ nav .container {
   background: var(--color-light);
   border-radius: var(--border-radius);
   padding: var(--search-padding);
+  display: flex;
+  align-items: center;
 }
 
 .search-bar input[type="search"] {
@@ -33,10 +35,12 @@ nav .container {
   font-size: 0.9rem;
   color: var(--color-dark);
   border: none;
+  outline: none;
 }
 
 nav .search-bar input[type="search"]::placeholder {
   color: var(--color-gray);
+  
 }
 nav .create {
   display: flex;
@@ -51,7 +55,7 @@ nav .create {
     border-radius: var(--border-radius);
     background-color: var(--color-primary);
     font-weight: bold;
-    
+
 }
 
  .dropdown {
@@ -81,6 +85,27 @@ nav .create {
   .btn-container{
       position: relative;
   }
+
+  
+/* ======================================= MEDIA QUERIES FOR SMALL LAPTOPS AND Mobile ================================== */
+
+@media screen and (max-width: 992px) {
+    
+  nav .log{
+    display: none;
+  }
+  .profile-picture{
+      justify-self: end;
+  }
+  .btn-purple{
+      display: none;
+  }
+  .search-bar input[type="search"] {
+      width: 70vw;
+      justify-self: center;
+  }
+  
+}
 
 `
 

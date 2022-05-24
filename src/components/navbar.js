@@ -1,5 +1,6 @@
 import Wrapper from '../assets/wrappers/navbar';
 import { useState } from "react"
+import {FaSearch} from 'react-icons/fa';
 
 
 const Navbar =()=>{
@@ -15,7 +16,7 @@ const Navbar =()=>{
                     WinkleMedia
                 </h2>
                 <div className="search-bar">
-                    <i className="uil uil-search"></i>
+                    <span><FaSearch/></span>
                     <input type="search" placeholder="Search for creators, inspirations, and projects"/>
                 </div>
                 <div className="create">
