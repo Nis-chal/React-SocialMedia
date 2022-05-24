@@ -26,6 +26,7 @@ const initialState ={
    
 
 const Register = () => {
+  
   const [values,setValues] = useState(initialState)
 
   const toggleMember = () =>{
