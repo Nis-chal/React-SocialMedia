@@ -5,6 +5,10 @@ import axios from "axios";
 import {
   DISPLAY_ALERT,
   CLEAR_ALERT,
+
+  SETUP_USER_BEGIN,
+  SETUP_USER_SUCCESS,
+  SETUP_USER_ERROR,
   
   
  
@@ -113,6 +117,70 @@ const AppProvider = ({ children }) => {
     dispatch({ type: CLEAR_VALUES });
   };
 
+  const setupUser = async ({ currentUser, endPoint, alertText }) => {
+    dispatch({ type: SETUP_USER_BEGIN });
+    // console.log(currentUser)
+    // console.log('from setup')
+
+
+   
+
+  
+    // console.log(currentUser)
+    const {name,location,email,password,profilePicture,username} = currentUser
+
+    // console.log(currentUser)
+    
+    let formData = new FormData()
+
+    formData.append('name',name)
+    formData.append('username',username)
+    formData.append('location',location)
+    formData.append('email',email)
+    formData.append('password',password)
+    formData.append('profilePicture',profilePicture)
+
+
+
+
+
+    try {
+      const { data } = await axios.post(
+        `/api/v1/auth/${endPoint}`,
+        formData
+      );
+
+      
+
+
+
+
+      const { user, token, location } = data;
+
+      dispatch({
+        type: SETUP_USER_SUCCESS,
+        payload: {
+          user,
+          token,
+          location,
+          alertText,
+        },
+      });
+
+      addUserToLocalStorage({ user, token, location });
+    } catch (error) {
+      //local storage later
+
+      dispatch({
+        type: SETUP_USER_ERROR,
+        payload: { msg: error.response.data.msg },
+      });
+    }
+
+    clearAlert();
+  };
+
+
  
 
   
@@ -123,6 +191,8 @@ const AppProvider = ({ children }) => {
       value={{
         ...state,
         displayAlert,
+
+        setupUser,
       
        
        
