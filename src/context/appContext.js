@@ -2,10 +2,27 @@ import React, { useReducer, useContext, } from "react";
 import reducer from "./reducer";
 import axios from "axios";
 
+import {
+  DISPLAY_ALERT,
+  CLEAR_ALERT,
+  
+  
+ 
+
+ 
+  HANDLE_CHANGE,
+  CLEAR_VALUES,
+
+
+ 
+} from "./action";
+
 
 const user = localStorage.getItem("user");
 const token = localStorage.getItem("token");
 const userLocation = localStorage.getItem("location");
+
+
 
 const initialState = {
   isLoading: false,
@@ -71,6 +88,30 @@ const AppProvider = ({ children }) => {
       return Promise.reject(error);
     }
   );
+   const displayAlert = () => {
+    dispatch({ type: DISPLAY_ALERT });
+    clearAlert();
+  };
+
+  const clearAlert = () => {
+    setTimeout(() => {
+      dispatch({ type: CLEAR_ALERT });
+    }, 3000);
+  };
+
+  const addUserToLocalStorage = ({ user, token, location }) => {
+    localStorage.setItem("user", JSON.stringify(user));
+    localStorage.setItem("token", token);
+    localStorage.setItem("location", location);
+  };
+
+  const handleChange = ({ name, value }) => {
+    dispatch({ type: HANDLE_CHANGE, payload: { name, value } });
+  };
+
+  const clearValues = () => {
+    dispatch({ type: CLEAR_VALUES });
+  };
 
  
 
@@ -81,6 +122,12 @@ const AppProvider = ({ children }) => {
     <AppContext.Provider
       value={{
         ...state,
+        displayAlert,
+      
+       
+       
+        handleChange,
+        clearValues,
         
    
       }}
