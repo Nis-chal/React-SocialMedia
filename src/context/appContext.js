@@ -134,7 +134,7 @@ const AppProvider = ({ children }) => {
     let formData = new FormData()
 
     formData.append('name',name)
-    formData.append('name',username)
+    formData.append('username',username)
     formData.append('location',location)
     formData.append('email',email)
     formData.append('password',password)

@@ -5,9 +5,18 @@ const Wrapper = styled.section`
   grid-template-columns: repeat(2,1fr);
   background-color: black;
   justify-content: center;
+  margin: 0;
+  padding: 0;
+ 
+
   
   
-  height: 100vh;
+  height: 119vh;
+
+
+  body{
+    background-color: black;
+  }
 
   .formv2{
     background-color: var(--black-900);
@@ -67,6 +76,7 @@ const Wrapper = styled.section`
     border-top: 5px solid var(--primary-500);
     border-bottom: 5px solid var(--primary-500);
     margin-inline: auto;
+    height: max-content;
 
     
   }
