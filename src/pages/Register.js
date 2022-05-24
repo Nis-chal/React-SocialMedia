@@ -10,6 +10,7 @@ import backgroundbg from '../assets/videos/handtouch.mp4'
 const initialState ={
  
   name:'',
+  username:'',
   email:'',
   profilePicture:undefined,
   password:'',
@@ -53,13 +54,13 @@ const Register = () => {
     // const form = document.querySelector("form")
     // let registerInfo = new registerInfo(form);
 
-    const {name,email,password,isMember,profilePicture,location} = values
+    const {name,email,password,isMember,profilePicture,location,username} = values
 
 
     
     
 
-    const currentUser = {name,email,password,location,profilePicture}
+    const currentUser = {name,email,password,location,profilePicture,username}
 
  
  
@@ -104,6 +105,18 @@ const Register = () => {
         (<FormRow 
         type='text' 
         name="name" 
+        handleChange ={handleChange}
+
+       
+       
+        />
+        
+
+        )}
+        {!values.isMember && 
+        (<FormRow 
+        type='text' 
+        name="username" 
         handleChange ={handleChange}
 
        

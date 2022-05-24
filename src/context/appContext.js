@@ -127,13 +127,14 @@ const AppProvider = ({ children }) => {
 
   
     // console.log(currentUser)
-    const {name,location,email,password,profilePicture} = currentUser
+    const {name,location,email,password,profilePicture,username} = currentUser
 
     // console.log(currentUser)
     
     let formData = new FormData()
 
     formData.append('name',name)
+    formData.append('name',username)
     formData.append('location',location)
     formData.append('email',email)
     formData.append('password',password)
