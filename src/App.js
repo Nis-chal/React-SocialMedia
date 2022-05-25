@@ -7,7 +7,6 @@ function App() {
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/auth/register" element={<Register />} />
-        <Route path="/user/dashboard" element={<SharedLayout />} />
 
         <Route
           path="/user"
@@ -17,7 +16,7 @@ function App() {
             </ProtectedRoute>
           }
         >
-          <Route index element={<Register />} />
+          <Route index element={<PostPage />} />
           <Route path="posts" element={<PostPage />} />
           <Route path="add-job" element={<Landing />} />
           <Route path="profile" element={<Landing />} />

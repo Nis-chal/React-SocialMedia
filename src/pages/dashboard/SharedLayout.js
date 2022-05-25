@@ -1,4 +1,4 @@
-import { Navbar, BigSidebar } from "../../components";
+import { Navbar, BigSidebar, Recommendation } from "../../components";
 import Wrapper from "../../assets/wrappers/SharedLayout";
 import { Outlet } from "react-router-dom";
 const SharedLayout = () => {
@@ -15,6 +15,7 @@ const SharedLayout = () => {
           <div className="container">
             <BigSidebar />
             <Outlet />
+            <Recommendation />
           </div>
         </main>
       </section>

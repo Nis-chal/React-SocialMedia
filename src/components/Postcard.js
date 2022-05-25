@@ -8,26 +8,26 @@ import irene from "../assets/images/irene.jpg";
 const PostCard = () => {
   return (
     <Wrapper>
-      <div class="feed">
-        <div class="head">
-          <div class="user">
-            <div class="profile-photo">
+      <div className="feed">
+        <div className="head">
+          <div className="user">
+            <div className="profile-photo">
               <img src={irene} alt="" />
             </div>
-            <div class="ingo">
+            <div className="ingo">
               <h3>Lana Rose</h3>
               <small>Dubai ,15 MINUTES AGO</small>
             </div>
           </div>
-          <span class="edit react-icons">
+          <span className="edit react-icons">
             <BiDotsHorizontalRounded className="react-icons" />
           </span>
         </div>
-        <div class="photo">
+        <div className="photo">
           <img src={irene} alt="" />
         </div>
-        <div class="action-buttons">
-          <div class="interaction-buttons">
+        <div className="action-buttons">
+          <div className="interaction-buttons">
             <span>
               <AiOutlineHeart className="react-icons love-icons" />
             </span>
@@ -35,17 +35,17 @@ const PostCard = () => {
               <FaRegComment className="react-icons comment-icons" />{" "}
             </span>
             <span>
-              <i class="uil uil-share-alt"></i>
+              <i className="uil uil-share-alt"></i>
             </span>
           </div>
-          <div class="bookmark">
+          <div className="bookmark">
             <span>
               <BsBookmark className="react-icons" />
             </span>
           </div>
         </div>
 
-        <div class="liked-by">
+        <div className="liked-by">
           <span>
             <img src={irene} alt="" />
           </span>
@@ -59,13 +59,13 @@ const PostCard = () => {
             Liked by <b>Ernest Achiever</b> and <b>2, 323 others</b>
           </p>
         </div>
-        <div class="caption">
+        <div className="caption">
           <p>
             <b>Lana Rose</b> Lorem ipsum dolor sit quisquam eius.{" "}
-            <span class="harsh-tag">#lifestyle</span>
+            <span className="harsh-tag">#lifestyle</span>
           </p>
         </div>
-        <div class="comments text-muted">View all 277 comments</div>
+        <div className="comments text-muted">View all 277 comments</div>
       </div>
     </Wrapper>
   );
