@@ -3,7 +3,7 @@ import { ImProfile } from 'react-icons/im'
 import {AiOutlineHome } from 'react-icons/ai'
 import {MdOutlineExplore} from 'react-icons/md'
 
-import {IoBookmarkOutline} from 'react-icons/io'
+import {IoBookmarkOutline} from 'react-icons/io5'
 
 const links = [
   {

@@ -1,13 +1,29 @@
-import {Navbar} from '../../components'
-
+import {Navbar,BigSidebar} from '../../components'
+import Wrapper from '../../assets/wrappers/SharedLayout'
 const SharedLayout = () =>{
 
-    return( <main className='dashboard'>
-        <div>
-            <Navbar/>
-        </div>
+    return(
+        <Wrapper>
 
-    </main>)
+        <section >
+
+            <div>
+                <Navbar/>
+            </div>
+
+                {/* ----------------------------- MAIN ---------------------------*/}
+
+
+            <main className='dashboard' >
+                <div className="container">
+                    <BigSidebar/>
+
+                </div>
+            </main>
+
+        </section>
+        </Wrapper> 
+    )
 }
 
 
