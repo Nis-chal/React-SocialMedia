@@ -4,5 +4,14 @@ import Navbar from "./navbar";
 import BigSidebar from "./BigSidebar";
 import PostCard from "./Postcard";
 import Recommendation from "./Recommendation";
+import AddPostForm from "./AddpostForm";
 
-export { FormRow, Alert, Navbar, BigSidebar, PostCard, Recommendation };
+export {
+  FormRow,
+  Alert,
+  Navbar,
+  BigSidebar,
+  PostCard,
+  Recommendation,
+  AddPostForm,
+};

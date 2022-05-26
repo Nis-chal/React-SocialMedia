@@ -98,6 +98,7 @@
 img {
   width: 100%;
   object-fit: cover !important;
+  -o-object-fit: cover;
 }
 
 @font-face {

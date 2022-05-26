@@ -7,21 +7,21 @@ const Recommendation = () => {
       <div className="right">
         <div className="may-know">
           <h4>Recommendation</h4>
-          <div class="request">
-            <div class="info">
-              <div class="profile-photo">
+          <div className="request">
+            <div className="info">
+              <div className="profile-photo">
                 <img src={irene} alt="" />
               </div>
 
               <div>
                 <h5>Hajia Bintu</h5>
-                <p class="text-muted">8 mutual friends</p>
+                <p className="text-muted">8 mutual friends</p>
               </div>
             </div>
 
-            <div class="action">
-              <button class="btn2 btn2-primary">Follow</button>
-              <button class="btn2 ">Remove</button>
+            <div className="action">
+              <button className="btn2 btn2-primary">Follow</button>
+              <button className="btn2 ">Remove</button>
             </div>
           </div>
         </div>
