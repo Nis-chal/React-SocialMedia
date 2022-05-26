@@ -6,8 +6,8 @@ import irene from "../assets/images/irene.jpg";
 import { useAppContext } from "../context/appContext";
 
 const NavLinks = ({ toggleSidebar }) => {
-  const { state } = useAppContext;
-  console.log(state);
+  const { user } = useAppContext();
+  console.log(user);
   return (
     <Wrapper>
       <Link to="/" className="profile">
@@ -15,8 +15,8 @@ const NavLinks = ({ toggleSidebar }) => {
           <img src={irene} alt="" />
         </div>
         <div className="handle">
-          <h4>Diana Ayi</h4>
-          <p className="text-muted">@dayi</p>
+          <h4>{user.name}</h4>
+          <p className="text-muted">@{user?.username}</p>
         </div>
       </Link>
 

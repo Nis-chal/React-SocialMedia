@@ -1,32 +1,21 @@
-import React, { useReducer, useContext, } from "react";
+import React, { useReducer, useContext } from "react";
 import reducer from "./reducer";
 import axios from "axios";
 
 import {
   DISPLAY_ALERT,
   CLEAR_ALERT,
-
   SETUP_USER_BEGIN,
   SETUP_USER_SUCCESS,
   SETUP_USER_ERROR,
-  
-  
- 
-
- 
   HANDLE_CHANGE,
   CLEAR_VALUES,
-
-
- 
+  LOGOUT_USER,
 } from "./action";
-
 
 const user = localStorage.getItem("user");
 const token = localStorage.getItem("token");
 const userLocation = localStorage.getItem("location");
-
-
 
 const initialState = {
   isLoading: false,
@@ -37,11 +26,7 @@ const initialState = {
   token: token,
   userLocation: userLocation || "",
 
-
   isEditing: false,
-  
-
-
 };
 
 const AppContext = React.createContext();
@@ -54,12 +39,10 @@ const AppProvider = ({ children }) => {
     // headers: {
     //   Authorization: `Bearer ${state.token}`,
     // },
-    
-     
-    headers:{
-      'Content-Type':'multipart/form-data'
-      
-    }
+
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
   });
 
   // response interceptor
@@ -86,13 +69,12 @@ const AppProvider = ({ children }) => {
       // Do something with response error
 
       if (error.response.status === 401) {
-        console.log('hello');
-        
+        console.log("hello");
       }
       return Promise.reject(error);
     }
   );
-   const displayAlert = () => {
+  const displayAlert = () => {
     dispatch({ type: DISPLAY_ALERT });
     clearAlert();
   };
@@ -122,38 +104,23 @@ const AppProvider = ({ children }) => {
     // console.log(currentUser)
     // console.log('from setup')
 
-
-   
-
-  
     // console.log(currentUser)
-    const {name,location,email,password,profilePicture,username} = currentUser
+    const { name, location, email, password, profilePicture, username } =
+      currentUser;
 
     // console.log(currentUser)
-    
-    let formData = new FormData()
 
-    formData.append('name',name)
-    formData.append('username',username)
-    formData.append('location',location)
-    formData.append('email',email)
-    formData.append('password',password)
-    formData.append('profilePicture',profilePicture)
+    let formData = new FormData();
 
-
-
-
+    formData.append("name", name);
+    formData.append("username", username);
+    formData.append("location", location);
+    formData.append("email", email);
+    formData.append("password", password);
+    formData.append("profilePicture", profilePicture);
 
     try {
-      const { data } = await axios.post(
-        `/api/v1/auth/${endPoint}`,
-        formData
-      );
-
-      
-
-
-
+      const { data } = await axios.post(`/api/v1/auth/${endPoint}`, formData);
 
       const { user, token, location } = data;
 
@@ -180,12 +147,17 @@ const AppProvider = ({ children }) => {
     clearAlert();
   };
 
+  const removeFromLocalStorage = () => {
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
+    localStorage.removeItem("location");
+  };
 
- 
+  const logoutUser = () => {
+    dispatch({ type: LOGOUT_USER });
+    removeFromLocalStorage();
+  };
 
-  
-
- 
   return (
     <AppContext.Provider
       value={{
@@ -193,13 +165,11 @@ const AppProvider = ({ children }) => {
         displayAlert,
 
         setupUser,
-      
-       
-       
+
         handleChange,
         clearValues,
-        
-   
+
+        logoutUser,
       }}
     >
       {children}

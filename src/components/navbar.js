@@ -1,9 +1,11 @@
 import Wrapper from "../assets/wrappers/navbar";
 import { useState } from "react";
 import { FaSearch } from "react-icons/fa";
+import { useAppContext } from "../context/appContext";
 
 const Navbar = () => {
   const [showLogout, setShowLogout] = useState(false);
+  const { logoutUser } = useAppContext();
 
   return (
     <Wrapper>
@@ -37,7 +39,11 @@ const Navbar = () => {
               <div
                 className={showLogout ? "dropdown show-dropdown" : "dropdown"}
               >
-                <button type="button" className="dropdown-btn">
+                <button
+                  type="button"
+                  className="dropdown-btn"
+                  onClick={() => logoutUser()}
+                >
                   logout
                 </button>
               </div>
