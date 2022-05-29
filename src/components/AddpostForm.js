@@ -51,6 +51,7 @@ const AddPostForm = () => {
    
 
     createPost({ userpost });
+    setValues(togglestate)
   };
 
   const onSelectedFile = (e) => {
