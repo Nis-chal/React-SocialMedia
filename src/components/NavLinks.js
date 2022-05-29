@@ -7,7 +7,7 @@ import { useAppContext } from "../context/appContext";
 
 const NavLinks = ({ toggleSidebar }) => {
   const { user } = useAppContext();
-  console.log(user);
+  
   return (
     <Wrapper>
       <Link to="/" className="profile">

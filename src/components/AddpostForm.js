@@ -4,19 +4,28 @@ import { MdAddLocationAlt } from "react-icons/md";
 import { BsImage } from "react-icons/bs";
 import { useState } from "react";
 import { ImCross } from "react-icons/im";
+import { useAppContext } from "../context/appContext";
+import { Alert } from "../components";
 
 const togglestate = {
   location: false,
   Image: false,
-  postImage: "",
+  images: "",
+  description: "",
+  userlocation: "",
 };
 
 const AddPostForm = () => {
   const [value, setValues] = useState(togglestate);
   const [selectedImages, setSelectedImages] = useState([]);
+  const { createPost } = useAppContext();
 
   const toggleMember = () => {
     setValues({ ...value, location: !value.location });
+  };
+
+  const handleChange = (e) => {
+    setValues({ ...value, [e.target.name]: e.target.value });
   };
 
   // const imageHandler = (e) => {
@@ -25,19 +34,34 @@ const AddPostForm = () => {
   //   reader.onloadend = () => {
   //     if (reader.readyState === 2) {
   //       console.log("hhello");
-  //       setValues({ ...value, postImage: reader.result });
+  //       setValues({ ...value, images: reader.result });
   //     } else {
   //       console.log("error");
   //     }
   //     reader.readAsDataURL(e.target.files[0]);
-  //     console.log(value.postImage);
+  //     console.log(value.images);
   //   };
   // };
 
+  const onSubmit = (e) => {
+    e.preventDefault();
+    const { images, userlocation, description } = value;
+
+    const userpost = { images, userlocation, description };
+   
+
+    createPost({ userpost });
+  };
+
   const onSelectedFile = (e) => {
     const selectedFiles = e.target.files;
+   
+ 
     const selectedFilesArray = Array.from(selectedFiles);
 
+    console.log(selectedFilesArray)
+
+    setValues({ images: selectedFilesArray });
     const imageArray = selectedFilesArray.map((file) => {
       return URL.createObjectURL(file);
     });
@@ -45,6 +69,7 @@ const AddPostForm = () => {
   };
   return (
     <Wrapper>
+      <Alert />
       <form>
         <div className="create-post">
           <div>
@@ -54,13 +79,15 @@ const AddPostForm = () => {
             type="text"
             placeholder="What's on your mind, Diana?"
             id="create-post"
+            name="description"
+            onChange={handleChange}
           />
           <div className="upload-image">
             <label htmlFor="upload">
               <BsImage className="icons-image" />
               <input
                 type="file"
-                name=""
+                name="images"
                 id="inputfile"
                 onChange={onSelectedFile}
                 multiple
@@ -68,13 +95,22 @@ const AddPostForm = () => {
             </label>
           </div>
           <MdAddLocationAlt className="icons" onClick={toggleMember} />
-          <input type="submit" value="Post" className="btn2 btn2-primary" />
+          <button
+            type="submit"
+            value="Post"
+            className="btn2 btn2-primary"
+            onClick={onSubmit}
+          >
+            Post
+          </button>
         </div>
         <div>
           <input
             type="text"
             placeholder="enter location"
             className={value.location ? "display-none" : "location-input"}
+            name="userlocation"
+            onChange={handleChange}
           />
         </div>
         <div className="multiple-images">

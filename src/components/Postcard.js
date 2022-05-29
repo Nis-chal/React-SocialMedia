@@ -25,6 +25,12 @@ const PostCard = () => {
         </div>
         <div className="photo">
           <img src={irene} alt="" />
+          <img src={irene} alt="" />
+          <img src={irene} alt="" />
+        </div>
+
+        <div className="dot-btns">
+          <button className="dot-btn"></button>
         </div>
         <div className="action-buttons">
           <div className="interaction-buttons">

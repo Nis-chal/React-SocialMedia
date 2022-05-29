@@ -13,6 +13,10 @@ import {
   HANDLE_CHANGE,
   CLEAR_VALUES,
 
+  CREATE_POST_BEGIN,
+  CREATE_POST_SUCCESS,
+  CREATE_POST_ERROR
+
 } from "./action";
 
 import { initialState } from "./appContext"
@@ -85,6 +89,28 @@ const reducer = (state,action)=>{
             alertType:'danger',
             alertText:action.payload.msg,
         }
+    }
+
+    if (action.type === CREATE_POST_BEGIN) {
+      return { ...state, isLoading: true };
+    }
+    if (action.type === CREATE_POST_SUCCESS) {
+      return {
+        ...state,
+        isLoading: false,
+        showAlert: true,
+        alertType: "success",
+        alertText: "New POST Created!",
+      };
+    }
+    if (action.type === CREATE_POST_ERROR) {
+      return {
+        ...state,
+        isLoading: false,
+        showAlert: true,
+        alertType: "danger",
+        alertText: action.payload.msg,
+      };
     }
 
 

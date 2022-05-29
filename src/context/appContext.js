@@ -11,6 +11,9 @@ import {
   HANDLE_CHANGE,
   CLEAR_VALUES,
   LOGOUT_USER,
+  CREATE_POST_BEGIN,
+  CREATE_POST_SUCCESS,
+  CREATE_POST_ERROR,
 } from "./action";
 
 const user = localStorage.getItem("user");
@@ -36,13 +39,13 @@ const AppProvider = ({ children }) => {
   // axios.defaults.headers.common['Authorization'] = `Bearer ${state.token}`
   const authFetch = axios.create({
     baseURL: "/api/v1",
-    // headers: {
-    //   Authorization: `Bearer ${state.token}`,
-    // },
-
     headers: {
-      "Content-Type": "multipart/form-data",
+      Authorization: `Bearer ${state.token}`,
     },
+
+    // headers: {
+    //   "Content-Type": "multipart/form-data",
+    // },
   });
 
   // response interceptor
@@ -158,6 +161,36 @@ const AppProvider = ({ children }) => {
     removeFromLocalStorage();
   };
 
+  const createPost = async ({ userpost }) => {
+    dispatch({ type: CREATE_POST_BEGIN });
+    try {
+      const { userlocation, description, images } = userpost;
+      let formData = new FormData();
+
+      formData.append("location", userlocation);
+      formData.append("description", description);
+      for (let i = 0; i < images.length; i++) {
+        formData.append("images", images[i]);
+        console.log(images[i]);
+      }
+
+      await authFetch.post("upload/post", formData);
+      dispatch({
+        type: CREATE_POST_SUCCESS,
+      });
+      // call function instead clearValues()
+      dispatch({ type: CLEAR_VALUES });
+    } catch (error) {
+      console.log(error.response);
+      if (error.response.status === 401) return;
+      dispatch({
+        type: CREATE_POST_ERROR,
+        payload: { msg: error.response.data.msg },
+      });
+    }
+    clearAlert();
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -168,6 +201,8 @@ const AppProvider = ({ children }) => {
 
         handleChange,
         clearValues,
+
+        createPost,
 
         logoutUser,
       }}

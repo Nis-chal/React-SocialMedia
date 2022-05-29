@@ -28,6 +28,8 @@ const Wrapper = styled.aside`
     border-radius: var(--card-border-radius);
     overflow: hidden;
     margin: 0.7rem 0;
+    display: flex;
+    overflow: hidden;
   }
   .feed .action-buttons {
     display: flex;
@@ -35,6 +37,19 @@ const Wrapper = styled.aside`
     align-items: center;
     font-size: 1.4rem;
     margin: 0.6rem;
+  }
+  .dot-btns {
+    display: flex;
+    gap: 2px;
+    width: max-content;
+    margin-inline: auto;
+  }
+  .dot-btn {
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 1s;
+    padding: 1.7px;
+    background-color: var(--color-dark);
   }
   .liked-by {
     display: flex;
