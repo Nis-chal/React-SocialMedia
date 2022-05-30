@@ -4,6 +4,8 @@ import { FaRegComment } from "react-icons/fa";
 import { BsBookmark } from "react-icons/bs";
 import Wrapper from "../assets/wrappers/PostCard";
 import irene from "../assets/images/irene.jpg";
+import data from "./data";
+import ImageSlider from "./imageSlider";
 
 const PostCard = () => {
   return (
@@ -24,9 +26,7 @@ const PostCard = () => {
           </span>
         </div>
         <div className="photo">
-          <img src={irene} alt="" />
-          <img src={irene} alt="" />
-          <img src={irene} alt="" />
+          <ImageSlider data={data} />
         </div>
 
         <div className="dot-btns">

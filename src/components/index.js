@@ -5,7 +5,7 @@ import BigSidebar from "./BigSidebar";
 import PostCard from "./Postcard";
 import Recommendation from "./Recommendation";
 import AddPostForm from "./AddpostForm";
-
+import ImageSlider from "./imageSlider";
 export {
   FormRow,
   Alert,
@@ -14,4 +14,5 @@ export {
   PostCard,
   Recommendation,
   AddPostForm,
+  ImageSlider
 };
