@@ -16,8 +16,8 @@ const ImageSlider = ({ data }) => {
         <Slider {...setting} className="slideimages">
           {data.map((image) => {
             return (
-              <div>
-                <img src={image.image} alt="" className="slideimg" />
+              <div key={image}>
+                <img src={image} alt="" className="slideimg" />
               </div>
             );
           })}

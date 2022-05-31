@@ -7,18 +7,18 @@ import irene from "../assets/images/irene.jpg";
 import data from "./data";
 import ImageSlider from "./imageSlider";
 
-const PostCard = () => {
+const PostCard = ({ item }) => {
   return (
     <Wrapper>
       <div className="feed">
         <div className="head">
           <div className="user">
             <div className="profile-photo">
-              <img src={irene} alt="" />
+              <img src={item.userid.profilePicture} alt="" />
             </div>
             <div className="ingo">
-              <h3>Lana Rose</h3>
-              <small>Dubai ,15 MINUTES AGO</small>
+              <h3>{item.userid.username}</h3>
+              <small>{item.location === undefined?"":item.location} ,15 MINUTES AGO</small>
             </div>
           </div>
           <span className="edit react-icons">
@@ -26,7 +26,7 @@ const PostCard = () => {
           </span>
         </div>
         <div className="photo">
-          <ImageSlider data={data} />
+          <ImageSlider data={item.images} />
         </div>
 
         <div className="dot-btns">
@@ -67,7 +67,7 @@ const PostCard = () => {
         </div>
         <div className="caption">
           <p>
-            <b>Lana Rose</b> Lorem ipsum dolor sit quisquam eius.{" "}
+            <b>{item.userid.username}</b> {item.description}.{" "}
             <span className="harsh-tag">#lifestyle</span>
           </p>
         </div>

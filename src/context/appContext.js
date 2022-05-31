@@ -14,6 +14,8 @@ import {
   CREATE_POST_BEGIN,
   CREATE_POST_SUCCESS,
   CREATE_POST_ERROR,
+  GET_POSTS_BEGIN,
+  GET_POSTS_SUCCESS,
 } from "./action";
 
 const user = localStorage.getItem("user");
@@ -30,6 +32,7 @@ const initialState = {
   userLocation: userLocation || "",
 
   isEditing: false,
+  userfeed: [],
 };
 
 const AppContext = React.createContext();
@@ -174,7 +177,7 @@ const AppProvider = ({ children }) => {
         console.log(images[i]);
       }
 
-      await authFetch.post("upload/post", formData);
+      await authFetch.post("posts/upload", formData);
       dispatch({
         type: CREATE_POST_SUCCESS,
       });
@@ -191,6 +194,20 @@ const AppProvider = ({ children }) => {
     clearAlert();
   };
 
+  const getallPosts = async () => {
+    dispatch({ type: GET_POSTS_BEGIN });
+    try {
+      const response = await authFetch.get("/posts/getposts");
+      const { posts } = response.data;
+
+      console.log(posts);
+      dispatch({ type: GET_POSTS_SUCCESS, payload: { posts } });
+    } catch (error) {
+      console.log(error.response);
+    }
+    clearAlert();
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -203,6 +220,7 @@ const AppProvider = ({ children }) => {
         clearValues,
 
         createPost,
+        getallPosts,
 
         logoutUser,
       }}

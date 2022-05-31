@@ -14,7 +14,6 @@ const togglestate = {
   description: "",
   userlocation: "",
 };
-
 const AddPostForm = () => {
   const [value, setValues] = useState(togglestate);
   const [selectedImages, setSelectedImages] = useState([]);
@@ -43,24 +42,23 @@ const AddPostForm = () => {
   //   };
   // };
 
-  const onSubmit = (e) => {
+  const onSubmit =async (e) => {
     e.preventDefault();
     const { images, userlocation, description } = value;
 
     const userpost = { images, userlocation, description };
-   
 
-    createPost({ userpost });
-    setValues(togglestate)
+    await createPost({ userpost });
+    setValues(togglestate);
+    setSelectedImages([]);
   };
 
   const onSelectedFile = (e) => {
     const selectedFiles = e.target.files;
-   
- 
+
     const selectedFilesArray = Array.from(selectedFiles);
 
-    console.log(selectedFilesArray)
+    console.log(selectedFilesArray);
 
     setValues({ images: selectedFilesArray });
     const imageArray = selectedFilesArray.map((file) => {
@@ -71,7 +69,7 @@ const AddPostForm = () => {
   return (
     <Wrapper>
       <Alert />
-      <form>
+      <form autoComplete="off">
         <div className="create-post">
           <div>
             <img className="profile-photo" src={irene} alt="" />
@@ -82,6 +80,7 @@ const AddPostForm = () => {
             id="create-post"
             name="description"
             onChange={handleChange}
+            value={value.description}
           />
           <div className="upload-image">
             <label htmlFor="upload">
@@ -98,7 +97,6 @@ const AddPostForm = () => {
           <MdAddLocationAlt className="icons" onClick={toggleMember} />
           <button
             type="submit"
-            value="Post"
             className="btn2 btn2-primary"
             onClick={onSubmit}
           >
@@ -112,6 +110,7 @@ const AddPostForm = () => {
             className={value.location ? "display-none" : "location-input"}
             name="userlocation"
             onChange={handleChange}
+            value={value.userlocation}
           />
         </div>
         <div className="multiple-images">
