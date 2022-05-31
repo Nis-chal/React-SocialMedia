@@ -14,6 +14,7 @@ const togglestate = {
   description: "",
   userlocation: "",
 };
+
 const AddPostForm = () => {
   const [value, setValues] = useState(togglestate);
   const [selectedImages, setSelectedImages] = useState([]);
@@ -51,6 +52,7 @@ const AddPostForm = () => {
     await createPost({ userpost });
     setValues(togglestate);
     setSelectedImages([]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   };
 
   const onSelectedFile = (e) => {

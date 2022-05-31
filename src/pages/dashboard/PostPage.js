@@ -3,7 +3,7 @@ import { useAppContext } from "../../context/appContext";
 import { useEffect } from "react";
 
 const PostPage = () => {
-  const { getallPosts, userfeed, createPost } = useAppContext();
+  const { getallPosts, userfeed} = useAppContext();
 
   useEffect(() => {
     getallPosts();

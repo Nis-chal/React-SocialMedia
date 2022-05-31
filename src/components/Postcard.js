@@ -4,8 +4,9 @@ import { FaRegComment } from "react-icons/fa";
 import { BsBookmark } from "react-icons/bs";
 import Wrapper from "../assets/wrappers/PostCard";
 import irene from "../assets/images/irene.jpg";
-import data from "./data";
 import ImageSlider from "./imageSlider";
+import moment from 'moment';
+
 
 const PostCard = ({ item }) => {
   return (
@@ -18,7 +19,7 @@ const PostCard = ({ item }) => {
             </div>
             <div className="ingo">
               <h3>{item.userid.username}</h3>
-              <small>{item.location === undefined?"":item.location} ,15 MINUTES AGO</small>
+              <small>{item.location === undefined?"":item.location} ,{moment(item.createdAt).fromNow()}</small>
             </div>
           </div>
           <span className="edit react-icons">
