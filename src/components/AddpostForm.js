@@ -43,13 +43,13 @@ const AddPostForm = () => {
   //   };
   // };
 
-  const onSubmit =async (e) => {
+  const onSubmit = (e) => {
     e.preventDefault();
     const { images, userlocation, description } = value;
 
     const userpost = { images, userlocation, description };
 
-    await createPost({ userpost });
+    createPost({ userpost });
     setValues(togglestate);
     setSelectedImages([]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -60,9 +60,8 @@ const AddPostForm = () => {
 
     const selectedFilesArray = Array.from(selectedFiles);
 
-    console.log(selectedFilesArray);
 
-    setValues({ images: selectedFilesArray });
+    setValues({ ...value,images: selectedFilesArray });
     const imageArray = selectedFilesArray.map((file) => {
       return URL.createObjectURL(file);
     });

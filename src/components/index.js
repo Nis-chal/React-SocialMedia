@@ -6,6 +6,7 @@ import PostCard from "./Postcard";
 import Recommendation from "./Recommendation";
 import AddPostForm from "./AddpostForm";
 import ImageSlider from "./imageSlider";
+import PostsContainer from "./PostsContainer";
 export {
   FormRow,
   Alert,
@@ -14,5 +15,6 @@ export {
   PostCard,
   Recommendation,
   AddPostForm,
-  ImageSlider
+  ImageSlider,
+  PostsContainer,
 };

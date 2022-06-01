@@ -174,7 +174,6 @@ const AppProvider = ({ children }) => {
       formData.append("description", description);
       for (let i = 0; i < images.length; i++) {
         formData.append("images", images[i]);
-        console.log(images[i]);
       }
 
       await authFetch.post("posts/upload", formData);

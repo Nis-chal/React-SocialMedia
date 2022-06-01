@@ -5,8 +5,7 @@ import { BsBookmark } from "react-icons/bs";
 import Wrapper from "../assets/wrappers/PostCard";
 import irene from "../assets/images/irene.jpg";
 import ImageSlider from "./imageSlider";
-import moment from 'moment';
-
+import moment from "moment";
 
 const PostCard = ({ item }) => {
   return (
@@ -14,12 +13,20 @@ const PostCard = ({ item }) => {
       <div className="feed">
         <div className="head">
           <div className="user">
-            <div className="profile-photo">
-              <img src={item.userid.profilePicture} alt="" />
+            <div>
+              <img
+                className="profile-photo"
+                src={item.userid.profilePicture}
+                alt=""
+              />
             </div>
             <div className="ingo">
               <h3>{item.userid.username}</h3>
-              <small>{item.location === undefined?"":item.location} ,{moment(item.createdAt).fromNow()}</small>
+              <small>
+                {item.location === "undefined" ? "" : `${item.location} ,`}
+
+                {moment(item.createdAt).fromNow()}
+              </small>
             </div>
           </div>
           <span className="edit react-icons">
@@ -63,13 +70,15 @@ const PostCard = ({ item }) => {
             <img src={irene} alt="" />
           </span>
           <p>
-            Liked by <b>Ernest Achiever</b> and <b>2, 323 others</b>
+            Liked by <b>Ernest Achiever</b> and{" "}
+            <b>{item.likesid.length} others</b>
           </p>
         </div>
         <div className="caption">
           <p>
-            <b>{item.userid.username}</b> {item.description}.{" "}
-            <span className="harsh-tag">#lifestyle</span>
+            <b>{!item.description ? "" : `${item.userid.username} `}</b>
+            &nbsp;
+            {item.description === "undefined" ? "" : `${item.description} `}
           </p>
         </div>
         <div className="comments text-muted">View all 277 comments</div>
