@@ -10,7 +10,7 @@ import { useState,useEffect } from "react";
 import { useAppContext } from "../context/appContext";
 
 const PostCard = ({ item }) => {
-  const { likepost,user } = useAppContext();
+  const { likepost,user ,unlikepost} = useAppContext();
 
   const [liked, setLike] = useState(false);
   // Likes
@@ -19,8 +19,7 @@ const PostCard = ({ item }) => {
       setLike(true);
     } else {
       setLike(false);
-      console.log(item.likesid)
-      console.log(user._id)
+      
     }
   }, [item.likesid,user._id]);
 
@@ -30,8 +29,10 @@ const PostCard = ({ item }) => {
 
     if (!liked) {
       likepost({ postid });
-      setLike(!liked);
+      setLike(true);
     }
+    unlikepost({postid})
+    setLike(false)
   };
   return (
     <Wrapper>
@@ -78,7 +79,10 @@ const PostCard = ({ item }) => {
                   onClick={togglelike}
                 />
               ) : (
-                <AiFillHeart className="react-icons love-icons red-fill" />
+                <AiFillHeart
+                  className="react-icons love-icons red-fill"
+                  onClick={togglelike}
+                />
               )}
             </span>
             <span>

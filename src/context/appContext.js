@@ -219,7 +219,14 @@ const AppProvider = ({ children }) => {
   const likepost = async ({ postid }) => {
     try {
       await authFetch.patch(`/posts/likepost/${postid}`);
-      console.log(postid)
+    } catch (error) {
+    }
+  };
+
+  const unlikepost = async ({ postid }) => {
+    try {
+      await authFetch.patch(`/posts/unlikepost/${postid}`);
+      console.log(postid);
     } catch (error) {
       console.log(error);
     }
@@ -242,6 +249,7 @@ const AppProvider = ({ children }) => {
         likepost,
 
         logoutUser,
+        unlikepost,
       }}
     >
       {children}
