@@ -30,7 +30,25 @@ const Wrapper = styled.aside`
     margin: 0.7rem 0;
     display: flex;
     overflow: hidden;
+    position: relative;
+
+    &>.display-none{
+      display: none;
+
+    }
+    & > .likeanimation{
+      position: absolute;
+      top: 40%;
+      right: 45%;
+      font-size: 50px;
+      color: white;
+      animation: likeanimation 1s ease-in-out forwards;
+
+      
+    }
+
   }
+
   .feed .action-buttons {
     display: flex;
     justify-content: space-between;
@@ -40,16 +58,17 @@ const Wrapper = styled.aside`
   }
   .dot-btns {
     display: flex;
-    gap: 2px;
     width: max-content;
     margin-inline: auto;
   }
   .dot-btn {
     border-radius: 10px;
+    border: none;
     cursor: pointer;
     transition: 1s;
-    padding: 1.7px;
-    background-color: var(--color-dark);
+    padding: 3px;
+    background-color: var(--grey-300);
+    margin-left: 4px;
   }
   .liked-by {
     display: flex;
@@ -86,6 +105,23 @@ const Wrapper = styled.aside`
   }
   .liked-by p {
     margin-left: 0.5rem;
+  }
+
+  .red-fill{
+    color:red !important;
+  }
+
+  @keyframes likeanimation {
+    0%{
+      opacity: 0;
+    }
+    50%{
+      opacity: 1;
+    }
+    100%{
+      opacity: 0;
+    }
+    
   }
 `;
 

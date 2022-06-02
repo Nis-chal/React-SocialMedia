@@ -12,6 +12,8 @@ import {
   CREATE_POST_ERROR,
   GET_POSTS_BEGIN,
   GET_POSTS_SUCCESS,
+  GET_LIKEPOSTS_BEGIN,
+  GET_LIKEPOSTS_SUCCESS
 } from "./action";
 
 import { initialState } from "./appContext";
@@ -92,6 +94,7 @@ const reducer = (state, action) => {
       ...state,
       isLoading: false,
       showAlert: true,
+      isSubmit: action.payload.isSubmit,
       alertType: "success",
       alertText: "New POST Created!",
     };
@@ -113,9 +116,18 @@ const reducer = (state, action) => {
     return {
       ...state,
       isLoading: false,
+      isSubmit: false,
       userfeed: action.payload.posts,
     };
   }
+
+  if(action.type === GET_LIKEPOSTS_BEGIN){
+    return{...state,likeAnimation:true}
+  }
+  if(action.type === GET_LIKEPOSTS_SUCCESS){
+    return{...state,likeAnimation:false}
+  }
+
 
   throw new Error(`no such action: ${action.type}`);
 };

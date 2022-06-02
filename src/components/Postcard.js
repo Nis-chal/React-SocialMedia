@@ -1,13 +1,38 @@
 import { BiDotsHorizontalRounded } from "react-icons/bi";
-import { AiOutlineHeart } from "react-icons/ai";
+import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { FaRegComment } from "react-icons/fa";
 import { BsBookmark } from "react-icons/bs";
 import Wrapper from "../assets/wrappers/PostCard";
 import irene from "../assets/images/irene.jpg";
 import ImageSlider from "./imageSlider";
 import moment from "moment";
+import { useState,useEffect } from "react";
+import { useAppContext } from "../context/appContext";
 
 const PostCard = ({ item }) => {
+  const { likepost,user } = useAppContext();
+
+  const [liked, setLike] = useState(false);
+  // Likes
+  useEffect(() => {
+    if (item.likesid.find((like) => like._id !== user._id)) {
+      setLike(true);
+    } else {
+      setLike(false);
+      console.log(item.likesid)
+      console.log(user._id)
+    }
+  }, [item.likesid,user._id]);
+
+  const togglelike = (e) => {
+    e.preventDefault();
+    const postid = item._id;
+
+    if (!liked) {
+      likepost({ postid });
+      setLike(!liked);
+    }
+  };
   return (
     <Wrapper>
       <div className="feed">
@@ -35,15 +60,26 @@ const PostCard = ({ item }) => {
         </div>
         <div className="photo">
           <ImageSlider data={item.images} />
+
+          <AiFillHeart className={liked ? `likeanimation` : "display-none"} />
         </div>
 
         <div className="dot-btns">
-          <button className="dot-btn"></button>
+          {item.images.map((index) => {
+            return <button key={index} className="dot-btn"></button>;
+          })}
         </div>
         <div className="action-buttons">
           <div className="interaction-buttons">
             <span>
-              <AiOutlineHeart className="react-icons love-icons" />
+              {!liked ? (
+                <AiOutlineHeart
+                  className="react-icons love-icons"
+                  onClick={togglelike}
+                />
+              ) : (
+                <AiFillHeart className="react-icons love-icons red-fill" />
+              )}
             </span>
             <span>
               <FaRegComment className="react-icons comment-icons" />{" "}

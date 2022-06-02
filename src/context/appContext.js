@@ -16,6 +16,8 @@ import {
   CREATE_POST_ERROR,
   GET_POSTS_BEGIN,
   GET_POSTS_SUCCESS,
+  GET_LIKEPOSTS_BEGIN,
+  GET_LIKEPOSTS_SUCCESS,
 } from "./action";
 
 const user = localStorage.getItem("user");
@@ -33,6 +35,10 @@ const initialState = {
 
   isEditing: false,
   userfeed: [],
+  isSubmit: false,
+  newPosts: "",
+
+  likeAnimation: false,
 };
 
 const AppContext = React.createContext();
@@ -90,6 +96,8 @@ const AppProvider = ({ children }) => {
       dispatch({ type: CLEAR_ALERT });
     }, 3000);
   };
+
+  
 
   const addUserToLocalStorage = ({ user, token, location }) => {
     localStorage.setItem("user", JSON.stringify(user));
@@ -179,6 +187,7 @@ const AppProvider = ({ children }) => {
       await authFetch.post("posts/upload", formData);
       dispatch({
         type: CREATE_POST_SUCCESS,
+        payload: { isSubmit: !state.isSubmit },
       });
       // call function instead clearValues()
       dispatch({ type: CLEAR_VALUES });
@@ -207,6 +216,15 @@ const AppProvider = ({ children }) => {
     clearAlert();
   };
 
+  const likepost = async ({ postid }) => {
+    try {
+      await authFetch.patch(`/posts/likepost/${postid}`);
+      console.log(postid)
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -220,6 +238,8 @@ const AppProvider = ({ children }) => {
 
         createPost,
         getallPosts,
+
+        likepost,
 
         logoutUser,
       }}

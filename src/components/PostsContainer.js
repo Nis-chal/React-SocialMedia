@@ -4,16 +4,16 @@ import { useAppContext } from "../context/appContext";
 import { useEffect } from "react";
 
 const PostsContainer = () => {
-  const { getallPosts, userfeed } = useAppContext();
+  const { getallPosts, userfeed ,isSubmit} = useAppContext();
 
   useEffect(() => {
     getallPosts();
-  }, []);
+  }, [isSubmit]);
 
   return (
     <div className="feeds">
       {userfeed.map((item, index) => {
-        return <PostCard item={item} key={index} />;
+        return <PostCard item={item} key={index} index={index}/>;
       })}
     </div>
   );
