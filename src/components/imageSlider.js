@@ -4,7 +4,7 @@ import "slick-carousel/slick/slick-theme.css";
 import Wrapper from "../assets/wrappers/imageSlider";
 const ImageSlider = ({ data }) => {
   const setting = {
-    dots: true,
+    dots: false,
     infinite: false,
     speed: 500,
     slidesToShow: 1,
@@ -16,7 +16,7 @@ const ImageSlider = ({ data }) => {
         <Slider {...setting} className="slideimages">
           {data.map((image) => {
             return (
-              <div key={image}>
+              <div key={image} className="slide-container">
                 <img src={image} alt="" className="slideimg" />
               </div>
             );

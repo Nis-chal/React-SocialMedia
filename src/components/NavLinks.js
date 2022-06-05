@@ -2,17 +2,16 @@ import { NavLink } from "react-router-dom";
 import links from "../utils/links";
 import Wrapper from "../assets/wrappers/Navlinks";
 import { Link } from "react-router-dom";
-import irene from "../assets/images/irene.jpg";
 import { useAppContext } from "../context/appContext";
 
 const NavLinks = ({ toggleSidebar }) => {
   const { user } = useAppContext();
-  
+
   return (
     <Wrapper>
       <Link to="/" className="profile">
-        <div className="profile-photo">
-          <img src={irene} alt="" />
+        <div>
+          <img src={user.profilePicture} alt="" className="profile-photo" />
         </div>
         <div className="handle">
           <h4>{user.name}</h4>

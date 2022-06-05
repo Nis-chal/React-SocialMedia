@@ -13,7 +13,8 @@ import {
   GET_POSTS_BEGIN,
   GET_POSTS_SUCCESS,
   GET_LIKEPOSTS_BEGIN,
-  GET_LIKEPOSTS_SUCCESS
+  GET_LIKEPOSTS_SUCCESS,
+  POSTS_DETAIL_BEGIN,
 } from "./action";
 
 import { initialState } from "./appContext";
@@ -111,23 +112,31 @@ const reducer = (state, action) => {
 
   if (action.type === GET_POSTS_BEGIN) {
     return { ...state, isLoading: true, showAlert: false };
-  }
+  };
+
   if (action.type === GET_POSTS_SUCCESS) {
     return {
       ...state,
       isLoading: false,
       isSubmit: false,
-      userfeed: action.payload.posts,
+      userfeed: action.payload.userfeed,
     };
   }
 
-  if(action.type === GET_LIKEPOSTS_BEGIN){
-    return{...state,likeAnimation:true}
+  if (action.type === GET_LIKEPOSTS_BEGIN) {
+    return { ...state, likeAnimation: true };
   }
-  if(action.type === GET_LIKEPOSTS_SUCCESS){
-    return{...state,likeAnimation:false}
+  if (action.type === GET_LIKEPOSTS_SUCCESS) {
+    return { ...state, likeAnimation: false };
   }
 
+  if (action.type === POSTS_DETAIL_BEGIN) {
+    return {
+      ...state,
+      postInfo: action.payload.post,
+      ImageToEdit:action.payload.post.images
+    };
+  }
 
   throw new Error(`no such action: ${action.type}`);
 };

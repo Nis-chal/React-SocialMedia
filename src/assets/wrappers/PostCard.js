@@ -6,13 +6,14 @@ const Wrapper = styled.aside`
   .feed {
     font-family: "Poppins", sans-serif;
 
-    background: var(--color-white);
+    background: var(--post-card-color);
     border-radius: var(--card-border-radius);
     padding: var(--card-padding);
     margin: 1rem 0;
     font-size: 0.85rem;
     line-height: 1.5;
-    color: var(--color-dark);
+    color: var(--card-color);
+    position: relative;
   }
   .feed .head {
     display: flex;
@@ -32,21 +33,17 @@ const Wrapper = styled.aside`
     overflow: hidden;
     position: relative;
 
-    &>.display-none{
+    & > .display-none {
       display: none;
-
     }
-    & > .likeanimation{
+    & > .likeanimation {
       position: absolute;
       top: 40%;
       right: 45%;
       font-size: 50px;
       color: white;
       animation: likeanimation 1s ease-in-out forwards;
-
-      
     }
-
   }
 
   .feed .action-buttons {
@@ -75,8 +72,9 @@ const Wrapper = styled.aside`
   }
 
   .react-icons {
-    color: var(--color-dark) !important;
+    color: var(--card-color) !important;
     font-size: 1.2rem;
+    cursor: pointer;
   }
   .love-icons {
     font-size: 1.5rem;
@@ -107,21 +105,34 @@ const Wrapper = styled.aside`
     margin-left: 0.5rem;
   }
 
-  .red-fill{
-    color:red !important;
+  .red-fill {
+    color: red !important;
+  }
+  .edit-dropdown {
+    position: absolute;
+    top: 40px;
+    right: 9px;
+    display: flex;
+    flex-direction: column;
+    font-size: 1.5rem;
+    padding: 1rem;
+    gap: 10px;
+    background-color: var(--post-card-color);
+  }
+  .action-icon {
+    cursor: pointer;
   }
 
   @keyframes likeanimation {
-    0%{
+    0% {
       opacity: 0;
     }
-    50%{
+    50% {
       opacity: 1;
     }
-    100%{
+    100% {
       opacity: 0;
     }
-    
   }
 `;
 

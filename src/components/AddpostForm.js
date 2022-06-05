@@ -60,8 +60,7 @@ const AddPostForm = () => {
 
     const selectedFilesArray = Array.from(selectedFiles);
 
-
-    setValues({ ...value,images: selectedFilesArray });
+    setValues({ ...value, images: selectedFilesArray });
     const imageArray = selectedFilesArray.map((file) => {
       return URL.createObjectURL(file);
     });
@@ -70,7 +69,7 @@ const AddPostForm = () => {
   return (
     <Wrapper>
       <Alert />
-      <form autoComplete="off">
+      <form autoComplete="off" id="addform">
         <div className="create-post">
           <div>
             <img className="profile-photo" src={irene} alt="" />
@@ -108,7 +107,7 @@ const AddPostForm = () => {
           <input
             type="text"
             placeholder="enter location"
-            className={value.location ? "display-none" : "location-input"}
+            className={!value.location ? "display-none" : "location-input"}
             name="userlocation"
             onChange={handleChange}
             value={value.userlocation}

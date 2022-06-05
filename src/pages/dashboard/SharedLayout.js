@@ -5,7 +5,7 @@ const SharedLayout = () => {
   return (
     <Wrapper>
       <section>
-        <div>
+        <div className="nav-container" >
           <Navbar />
         </div>
 
@@ -18,6 +18,7 @@ const SharedLayout = () => {
             <Recommendation />
           </div>
         </main>
+        <div className="glassbg"></div>
       </section>
     </Wrapper>
   );

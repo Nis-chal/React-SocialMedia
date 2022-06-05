@@ -1,14 +1,10 @@
-import {  AddPostForm,PostsContainer } from "../../components";
+import { AddPostForm, PostsContainer } from "../../components";
 
 const PostPage = () => {
-
-
-
-
   return (
     <div className="middle">
       <AddPostForm />
-      <PostsContainer/>
+      <PostsContainer />
     </div>
   );
 };

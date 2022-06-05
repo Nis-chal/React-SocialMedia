@@ -3,7 +3,7 @@ import styled from "styled-components";
 const Wrapper = styled.aside`
   .profile {
     padding: var(--card-padding);
-    background: var(--color-white);
+    background: var(--post-card-color);
     border-radius: var(--card-border-radius);
     display: flex;
     align-items: center;
@@ -14,11 +14,15 @@ const Wrapper = styled.aside`
       object-fit: cover;
     }
   }
+  .handle h4 {
+    color: var(--card-color);
+  }
 
   .sidebar {
     margin-top: 1rem;
-    background: var(--color-white);
+    background: var(--post-card-color);
     border-radius: var(--card-border-radius);
+    overflow: hidden;
   }
 
   .sidebar .menu-item {
@@ -26,12 +30,57 @@ const Wrapper = styled.aside`
     align-items: center;
     height: 4rem;
     cursor: pointer;
-    transition: all 300ms ease;
     position: relative;
+    overflow: hidden;
   }
 
+  .sidebar .menu-item:first-child.active {
+    border-top-left-radius: var(--card-border-radius);
+    overflow: hidden;
+  }
   .sidebar .menu-item:hover {
-    background: var(--color-light);
+    text-decoration: none;
+    color: #fff;
+  }
+  .sidebar .menu-item:hover::before {
+    position: absolute;
+    content: "";
+    display: inline-block;
+    top: -180px;
+    left: 0;
+    width: 30px;
+    height: 100%;
+    background: linear-gradient(
+      166deg,
+      rgba(2, 0, 36, 0.9251050762101716) 0%,
+      rgba(80, 20, 128, 1) 42%,
+      rgba(17, 204, 192, 1) 97%
+    );
+
+    animation: shiny-btn1 3s ease-in-out 0s forwards;
+  }
+  .sidebar .menu-item:hover {
+    opacity: 0.7;
+  }
+  
+
+  @keyframes shiny-btn1 {
+    0% {
+      -webkit-transform: scale(0) rotate(45deg);
+      opacity: 1;
+    }
+    50% {
+      -webkit-transform: scale(0) rotate(45deg);
+      opacity: 0.5;
+    }
+    81% {
+      -webkit-transform: scale(4) rotate(45deg);
+      opacity: 1;
+    }
+    100% {
+      -webkit-transform: scale(50) rotate(45deg);
+      opacity: 0;
+    }
   }
 
   .sidebar span {
@@ -53,6 +102,13 @@ const Wrapper = styled.aside`
 
     .sidebar h3 {
       display: none;
+    }
+
+    .left {
+      grid-column: 3/4;
+      position: fixed;
+      bottom: 0;
+      right: 0;
     }
 
     .left .btn {

@@ -6,22 +6,37 @@ import Wrapper from "../assets/wrappers/PostCard";
 import irene from "../assets/images/irene.jpg";
 import ImageSlider from "./imageSlider";
 import moment from "moment";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useAppContext } from "../context/appContext";
+import { FiEdit } from "react-icons/fi";
+import { MdDelete } from "react-icons/md";
+
+import { Link } from "react-router-dom";
 
 const PostCard = ({ item }) => {
-  const { likepost,user ,unlikepost} = useAppContext();
+  const { likepost, user, unlikepost } = useAppContext();
 
   const [liked, setLike] = useState(false);
+  const [likecount, setLikCount] = useState(item.likesid.length);
+  const [isuser, setUser] = useState();
+  const [dropdown, setdropdown] = useState(false);
   // Likes
   useEffect(() => {
     if (item.likesid.find((like) => like._id !== user._id)) {
       setLike(true);
     } else {
       setLike(false);
-      
     }
-  }, [item.likesid,user._id]);
+    if (item.userid._id === user._id) {
+      setUser(true);
+    } else {
+      setUser(false);
+    }
+  }, [item.likesid, user._id]);
+
+  const toggledropdown = () => {
+    setdropdown(!dropdown);
+  };
 
   const togglelike = (e) => {
     e.preventDefault();
@@ -30,9 +45,12 @@ const PostCard = ({ item }) => {
     if (!liked) {
       likepost({ postid });
       setLike(true);
+      setLikCount((value) => value + 1);
+    } else {
+      unlikepost({ postid });
+      setLike(false);
+      setLikCount((value) => value - 1);
     }
-    unlikepost({postid})
-    setLike(false)
   };
   return (
     <Wrapper>
@@ -56,7 +74,14 @@ const PostCard = ({ item }) => {
             </div>
           </div>
           <span className="edit react-icons">
-            <BiDotsHorizontalRounded className="react-icons" />
+            {isuser ? (
+              <BiDotsHorizontalRounded
+                className="react-icons"
+                onClick={toggledropdown}
+              />
+            ) : (
+              <div></div>
+            )}
           </span>
         </div>
         <div className="photo">
@@ -110,8 +135,7 @@ const PostCard = ({ item }) => {
             <img src={irene} alt="" />
           </span>
           <p>
-            Liked by <b>Ernest Achiever</b> and{" "}
-            <b>{item.likesid.length} others</b>
+            Liked by <b>Ernest Achiever</b> and <b>{likecount} others</b>
           </p>
         </div>
         <div className="caption">
@@ -122,6 +146,17 @@ const PostCard = ({ item }) => {
           </p>
         </div>
         <div className="comments text-muted">View all 277 comments</div>
+
+        {dropdown ? (
+          <div className="edit-dropdown">
+            <Link to={`/user/postdetail/${item._id}`}>
+              <FiEdit className="action-icon" />
+            </Link>
+            <MdDelete className="action-icon" />
+          </div>
+        ) : (
+          <div></div>
+        )}
       </div>
     </Wrapper>
   );

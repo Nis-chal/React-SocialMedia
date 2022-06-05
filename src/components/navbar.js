@@ -22,9 +22,9 @@ const Navbar = () => {
             />
           </div>
           <div className="create">
-            <label htmlFor="create-post" className="btn btn-purple">
+            <a href="#addform" className="btn btn-purple">
               Add Post
-            </label>
+            </a>
             <div className="btn-container">
               <button
                 className="profile-picture btn-none"

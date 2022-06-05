@@ -6,7 +6,7 @@ const Wrapper = styled.aside`
     position: sticky;
     top: var(--sticky-top-right);
     bottom: 0;
-    color: var(--color-dark);
+    color: var(--card-color);
   }
 
   .right .may-know {
@@ -17,7 +17,7 @@ const Wrapper = styled.aside`
     margin: 1rem 0;
   }
   .right .request {
-    background: var(--color-white);
+    background: var(--post-card-color);
     padding: var(--card-padding);
     border-radius: var(--card-border-radius);
     margin-bottom: 0.7rem;

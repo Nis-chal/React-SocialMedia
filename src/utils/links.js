@@ -9,7 +9,7 @@ const links = [
   {
     id: 1,
     text: 'Home',
-    path: '/',
+    path: '/user',
     icon: <AiOutlineHome />,
   },
   {

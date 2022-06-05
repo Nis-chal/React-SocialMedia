@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 const Wrapper = styled.aside`
   form {
-    background: var(--color-white);
   }
   .create-post {
     width: 100%;
@@ -10,7 +9,7 @@ const Wrapper = styled.aside`
     align-items: center;
     justify-content: space-between;
     margin-top: 1rem;
-    background: var(--color-white);
+    background: var(--post-card-color);
     padding: 0.4rem var(--card-padding);
     border-radius: var(--border-radius);
   }
@@ -20,7 +19,7 @@ const Wrapper = styled.aside`
     width: 100%;
     padding-left: 1rem;
     background: transparent;
-    color: var(--color-dark);
+    color: var(--input-color);
     margin-right: 1rem;
     outline: none;
     border: none;
@@ -29,14 +28,16 @@ const Wrapper = styled.aside`
   .location-input {
     justify-self: start;
     width: 100%;
+    margin-top: 10px;
     padding-left: 1rem;
-    background: var(--color-secondary);
-    color: var(--color-dark);
+    background: var(--post-card-color);
+    color: var(--input-color);
 
     margin-right: 1rem;
     outline: none;
     border: none;
     height: 40px;
+    border-radius: var(--border-radius);
   }
 
   .icons {

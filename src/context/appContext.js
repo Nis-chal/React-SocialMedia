@@ -16,8 +16,7 @@ import {
   CREATE_POST_ERROR,
   GET_POSTS_BEGIN,
   GET_POSTS_SUCCESS,
-  GET_LIKEPOSTS_BEGIN,
-  GET_LIKEPOSTS_SUCCESS,
+  POSTS_DETAIL_BEGIN,
 } from "./action";
 
 const user = localStorage.getItem("user");
@@ -36,9 +35,10 @@ const initialState = {
   isEditing: false,
   userfeed: [],
   isSubmit: false,
-  newPosts: "",
 
   likeAnimation: false,
+  postInfo: "",
+  ImageToEdit: "",
 };
 
 const AppContext = React.createContext();
@@ -97,8 +97,6 @@ const AppProvider = ({ children }) => {
     }, 3000);
   };
 
-  
-
   const addUserToLocalStorage = ({ user, token, location }) => {
     localStorage.setItem("user", JSON.stringify(user));
     localStorage.setItem("token", token);
@@ -115,14 +113,9 @@ const AppProvider = ({ children }) => {
 
   const setupUser = async ({ currentUser, endPoint, alertText }) => {
     dispatch({ type: SETUP_USER_BEGIN });
-    // console.log(currentUser)
-    // console.log('from setup')
 
-    // console.log(currentUser)
     const { name, location, email, password, profilePicture, username } =
       currentUser;
-
-    // console.log(currentUser)
 
     let formData = new FormData();
 
@@ -205,11 +198,10 @@ const AppProvider = ({ children }) => {
   const getallPosts = async () => {
     dispatch({ type: GET_POSTS_BEGIN });
     try {
-      const response = await authFetch.get("/posts/getposts");
+      const response = await authFetch("/posts/getposts");
       const { posts } = response.data;
 
-      console.log(posts);
-      dispatch({ type: GET_POSTS_SUCCESS, payload: { posts } });
+      dispatch({ type: GET_POSTS_SUCCESS, payload: { userfeed: posts } });
     } catch (error) {
       console.log(error.response);
     }
@@ -220,6 +212,7 @@ const AppProvider = ({ children }) => {
     try {
       await authFetch.patch(`/posts/likepost/${postid}`);
     } catch (error) {
+      console.log(error);
     }
   };
 
@@ -227,6 +220,28 @@ const AppProvider = ({ children }) => {
     try {
       await authFetch.patch(`/posts/unlikepost/${postid}`);
       console.log(postid);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const detailspost = async (postid) => {
+    try {
+      const response = await authFetch(`/posts/postdetail/${postid}`);
+      const { post } = response.data;
+      console.log(post);
+      dispatch({
+        type: POSTS_DETAIL_BEGIN,
+        payload: { post },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const postUpdate = async ({ postInformation }) => {
+    try {
+      const response = await authFetch.post("/posts/postupdate");
     } catch (error) {
       console.log(error);
     }
@@ -245,6 +260,8 @@ const AppProvider = ({ children }) => {
 
         createPost,
         getallPosts,
+
+        detailspost,
 
         likepost,
 
