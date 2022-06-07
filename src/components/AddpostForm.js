@@ -48,6 +48,7 @@ const AddPostForm = () => {
     const { images, userlocation, description } = value;
 
     const userpost = { images, userlocation, description };
+    console.log(images)
 
     createPost({ userpost });
     setValues(togglestate);

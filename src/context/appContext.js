@@ -17,6 +17,8 @@ import {
   GET_POSTS_BEGIN,
   GET_POSTS_SUCCESS,
   POSTS_DETAIL_BEGIN,
+  POSTS_BEGIN_SUCCESS,
+  POSTS_UPDATE_SUCCESS,
 } from "./action";
 
 const user = localStorage.getItem("user");
@@ -241,10 +243,30 @@ const AppProvider = ({ children }) => {
 
   const postUpdate = async ({ postInformation }) => {
     try {
-      const response = await authFetch.post("/posts/postupdate");
+      dispatch({ type: POSTS_BEGIN_SUCCESS });
+      const { images, networkpath, location, description, postId } =
+        postInformation;
+      let formData = new FormData();
+
+      formData.append("location", location);
+      formData.append("description", description);
+      for (let i = 0; i < images.length; i++) {
+        formData.append("filePath", images[i]);
+      }
+      for (let i = 0; i < networkpath.length; i++) {
+        formData.append("networkpath", networkpath[i]);
+      }
+
+      await authFetch.patch(`/posts/updatepost/${postId}`, formData);
+      dispatch({ type: POSTS_UPDATE_SUCCESS });
     } catch (error) {
-      console.log(error);
+      dispatch({
+        type: SETUP_USER_ERROR,
+        payload: { msg: error.response.data.msg },
+        
+      });
     }
+    clearAlert();
   };
 
   return (
@@ -267,6 +289,8 @@ const AppProvider = ({ children }) => {
 
         logoutUser,
         unlikepost,
+
+        postUpdate,
       }}
     >
       {children}

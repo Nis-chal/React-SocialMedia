@@ -13,7 +13,7 @@ const PostsContainer = () => {
   return (
     <div className="feeds">
       {userfeed.map((item, index) => {
-        return <PostCard item={item} key={index} index={index}/>;
+        return <PostCard item={item} key={item} index={index}/>;
       })}
     </div>
   );

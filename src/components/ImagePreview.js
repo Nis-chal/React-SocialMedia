@@ -8,9 +8,10 @@ import { FormInput } from "../components";
 const togglestate = {
   description: "",
   location: "",
+  images:""
 };
 const ImagePreview = ({ postInfo }) => {
-  const { ImageToEdit } = useAppContext();
+  const { ImageToEdit,postUpdate ,isLoading} = useAppContext();
   const [value, setValues] = useState(togglestate);
   const [filepath, setFilePath] = useState([]);
   const [networkpath, setNetworkpath] = useState([]);
@@ -19,6 +20,7 @@ const ImagePreview = ({ postInfo }) => {
   useEffect(() => {
     setSelectedImages(ImageToEdit);
     setNetworkpath(ImageToEdit);
+    console.log(networkpath)
   }, [ImageToEdit]);
 
   const handleChange = (e) => {
@@ -40,13 +42,17 @@ const ImagePreview = ({ postInfo }) => {
     setSelectedImages(combineArray);
   };
 
-  const onSubmit = (e) =>{
+  const onSubmit = (e) => {
     e.preventDefault();
-    const {location ,description} = value;
+    const { location, description,images } = value;
+    const postId = postInfo._id
+    console.log(images)
 
-    const postInformation = {filepath,networkpath,location,description}
-    
-  }
+    const postInformation = { images, networkpath, location, description, postId };
+
+    postUpdate({postInformation})
+
+  };
   return (
     <Wrapper>
       <h2 className="form-title"> Add Post</h2>
@@ -88,7 +94,7 @@ const ImagePreview = ({ postInfo }) => {
                       className="image-cross"
                       onClick={() => {
                         setNetworkpath(
-                          filepath.filter((indexImage) => indexImage !== image)
+                          networkpath.filter((indexImage) => indexImage !== image)
                         );
                         setFilePath(
                           filepath.filter((indexImage) => indexImage !== image)
@@ -98,6 +104,10 @@ const ImagePreview = ({ postInfo }) => {
                             (indeximage) => indeximage !== image
                           )
                         );
+
+                        console.log(networkpath)
+                        // console.log(filepath)
+                        
                       }}
                     />
                   </div>
@@ -105,7 +115,9 @@ const ImagePreview = ({ postInfo }) => {
               })}
           </div>
         </div>
-        <button className="btn btn-primary">save</button>
+        <button className="btn btn-primary" disabled={isLoading} onClick={onSubmit}>
+          save
+        </button>
       </form>
     </Wrapper>
   );

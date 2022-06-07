@@ -79,18 +79,17 @@ const Wrapper = styled.aside`
   }
 
   .multiple-images {
-    display: flex;
-    margin-top: 10px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 7px;
+    padding-inline: 2%;
 
     & > .image {
       position: relative;
 
       /* overflow: hidden; */
 
-      margin-left: 10px;
-
       & > img {
-        width: 100px;
         aspect-ratio: 1/1;
       }
 

@@ -15,6 +15,8 @@ import {
   GET_LIKEPOSTS_BEGIN,
   GET_LIKEPOSTS_SUCCESS,
   POSTS_DETAIL_BEGIN,
+  POSTS_BEGIN_SUCCESS,
+  POSTS_UPDATE_SUCCESS,
 } from "./action";
 
 import { initialState } from "./appContext";
@@ -135,6 +137,23 @@ const reducer = (state, action) => {
       ...state,
       postInfo: action.payload.post,
       ImageToEdit:action.payload.post.images
+    };
+  }
+
+  if(action.type === POSTS_BEGIN_SUCCESS){
+    return {
+      ...state,
+      isLoading:true
+    }
+  }
+
+  if(action.type === POSTS_UPDATE_SUCCESS){
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: "success",
+      alertText: "POST UPDATE SUCCESS",
     };
   }
 
