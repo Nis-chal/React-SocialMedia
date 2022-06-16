@@ -1,6 +1,11 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Landing, Register, ProtectedRoute } from "./pages";
-import { SharedLayout, PostPage, Postedit } from "./pages/dashboard";
+import { Landing, Register, ProtectedRoute, Profile } from "./pages";
+import {
+  SharedLayout,
+  PostPage,
+  Postedit,
+  SharedLayoutv2,
+} from "./pages/dashboard";
 
 function App() {
   return (
@@ -20,7 +25,18 @@ function App() {
           <Route index element={<PostPage />} />
           <Route path="postdetail/:id" element={<Postedit />} />
           <Route path="add-job" element={<Landing />} />
-          <Route path="profile" element={<Landing />} />
+          {/* <Route path="/profile" element={<Profile />} /> */}
+        </Route>
+
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <SharedLayoutv2 />
+            </ProtectedRoute>
+          }
+        >
+          <Route index element={<Profile />} />
         </Route>
       </Routes>
     </BrowserRouter>
