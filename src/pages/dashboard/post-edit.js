@@ -1,4 +1,4 @@
-import { ImagePreview, Alert } from "../../components";
+import { ImagePreview, Alert, PostCard } from "../../components";
 import { useAppContext } from "../../context/appContext";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
@@ -6,16 +6,18 @@ import { useParams } from "react-router-dom";
 const Postedit = () => {
   const { id: postid } = useParams();
 
-  const { detailspost, postInfo } = useAppContext();
+  const { detailspost, postInfo,isEditing } = useAppContext();
 
   useEffect(() => {
     detailspost(postid);
-  }, [postid]);
+  }, [postid,isEditing]);
 
   return (
-    <div className="editfrom">
+    <div className="middle">
       <Alert />
+
       <ImagePreview postInfo={postInfo} />
+      {/* <PostCard item={postInfo} /> */}
     </div>
   );
 };

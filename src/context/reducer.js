@@ -114,7 +114,7 @@ const reducer = (state, action) => {
 
   if (action.type === GET_POSTS_BEGIN) {
     return { ...state, isLoading: true, showAlert: false };
-  };
+  }
 
   if (action.type === GET_POSTS_SUCCESS) {
     return {
@@ -136,24 +136,25 @@ const reducer = (state, action) => {
     return {
       ...state,
       postInfo: action.payload.post,
-      ImageToEdit:action.payload.post.images
+      ImageToEdit: action.payload.post.images,
     };
   }
 
-  if(action.type === POSTS_BEGIN_SUCCESS){
+  if (action.type === POSTS_BEGIN_SUCCESS) {
     return {
       ...state,
-      isLoading:true
-    }
+      isLoading: true,
+    };
   }
 
-  if(action.type === POSTS_UPDATE_SUCCESS){
+  if (action.type === POSTS_UPDATE_SUCCESS) {
     return {
       ...state,
       isLoading: false,
       showAlert: true,
       alertType: "success",
       alertText: "POST UPDATE SUCCESS",
+      isEditing: action.payload.isEditing,
     };
   }
 

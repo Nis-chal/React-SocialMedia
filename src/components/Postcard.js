@@ -6,22 +6,33 @@ import Wrapper from "../assets/wrappers/PostCard";
 import irene from "../assets/images/irene.jpg";
 import ImageSlider from "./imageSlider";
 import moment from "moment";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useAppContext } from "../context/appContext";
 import { FiEdit } from "react-icons/fi";
 import { MdDelete } from "react-icons/md";
 
 import { Link } from "react-router-dom";
 
-const PostCard = ({ item }) => {
+const PostCard = React.memo(({ item }) => {
+  const postbio = {
+    likec: "",
+    profilep: "",
+  };
   const { likepost, user, unlikepost } = useAppContext();
 
   const [liked, setLike] = useState(false);
-  const [likecount, setLikCount] = useState(item.likesid.length);
+  const [likecount, setLikCount] = useState(0);
   const [isuser, setUser] = useState();
   const [dropdown, setdropdown] = useState(false);
+  const [posti, setPostI] = useState(postbio);
   // Likes
   useEffect(() => {
+    setPostI({
+      ...posti,
+      [posti.likec]: item.likesid.length,
+      [posti.profilep]: item.userid.profilePicture,
+    });
+    setLikCount(item.likesid.length);
     if (item.likesid.find((like) => like._id !== user._id)) {
       setLike(true);
     } else {
@@ -85,7 +96,7 @@ const PostCard = ({ item }) => {
           </span>
         </div>
         <div className="photo">
-          <ImageSlider data={item.images} />
+          <ImageSlider data={item} />
 
           <AiFillHeart className={liked ? `likeanimation` : "display-none"} />
         </div>
@@ -160,6 +171,6 @@ const PostCard = ({ item }) => {
       </div>
     </Wrapper>
   );
-};
+});
 
 export default PostCard;

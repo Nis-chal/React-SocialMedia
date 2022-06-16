@@ -14,9 +14,10 @@ const ImageSlider = ({ data }) => {
     <Wrapper>
       <div>
         <Slider {...setting} className="slideimages">
-          {data.map((image) => {
+          {data.images.map((image, index) => {
+            console.log(data._id + index);
             return (
-              <div key={image} className="slide-container">
+              <div key={data._id + index} className="slide-container">
                 <img src={image} alt="" className="slideimg" />
               </div>
             );

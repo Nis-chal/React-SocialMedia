@@ -258,7 +258,7 @@ const AppProvider = ({ children }) => {
       }
 
       await authFetch.patch(`/posts/updatepost/${postId}`, formData);
-      dispatch({ type: POSTS_UPDATE_SUCCESS });
+      dispatch({ type: POSTS_UPDATE_SUCCESS ,payload:{isEditing:!state.isEditing}});
     } catch (error) {
       dispatch({
         type: SETUP_USER_ERROR,
