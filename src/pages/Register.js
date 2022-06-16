@@ -1,4 +1,4 @@
-import {useState} from 'react'
+import {useState,useEffect} from 'react'
 
 import Wrapper from '../assets/wrappers/RegisterPage'
 import {FormRow,Alert} from '../components'
@@ -6,6 +6,7 @@ import { useAppContext } from '../context/appContext'
 
 
 import backgroundbg from '../assets/videos/handtouch.mp4'
+import { useNavigate } from 'react-router-dom'
 
 const initialState ={
  
@@ -28,10 +29,18 @@ const initialState ={
    
 
 const Register = () => {
-  const {setupUser,isLoading,showAlert} = useAppContext()
+  const {setupUser,isLoading,showAlert,user} = useAppContext()
+  const navigate = useNavigate();
 
   
   const [values,setValues] = useState(initialState)
+  useEffect(() => {
+    if (user) {
+      setTimeout(() => {
+        navigate("/user");
+      }, 3000);
+    }
+  }, [user, navigate]);
 
   const toggleMember = () =>{
     setValues({...values, isMember:!values.isMember})

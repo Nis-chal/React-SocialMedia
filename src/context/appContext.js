@@ -1,32 +1,30 @@
-import React, { useReducer, useContext, } from "react";
+import React, { useReducer, useContext } from "react";
 import reducer from "./reducer";
 import axios from "axios";
 
 import {
   DISPLAY_ALERT,
   CLEAR_ALERT,
-
   SETUP_USER_BEGIN,
   SETUP_USER_SUCCESS,
   SETUP_USER_ERROR,
-  
-  
- 
-
- 
   HANDLE_CHANGE,
   CLEAR_VALUES,
-
-
- 
+  LOGOUT_USER,
+  CREATE_POST_BEGIN,
+  CREATE_POST_SUCCESS,
+  CREATE_POST_ERROR,
+  GET_POSTS_BEGIN,
+  GET_POSTS_SUCCESS,
+  POSTS_DETAIL_BEGIN,
+  POSTS_BEGIN_SUCCESS,
+  POSTS_UPDATE_SUCCESS,
+  POSTS_DELETE_BEGIN,
 } from "./action";
-
 
 const user = localStorage.getItem("user");
 const token = localStorage.getItem("token");
 const userLocation = localStorage.getItem("location");
-
-
 
 const initialState = {
   isLoading: false,
@@ -37,11 +35,14 @@ const initialState = {
   token: token,
   userLocation: userLocation || "",
 
-
   isEditing: false,
-  
+  userfeed: [],
+  isSubmit: false,
 
-
+  likeAnimation: false,
+  postInfo: "",
+  ImageToEdit: "",
+  isDeleting:false
 };
 
 const AppContext = React.createContext();
@@ -51,15 +52,13 @@ const AppProvider = ({ children }) => {
   // axios.defaults.headers.common['Authorization'] = `Bearer ${state.token}`
   const authFetch = axios.create({
     baseURL: "/api/v1",
+    headers: {
+      Authorization: `Bearer ${state.token}`,
+    },
+
     // headers: {
-    //   Authorization: `Bearer ${state.token}`,
+    //   "Content-Type": "multipart/form-data",
     // },
-    
-     
-    headers:{
-      'Content-Type':'multipart/form-data'
-      
-    }
   });
 
   // response interceptor
@@ -86,13 +85,12 @@ const AppProvider = ({ children }) => {
       // Do something with response error
 
       if (error.response.status === 401) {
-        console.log('hello');
-        
+        console.log("hello");
       }
       return Promise.reject(error);
     }
   );
-   const displayAlert = () => {
+  const displayAlert = () => {
     dispatch({ type: DISPLAY_ALERT });
     clearAlert();
   };
@@ -119,41 +117,21 @@ const AppProvider = ({ children }) => {
 
   const setupUser = async ({ currentUser, endPoint, alertText }) => {
     dispatch({ type: SETUP_USER_BEGIN });
-    // console.log(currentUser)
-    // console.log('from setup')
 
+    const { name, location, email, password, profilePicture, username } =
+      currentUser;
 
-   
+    let formData = new FormData();
 
-  
-    // console.log(currentUser)
-    const {name,location,email,password,profilePicture,username} = currentUser
-
-    // console.log(currentUser)
-    
-    let formData = new FormData()
-
-    formData.append('name',name)
-    formData.append('username',username)
-    formData.append('location',location)
-    formData.append('email',email)
-    formData.append('password',password)
-    formData.append('profilePicture',profilePicture)
-
-
-
-
+    formData.append("name", name);
+    formData.append("username", username);
+    formData.append("location", location);
+    formData.append("email", email);
+    formData.append("password", password);
+    formData.append("profilePicture", profilePicture);
 
     try {
-      const { data } = await axios.post(
-        `/api/v1/auth/${endPoint}`,
-        formData
-      );
-
-      
-
-
-
+      const { data } = await axios.post(`/api/v1/auth/${endPoint}`, formData);
 
       const { user, token, location } = data;
 
@@ -180,12 +158,128 @@ const AppProvider = ({ children }) => {
     clearAlert();
   };
 
+  const removeFromLocalStorage = () => {
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
+    localStorage.removeItem("location");
+  };
 
- 
+  const logoutUser = () => {
+    dispatch({ type: LOGOUT_USER });
+    removeFromLocalStorage();
+  };
 
-  
+  const createPost = async ({ userpost }) => {
+    dispatch({ type: CREATE_POST_BEGIN });
+    try {
+      const { userlocation, description, images } = userpost;
+      let formData = new FormData();
 
- 
+      formData.append("location", userlocation);
+      formData.append("description", description);
+      for (let i = 0; i < images.length; i++) {
+        formData.append("images", images[i]);
+      }
+
+      await authFetch.post("posts/upload", formData);
+      dispatch({
+        type: CREATE_POST_SUCCESS,
+        payload: { isSubmit: !state.isSubmit },
+      });
+      // call function instead clearValues()
+      dispatch({ type: CLEAR_VALUES });
+    } catch (error) {
+      console.log(error.response);
+      if (error.response.status === 401) return;
+      dispatch({
+        type: CREATE_POST_ERROR,
+        payload: { msg: error.response.data.msg },
+      });
+    }
+    clearAlert();
+  };
+
+  const getallPosts = async () => {
+    dispatch({ type: GET_POSTS_BEGIN });
+    try {
+      const response = await authFetch("/posts/getposts");
+      const { posts } = response.data;
+
+      dispatch({ type: GET_POSTS_SUCCESS, payload: { userfeed: posts } });
+    } catch (error) {
+      console.log(error.response);
+    }
+    clearAlert();
+  };
+
+  const likepost = async ({ postid }) => {
+    try {
+      await authFetch.patch(`/posts/likepost/${postid}`);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const unlikepost = async ({ postid }) => {
+    try {
+      await authFetch.patch(`/posts/unlikepost/${postid}`);
+      console.log(postid);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const detailspost = async (postid) => {
+    try {
+      const response = await authFetch(`/posts/postdetail/${postid}`);
+      const { post } = response.data;
+      console.log(post);
+      dispatch({
+        type: POSTS_DETAIL_BEGIN,
+        payload: { post },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const postUpdate = async ({ postInformation }) => {
+    try {
+      dispatch({ type: POSTS_BEGIN_SUCCESS });
+      const { images, networkpath, location, description, postId } =
+        postInformation;
+      let formData = new FormData();
+
+      formData.append("location", location);
+      formData.append("description", description);
+      for (let i = 0; i < images.length; i++) {
+        formData.append("filePath", images[i]);
+      }
+      for (let i = 0; i < networkpath.length; i++) {
+        formData.append("networkpath", networkpath[i]);
+      }
+
+      await authFetch.patch(`/posts/updatepost/${postId}`, formData);
+      dispatch({ type: POSTS_UPDATE_SUCCESS ,payload:{isEditing:!state.isEditing}});
+    } catch (error) {
+      dispatch({
+        type: SETUP_USER_ERROR,
+        payload: { msg: error.response.data.msg },
+        
+      });
+    }
+    clearAlert();
+  };
+   const deletePost = async (postId) => {
+     dispatch({ type: POSTS_DELETE_BEGIN,payload:{isDeleting:!state.isDeleting} });
+     try {
+       await authFetch.delete(`/posts/postdetail/${postId}`);
+       
+     } catch (error) {
+       logoutUser();
+     }
+   };
+
   return (
     <AppContext.Provider
       value={{
@@ -193,13 +287,22 @@ const AppProvider = ({ children }) => {
         displayAlert,
 
         setupUser,
-      
-       
-       
+
         handleChange,
         clearValues,
-        
-   
+
+        createPost,
+        getallPosts,
+
+        detailspost,
+
+        likepost,
+
+        logoutUser,
+        unlikepost,
+
+        postUpdate,
+        deletePost
       }}
     >
       {children}
