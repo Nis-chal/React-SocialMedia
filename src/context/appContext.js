@@ -19,6 +19,7 @@ import {
   POSTS_DETAIL_BEGIN,
   POSTS_BEGIN_SUCCESS,
   POSTS_UPDATE_SUCCESS,
+  POSTS_DELETE_BEGIN,
 } from "./action";
 
 const user = localStorage.getItem("user");
@@ -41,6 +42,7 @@ const initialState = {
   likeAnimation: false,
   postInfo: "",
   ImageToEdit: "",
+  isDeleting:false
 };
 
 const AppContext = React.createContext();
@@ -268,6 +270,15 @@ const AppProvider = ({ children }) => {
     }
     clearAlert();
   };
+   const deletePost = async (postId) => {
+     dispatch({ type: POSTS_DELETE_BEGIN,payload:{isDeleting:!state.isDeleting} });
+     try {
+       await authFetch.delete(`/posts/postdetail/${postId}`);
+       
+     } catch (error) {
+       logoutUser();
+     }
+   };
 
   return (
     <AppContext.Provider
@@ -291,6 +302,7 @@ const AppProvider = ({ children }) => {
         unlikepost,
 
         postUpdate,
+        deletePost
       }}
     >
       {children}

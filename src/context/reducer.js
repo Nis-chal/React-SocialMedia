@@ -17,6 +17,7 @@ import {
   POSTS_DETAIL_BEGIN,
   POSTS_BEGIN_SUCCESS,
   POSTS_UPDATE_SUCCESS,
+  POSTS_DELETE_BEGIN,
 } from "./action";
 
 import { initialState } from "./appContext";
@@ -156,6 +157,13 @@ const reducer = (state, action) => {
       alertText: "POST UPDATE SUCCESS",
       isEditing: action.payload.isEditing,
     };
+  }
+
+  if(action.type === POSTS_DELETE_BEGIN){
+    return {
+      ...state,
+      isDeleting: action.payload.isDeleting
+    }
   }
 
   throw new Error(`no such action: ${action.type}`);

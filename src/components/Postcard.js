@@ -18,7 +18,7 @@ const PostCard = React.memo(({ item }) => {
     likec: "",
     profilep: "",
   };
-  const { likepost, user, unlikepost } = useAppContext();
+  const { likepost, user, unlikepost ,deletePost} = useAppContext();
 
   const [liked, setLike] = useState(false);
   const [likecount, setLikCount] = useState(0);
@@ -163,7 +163,7 @@ const PostCard = React.memo(({ item }) => {
             <Link to={`/user/postdetail/${item._id}`}>
               <FiEdit className="action-icon" />
             </Link>
-            <MdDelete className="action-icon" />
+            <MdDelete className="action-icon" onClick={()=>deletePost(item._id)} />
           </div>
         ) : (
           <div></div>
