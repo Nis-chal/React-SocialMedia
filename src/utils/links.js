@@ -8,28 +8,28 @@ import {IoBookmarkOutline} from 'react-icons/io5'
 const links = [
   {
     id: 1,
-    text: 'Home',
-    path: '/user',
+    text: "Home",
+    path: "/user",
     icon: <AiOutlineHome />,
   },
   {
     id: 2,
-    text: 'Explore',
-    path: 'Explore',
-    icon: <MdOutlineExplore/>,
+    text: "Explore",
+    path: "/user/Explore",
+    icon: <MdOutlineExplore />,
   },
   {
     id: 3,
-    text: 'bookmarks',
-    path: 'bookmarks',
+    text: "bookmarks",
+    path: "bookmarks",
     icon: <IoBookmarkOutline />,
   },
   {
     id: 4,
-    text: 'profile',
-    path: 'profile',
+    text: "profile",
+    path: "/profile",
     icon: <ImProfile />,
   },
-]
+];
 
 export default links
