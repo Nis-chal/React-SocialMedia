@@ -18,13 +18,14 @@ const PostCard = React.memo(({ item }) => {
     likec: "",
     profilep: "",
   };
-  const { likepost, user, unlikepost ,deletePost} = useAppContext();
+  const { likepost, user, unlikepost, deletePost } = useAppContext();
 
   const [liked, setLike] = useState(false);
   const [likecount, setLikCount] = useState(0);
   const [isuser, setUser] = useState();
   const [dropdown, setdropdown] = useState(false);
   const [posti, setPostI] = useState(postbio);
+  const [deleteFeed, setDeleteP] = useState(false);
   // Likes
   useEffect(() => {
     setPostI({
@@ -49,6 +50,11 @@ const PostCard = React.memo(({ item }) => {
     setdropdown(!dropdown);
   };
 
+  const removePost = (postid) => {
+    deletePost(postid);
+    setDeleteP(true);
+  };
+
   const togglelike = (e) => {
     e.preventDefault();
     const postid = item._id;
@@ -65,7 +71,7 @@ const PostCard = React.memo(({ item }) => {
   };
   return (
     <Wrapper>
-      <div className="feed">
+      <div className={deleteFeed ? "display-none" : "feed"}>
         <div className="head">
           <div className="user">
             <div>
@@ -163,7 +169,10 @@ const PostCard = React.memo(({ item }) => {
             <Link to={`/user/postdetail/${item._id}`}>
               <FiEdit className="action-icon" />
             </Link>
-            <MdDelete className="action-icon" onClick={()=>deletePost(item._id)} />
+            <MdDelete
+              className="action-icon"
+              onClick={() => removePost(item._id)}
+            />
           </div>
         ) : (
           <div></div>

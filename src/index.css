@@ -119,6 +119,9 @@ img {
   object-fit: cover !important;
   -o-object-fit: cover;
 }
+.display-none{
+  display: none;
+}
 
 @font-face {
   font-family: "MADE Soulmaze Outline Regular";
