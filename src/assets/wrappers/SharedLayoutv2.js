@@ -22,8 +22,8 @@ const Wrapper = styled.aside`
   }
 
   .dashboardv {
-    padding-left:9.8vw;
-    
+    padding-left: 9.8vw;
+
     display: flex;
     flex-direction: column;
   }
@@ -34,7 +34,7 @@ const Wrapper = styled.aside`
   }
   main .containerv {
     display: grid;
-    grid-template-columns: 18vw auto ;
+    grid-template-columns: 18vw auto;
     column-gap: 2rem;
     position: relative;
     background: hsl(255 255 255 0.4);
@@ -44,11 +44,14 @@ const Wrapper = styled.aside`
     .container {
       width: 96%;
     }
-    main .container {
-      grid-template-columns: 2/2;
+    main .containerv {
+      display: flex;
       gap: 1rem;
     }
     .left {
+      position: fixed;
+      top: 5rem;
+      right: 0;
       width: 5rem;
       z-index: 5;
     }
@@ -59,8 +62,11 @@ const Wrapper = styled.aside`
     main .container .left .profile {
       display: none;
     }
+  .dashboardv{
+    padding: 5vw;
 
-    .sidebar h3 {
+  } 
+  .sidebar h3 {
       display: none;
     }
     .left .btn {
@@ -70,11 +76,9 @@ const Wrapper = styled.aside`
 
   @media screen and (max-width: 992px) {
     main .container {
-      grid-template-columns: 1/1;
       gap: 0;
     }
     main .container .left {
-      grid-column: 3/4;
       position: fixed;
       bottom: 0;
       right: 0;

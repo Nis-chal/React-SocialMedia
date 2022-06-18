@@ -87,6 +87,7 @@ html {
   --color-light: hsl(252, 30%, var(--light-color-lightness));
   --color-gray: hsl(252, 15%, 65%);
   --color-gray-2: hsl(var(--primary-color-hue), 15%, 65%);
+  --color-link:#746B87;
 
   --color-primary: hsl(var(--primary-color-hue), 75%, 60%);
   --color-secondary: hsl(252, 100%, 90%);
