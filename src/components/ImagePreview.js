@@ -20,7 +20,7 @@ const ImagePreview = ({ postInfo }) => {
   useEffect(() => {
     setSelectedImages(ImageToEdit);
     setNetworkpath(ImageToEdit);
-    console.log(networkpath);
+    
   }, [ImageToEdit]);
 
   const handleChange = (e) => {
@@ -46,7 +46,7 @@ const ImagePreview = ({ postInfo }) => {
     e.preventDefault();
     const { location, description, images } = value;
     const postId = postInfo._id;
-    console.log(images);
+    
 
     const postInformation = {
       images,
@@ -112,8 +112,7 @@ const ImagePreview = ({ postInfo }) => {
                           )
                         );
 
-                        // console.log(networkpath);
-                        // console.log(filepath)
+                        
                       }}
                     />
                   </div>

@@ -305,12 +305,22 @@ const AppProvider = ({ children }) => {
   const followUser = async(userId)=>{
     dispatch({type:FOLLOW_BEGIN})
     try{
-      await authFetch.post(`/profile/${userId}`)
+      await authFetch.patch(`/profile/${userId}`)
       dispatch({type:FOLLOW_SUCCESS})
     }catch(e){
       console.log(e)
     }
   }
+
+  const unfollowUser = async (userId) => {
+    dispatch({ type: FOLLOW_BEGIN });
+    try {
+      await authFetch.patch(`/profile/unfollow/${userId}`);
+      dispatch({ type: FOLLOW_SUCCESS });
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   return (
     <AppContext.Provider
@@ -337,7 +347,8 @@ const AppProvider = ({ children }) => {
         deletePost,
 
         userProfile,
-        followUser
+        followUser,
+        unfollowUser
       }}
     >
       {children}

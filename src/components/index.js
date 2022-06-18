@@ -10,6 +10,7 @@ import ImageSlider from "./imageSlider";
 import PostsContainer from "./PostsContainer";
 import FormInput from "./FormInput";
 import ImagePreview from "./ImagePreview";
+import Followbtn from "./Followbtn";
 
 export {
   Loading,
@@ -23,5 +24,6 @@ export {
   ImageSlider,
   PostsContainer,
   FormInput,
-  ImagePreview
+  ImagePreview,
+  Followbtn
 };

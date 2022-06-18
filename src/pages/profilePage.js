@@ -8,24 +8,22 @@ import { useState } from "react";
 import { HiLocationMarker, HiUser } from "react-icons/hi";
 import { MdDescription } from "react-icons/md";
 import { useParams } from "react-router-dom";
-import { Loading, PostCard } from "../components";
+import { Loading, PostCard,Followbtn } from "../components";
 
 const Profile = () => {
-  const { user, userProfile, profileUser, profilePost, isLoading,followUser ,buttontype} =
+  const { userProfile, profileUser, profilePost, isLoading} =
     useAppContext();
   const { id: userId } = useParams();
 
-  const [followed,setFollowed] = useState(false)
+  
 
   useEffect(() => {
     userProfile(userId);
-    // if (profileUser.followers.find((followers) => followers === user._id)) {
-    //   setFollowed(true);
-    // } else {
-    //   setFollowed(false);
-    // }
+  
    
   }, [userId]);
+
+ 
 
   const [tab, tabtoggle] = useState(1);
 
@@ -54,27 +52,7 @@ const Profile = () => {
               className="profile-cover"
             />
             <span className="profile-username">{profileUser.username}</span>
-            {user._id === profileUser._id ? (
-              <button className="btn btn-follow follow-btn">
-                Edit Profile
-              </button>
-            ) : profileUser.followers?.find((followers) => followers === user._id)? (
-              <button
-                className="btn btn-follow follow-btn"
-                disabled={buttontype}
-                onClick={() => followUser(userId)}
-              >
-                follow
-              </button>
-            ) : (
-              <button
-                className="btn btn-follow follow-btn"
-                disabled={buttontype}
-                onClick={() => followUser(userId)}
-              >
-                unfollow
-              </button>
-            )}
+            <Followbtn/>
           </div>
           <div className="profile-info">
             <div className="profile-info-content">
@@ -147,7 +125,7 @@ const Profile = () => {
 
           <div className={tab === 1 ? "timeline" : "display-none"}>
             {profilePost.map((item, index) => {
-              return <PostCard item={item} index={item} />;
+              return <PostCard item={item} index={item} key={index} />;
             })}
           </div>
         </div>
