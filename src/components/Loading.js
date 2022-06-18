@@ -1,4 +1,4 @@
-const Loading = ({ center }) => {
+const Loading = () => {
   return (
     <div className={"center" ? "loading loading-center" : "loading"}></div>
   );

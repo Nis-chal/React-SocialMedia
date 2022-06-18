@@ -7,6 +7,9 @@ const Wrapper = styled.aside`
     flex-direction: column;
     gap: 10px;
     margin-right: 20px;
+    overflow: hidden;
+    height: 90vh;
+    overflow-y: scroll;
   }
 
   .profile-content {
@@ -30,6 +33,18 @@ const Wrapper = styled.aside`
       bottom: 14%;
       font-weight: bolder;
       font-size: 22px;
+    }
+
+    & > .follow-btn {
+      position: absolute;
+      right: 3%;
+      bottom: 14%;
+      background-color: var(--post-card-color);
+      backdrop-filter: blur(20px);
+      padding-block: 10px;
+      border-radius: 20px;
+      min-width: 100px;
+      border: 2px solid var(--color-primary)!important;
     }
     & > .profile-cover {
       aspect-ratio: 1/0.2;
@@ -72,6 +87,8 @@ const Wrapper = styled.aside`
 
         border-radius: 10px;
         color: var(--color-link);
+        position: sticky;
+        top: 0;
 
         & > .intro-header {
           display: flex;
@@ -89,6 +106,20 @@ const Wrapper = styled.aside`
       padding: 3%;
       border-radius: 15px;
       color: var(--color-secondary);
+      position: sticky;
+      top: 140px;
+
+      & > .photo-section-header {
+        display: flex;
+        justify-content: space-between;
+
+        .no-btn {
+          background-color: transparent;
+          border: none;
+          color: var(--color-grey);
+          cursor: pointer;
+        }
+      }
 
       .profile-collection {
         margin-top: 10px;
@@ -131,6 +162,10 @@ const Wrapper = styled.aside`
     &.active {
       border-bottom: 2px solid var(--color-primary);
     }
+  }
+
+  .timeline {
+    width: 550px;
   }
 `;
 

@@ -3,6 +3,7 @@ import reducer from "./reducer";
 import axios from "axios";
 
 import {
+  LOADING_BEGIN,
   DISPLAY_ALERT,
   CLEAR_ALERT,
   SETUP_USER_BEGIN,
@@ -20,6 +21,9 @@ import {
   POSTS_BEGIN_SUCCESS,
   POSTS_UPDATE_SUCCESS,
   POSTS_DELETE_BEGIN,
+  GET_PROFILE_BEGIN,
+  FOLLOW_BEGIN,
+  FOLLOW_SUCCESS,
 } from "./action";
 
 const user = localStorage.getItem("user");
@@ -42,7 +46,11 @@ const initialState = {
   likeAnimation: false,
   postInfo: "",
   ImageToEdit: "",
-  isDeleting:false
+  isDeleting: false,
+
+  profileUser:"",
+  profilePost:[],
+  buttontype:false
 };
 
 const AppContext = React.createContext();
@@ -260,25 +268,49 @@ const AppProvider = ({ children }) => {
       }
 
       await authFetch.patch(`/posts/updatepost/${postId}`, formData);
-      dispatch({ type: POSTS_UPDATE_SUCCESS ,payload:{isEditing:!state.isEditing}});
+      dispatch({
+        type: POSTS_UPDATE_SUCCESS,
+        payload: { isEditing: !state.isEditing },
+      });
     } catch (error) {
       dispatch({
         type: SETUP_USER_ERROR,
         payload: { msg: error.response.data.msg },
-        
       });
     }
     clearAlert();
   };
-   const deletePost = async (postId) => {
-     dispatch({ type: POSTS_DELETE_BEGIN,payload:{isDeleting:!state.isDeleting} });
-     try {
-       await authFetch.delete(`/posts/postdetail/${postId}`);
-       
-     } catch (error) {
-       logoutUser();
-     }
-   };
+  const deletePost = async (postId) => {
+    dispatch({
+      type: POSTS_DELETE_BEGIN,
+      payload: { isDeleting: !state.isDeleting },
+    });
+    try {
+      await authFetch.delete(`/posts/postdetail/${postId}`);
+    } catch (error) {
+      logoutUser();
+    }
+  };
+
+  const userProfile = async (userId) => {
+    dispatch({type:LOADING_BEGIN})
+    try {
+      const response =await authFetch.get(`/profile/${userId}`);
+      const{post,user} = response.data
+      dispatch({ type: GET_PROFILE_BEGIN ,payload:{post,user}});
+
+    } catch (error) {}
+  };
+
+  const followUser = async(userId)=>{
+    dispatch({type:FOLLOW_BEGIN})
+    try{
+      await authFetch.post(`/profile/${userId}`)
+      dispatch({type:FOLLOW_SUCCESS})
+    }catch(e){
+      console.log(e)
+    }
+  }
 
   return (
     <AppContext.Provider
@@ -302,7 +334,10 @@ const AppProvider = ({ children }) => {
         unlikepost,
 
         postUpdate,
-        deletePost
+        deletePost,
+
+        userProfile,
+        followUser
       }}
     >
       {children}

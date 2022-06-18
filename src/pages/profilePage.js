@@ -1,21 +1,40 @@
 import { useAppContext } from "../context/appContext";
-import { AiFillSetting, AiTwotoneHome } from "react-icons/ai";
+// import { AiFillSetting, AiTwotoneHome } from "react-icons/ai";
+
+import { useEffect } from "react";
 import Wrapper from "../assets/wrappers/Profile";
-import {GoGlobe} from "react-icons/go"
+import { GoGlobe } from "react-icons/go";
 import { useState } from "react";
 import { HiLocationMarker, HiUser } from "react-icons/hi";
-import {MdDescription} from "react-icons/md"
- 
+import { MdDescription } from "react-icons/md";
+import { useParams } from "react-router-dom";
+import { Loading, PostCard } from "../components";
+
 const Profile = () => {
-  const { user } = useAppContext();
+  const { user, userProfile, profileUser, profilePost, isLoading,followUser ,buttontype} =
+    useAppContext();
+  const { id: userId } = useParams();
 
- 
+  const [followed,setFollowed] = useState(false)
 
-  const [tab,tabtoggle] = useState(0);
+  useEffect(() => {
+    userProfile(userId);
+    // if (profileUser.followers.find((followers) => followers === user._id)) {
+    //   setFollowed(true);
+    // } else {
+    //   setFollowed(false);
+    // }
+   
+  }, [userId]);
 
-  const ontoggle = (index) =>{
-    tabtoggle(index)
+  const [tab, tabtoggle] = useState(1);
 
+  const ontoggle = (index) => {
+    tabtoggle(index);
+  };
+
+  if (isLoading) {
+    return <Loading />;
   }
 
   return (
@@ -34,7 +53,28 @@ const Profile = () => {
               alt=""
               className="profile-cover"
             />
-            <span className="profile-username">username</span>
+            <span className="profile-username">{profileUser.username}</span>
+            {user._id === profileUser._id ? (
+              <button className="btn btn-follow follow-btn">
+                Edit Profile
+              </button>
+            ) : profileUser.followers?.find((followers) => followers === user._id)? (
+              <button
+                className="btn btn-follow follow-btn"
+                disabled={buttontype}
+                onClick={() => followUser(userId)}
+              >
+                follow
+              </button>
+            ) : (
+              <button
+                className="btn btn-follow follow-btn"
+                disabled={buttontype}
+                onClick={() => followUser(userId)}
+              >
+                unfollow
+              </button>
+            )}
           </div>
           <div className="profile-info">
             <div className="profile-info-content">
@@ -66,12 +106,23 @@ const Profile = () => {
                 <GoGlobe />
                 <h1> Intro</h1>
               </div>
-              <div><HiUser/> name</div>
-              <span><HiLocationMarker/> location</span>
-              <p><MdDescription/> profile descriptioni</p>
+              <div>
+                <HiUser /> {profileUser.name}
+              </div>
+              <span>
+                <HiLocationMarker /> {profileUser.location}
+              </span>
+              <p>
+                <MdDescription /> {profileUser.email}
+              </p>
             </div>
-            <div className="photo-section">
-              <h1>photo</h1>
+            <div className={tab === 5 ? "display-none" : "photo-section"}>
+              <div className="photo-section-header">
+                <h1>photo</h1>
+                <button className="no-btn" onClick={() => ontoggle(5)}>
+                  view all
+                </button>
+              </div>
               <div className="profile-collection">
                 <img
                   src="https://images.unsplash.com/photo-1611643378160-39d6dd915b69?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8YW5pbWF0aW9ufGVufDB8fDB8fA%3D%3D&w=1000&q=80"
@@ -88,19 +139,16 @@ const Profile = () => {
               </div>
             </div>
           </div>
-          <div className={tab === 1 ? "profile-posts" : "display-none"}>
-            <img
-              src="https://img.freepik.com/free-photo/cool-geometric-triangular-figure-neon-laser-light-great-backgrounds-wallpapers_181624-9331.jpg?w=2000"
-              alt=""
-            />
-            <img
-              src="https://img.freepik.com/free-photo/cool-geometric-triangular-figure-neon-laser-light-great-backgrounds-wallpapers_181624-9331.jpg?w=2000"
-              alt=""
-            />
-            <img
-              src="https://img.freepik.com/free-photo/cool-geometric-triangular-figure-neon-laser-light-great-backgrounds-wallpapers_181624-9331.jpg?w=2000"
-              alt=""
-            />
+          <div className={tab === 5 ? "profile-posts" : "display-none"}>
+            {profilePost.map((item, index) => {
+              return <img src={item.images[0]} alt="" key={item._id} />;
+            })}
+          </div>
+
+          <div className={tab === 1 ? "timeline" : "display-none"}>
+            {profilePost.map((item, index) => {
+              return <PostCard item={item} index={item} />;
+            })}
           </div>
         </div>
       </div>

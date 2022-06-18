@@ -1,5 +1,6 @@
 import FormRow from "./FormRow";
 import Alert from "./Alert";
+import Loading from './Loading'
 import Navbar from "./navbar";
 import BigSidebar from "./BigSidebar";
 import PostCard from "./Postcard";
@@ -9,7 +10,9 @@ import ImageSlider from "./imageSlider";
 import PostsContainer from "./PostsContainer";
 import FormInput from "./FormInput";
 import ImagePreview from "./ImagePreview";
+
 export {
+  Loading,
   FormRow,
   Alert,
   Navbar,

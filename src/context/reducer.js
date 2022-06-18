@@ -1,4 +1,5 @@
 import {
+  LOADING_BEGIN,
   DISPLAY_ALERT,
   CLEAR_ALERT,
   SETUP_USER_BEGIN,
@@ -18,6 +19,9 @@ import {
   POSTS_BEGIN_SUCCESS,
   POSTS_UPDATE_SUCCESS,
   POSTS_DELETE_BEGIN,
+  GET_PROFILE_BEGIN,
+  FOLLOW_BEGIN,
+  FOLLOW_SUCCESS
 } from "./action";
 
 import { initialState } from "./appContext";
@@ -30,6 +34,10 @@ const reducer = (state, action) => {
       alertType: "danger",
       alertText: "Please provide all values!",
     };
+  }
+
+  if(action.type === LOADING_BEGIN){
+    return {...state,isLoading:true}
   }
 
   if (action.type === CLEAR_ALERT) {
@@ -165,6 +173,28 @@ const reducer = (state, action) => {
       isDeleting: action.payload.isDeleting
     }
   }
+
+  if(action.type === GET_PROFILE_BEGIN){
+    return {
+      ...state,
+      profileUser:action.payload.user,
+      profilePost:action.payload.post,
+      isLoading:false,
+
+    }
+  }
+   if (action.type === FOLLOW_BEGIN) {
+     return {
+       ...state,
+      buttontype:true,
+     };
+   }
+   if (action.type === FOLLOW_SUCCESS) {
+     return {
+       ...state,
+       buttontype: false,
+     };
+   }
 
   throw new Error(`no such action: ${action.type}`);
 };
