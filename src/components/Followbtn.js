@@ -5,11 +5,12 @@ import { useEffect } from "react";
 
 
 
-const Followbtn = () => {
+const Followbtn = ({items}) => {
     const {
       user,
+    
       
-      profileUser,
+      
       
       followUser,
       buttontype,
@@ -19,12 +20,12 @@ const Followbtn = () => {
   const { id: userId } = useParams();
 
   useEffect(()=>{
-      if (profileUser.followers?.find((followers) => followers === user._id)) {
+      if (items.followers?.find((item) => item === user._id)) {
         setFollowed(true);
       } else {
         setFollowed(false);
       }
-  },[userId])
+  },[userId,items.followers])
 
   
     const togglefollow = () => {
@@ -37,8 +38,10 @@ const Followbtn = () => {
       }
     };
 
+   
 
-  return user._id === profileUser._id ? (
+
+  return user._id === items._id ? (
     <button className="btn btn-follow follow-btn">Edit Profile</button>
   ) : followed ? (
     <button
@@ -46,15 +49,15 @@ const Followbtn = () => {
       disabled={buttontype}
       onClick={() => togglefollow()}
     >
-      follow
+      unfollow
     </button>
   ) : (
     <button
       className="btn btn-follow follow-btn"
       disabled={buttontype}
-      onClick={() => togglefollow()}
+      onClick={()=>togglefollow()}
     >
-      unfollow
+      follow
     </button>
   );
 };

@@ -37,6 +37,9 @@ export const FOLLOW_SUCCESS = "FOLLOW_SUCCESS";
 export const UNFOLLOW_BEGIN = "UNFOLLOW_BEGIN";
 export const UNFOLLOW_SUCCESS = "UNFOLLOW_SUCCESS";
 
+export const SEARCH_SUCCESS = "SEARCH_SUCCESS";
+export const SEARCH_END = "SEARCH_END";
+
 
 
 

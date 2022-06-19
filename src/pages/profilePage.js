@@ -8,22 +8,15 @@ import { useState } from "react";
 import { HiLocationMarker, HiUser } from "react-icons/hi";
 import { MdDescription } from "react-icons/md";
 import { useParams } from "react-router-dom";
-import { Loading, PostCard,Followbtn } from "../components";
+import { Loading, PostCard, Followbtn } from "../components";
 
 const Profile = () => {
-  const { userProfile, profileUser, profilePost, isLoading} =
-    useAppContext();
+  const { userProfile, profileUser, profilePost, isLoading } = useAppContext();
   const { id: userId } = useParams();
-
-  
 
   useEffect(() => {
     userProfile(userId);
-  
-   
   }, [userId]);
-
- 
 
   const [tab, tabtoggle] = useState(1);
 
@@ -52,7 +45,7 @@ const Profile = () => {
               className="profile-cover"
             />
             <span className="profile-username">{profileUser.username}</span>
-            <Followbtn/>
+            <Followbtn items ={profileUser} />
           </div>
           <div className="profile-info">
             <div className="profile-info-content">

@@ -21,7 +21,9 @@ import {
   POSTS_DELETE_BEGIN,
   GET_PROFILE_BEGIN,
   FOLLOW_BEGIN,
-  FOLLOW_SUCCESS
+  FOLLOW_SUCCESS,
+  SEARCH_END,
+  SEARCH_SUCCESS
 } from "./action";
 
 import { initialState } from "./appContext";
@@ -195,6 +197,15 @@ const reducer = (state, action) => {
        buttontype: false,
      };
    }
+
+   if(action.type === SEARCH_SUCCESS){
+    return {
+      ...state,
+      searchList:action.payload.users,
+    }
+   }
+
+   
 
   throw new Error(`no such action: ${action.type}`);
 };

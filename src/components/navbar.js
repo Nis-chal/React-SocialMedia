@@ -1,26 +1,20 @@
 import Wrapper from "../assets/wrappers/navbar";
 import { useState } from "react";
-import { FaSearch } from "react-icons/fa";
 import { useAppContext } from "../context/appContext";
+import {Searchbar,SearchResult} from "../components"
+
 
 const Navbar = () => {
   const [showLogout, setShowLogout] = useState(false);
   const { logoutUser } = useAppContext();
+  
 
   return (
     <Wrapper>
       <nav>
         <div className="container">
           <h2 className="log">WinkleMedia</h2>
-          <div className="search-bar">
-            <span>
-              <FaSearch />
-            </span>
-            <input
-              type="search"
-              placeholder="Search for creators, inspirations, and projects"
-            />
-          </div>
+          <Searchbar/>
           <div className="create">
             <a href="#addform" className="btn btn-purple">
               Add Post

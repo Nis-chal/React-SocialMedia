@@ -24,6 +24,8 @@ import {
   GET_PROFILE_BEGIN,
   FOLLOW_BEGIN,
   FOLLOW_SUCCESS,
+  SEARCH_SUCCESS,
+  SEARCH_END
 } from "./action";
 
 const user = localStorage.getItem("user");
@@ -50,7 +52,8 @@ const initialState = {
 
   profileUser:"",
   profilePost:[],
-  buttontype:false
+  buttontype:false,
+  searchList:[],
 };
 
 const AppContext = React.createContext();
@@ -322,6 +325,21 @@ const AppProvider = ({ children }) => {
     }
   };
 
+  const searchProfile = async(url)=>{
+    try{
+
+     const res= await authFetch.get(`/profile/${url}`)
+     const {users} = res.data
+
+     dispatch({type:SEARCH_SUCCESS,payload:{users}})
+
+    }catch(e){
+      console.log(e)
+    }
+  }
+
+
+
   return (
     <AppContext.Provider
       value={{
@@ -348,7 +366,8 @@ const AppProvider = ({ children }) => {
 
         userProfile,
         followUser,
-        unfollowUser
+        unfollowUser,
+        searchProfile
       }}
     >
       {children}

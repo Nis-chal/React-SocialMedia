@@ -11,7 +11,8 @@ import PostsContainer from "./PostsContainer";
 import FormInput from "./FormInput";
 import ImagePreview from "./ImagePreview";
 import Followbtn from "./Followbtn";
-
+import Searchbar from "./searchbar";
+import SearchResult from "./SearchResult";
 export {
   Loading,
   FormRow,
@@ -25,5 +26,7 @@ export {
   PostsContainer,
   FormInput,
   ImagePreview,
-  Followbtn
+  Followbtn,
+  Searchbar,
+  SearchResult
 };
