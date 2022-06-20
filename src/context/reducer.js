@@ -181,6 +181,8 @@ const reducer = (state, action) => {
       ...state,
       profileUser:action.payload.user,
       profilePost:action.payload.post,
+      followings:action.payload.followings,
+      followers:action.payload.followers,
       isLoading:false,
 
     }

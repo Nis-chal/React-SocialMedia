@@ -8,10 +8,10 @@ import { useState } from "react";
 import { HiLocationMarker, HiUser } from "react-icons/hi";
 import { MdDescription } from "react-icons/md";
 import { useParams } from "react-router-dom";
-import { Loading, PostCard, Followbtn } from "../components";
+import { Loading, PostCard, Followbtn ,UserForm} from "../components";
 
 const Profile = () => {
-  const { userProfile, profileUser, profilePost, isLoading } = useAppContext();
+  const { userProfile, profileUser, profilePost, isLoading,followers,followings } = useAppContext();
   const { id: userId } = useParams();
 
   useEffect(() => {
@@ -45,7 +45,7 @@ const Profile = () => {
               className="profile-cover"
             />
             <span className="profile-username">{profileUser.username}</span>
-            <Followbtn items ={profileUser} />
+            <Followbtn items={profileUser} clicked={() => ontoggle(6)} />
           </div>
           <div className="profile-info">
             <div className="profile-info-content">
@@ -120,6 +120,26 @@ const Profile = () => {
             {profilePost.map((item, index) => {
               return <PostCard item={item} index={item} key={index} />;
             })}
+          </div>
+
+          <div className={tab === 6 ? "" : "display-none"}>
+            <UserForm info={profileUser} />
+          </div>
+
+          <div className={tab === 3 ? "" : "display-none"}>
+
+            {followings.map((item)=>{
+              return <div className="following-lists">
+                <img className="profile-photo" src={item.profilePicture} alt="" />
+
+                <div className="following-info">
+                  <span>{item.username}</span>
+                  <div>{item.name}</div>
+                </div>
+                
+              </div>
+            })}
+            
           </div>
         </div>
       </div>

@@ -5,7 +5,7 @@ import { useEffect } from "react";
 
 
 
-const Followbtn = ({items}) => {
+const Followbtn = ({items,clicked}) => {
     const {
       user,
     
@@ -42,7 +42,7 @@ const Followbtn = ({items}) => {
 
 
   return user._id === items._id ? (
-    <button className="btn btn-follow follow-btn">Edit Profile</button>
+    <button className="btn btn-follow follow-btn" onClick ={clicked}>Edit Profile</button>
   ) : followed ? (
     <button
       className="btn btn-follow follow-btn"

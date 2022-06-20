@@ -54,6 +54,8 @@ const initialState = {
   profilePost:[],
   buttontype:false,
   searchList:[],
+  followers:[],
+  followings:[]
 };
 
 const AppContext = React.createContext();
@@ -299,8 +301,8 @@ const AppProvider = ({ children }) => {
     dispatch({type:LOADING_BEGIN})
     try {
       const response =await authFetch.get(`/profile/${userId}`);
-      const{post,user} = response.data
-      dispatch({ type: GET_PROFILE_BEGIN ,payload:{post,user}});
+      const{post,user,followings,followers} = response.data
+      dispatch({ type: GET_PROFILE_BEGIN ,payload:{post,user,followings,followers}});
 
     } catch (error) {}
   };

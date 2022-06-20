@@ -13,6 +13,7 @@ import ImagePreview from "./ImagePreview";
 import Followbtn from "./Followbtn";
 import Searchbar from "./searchbar";
 import SearchResult from "./SearchResult";
+import UserForm from "./User_form";
 export {
   Loading,
   FormRow,
@@ -28,5 +29,6 @@ export {
   ImagePreview,
   Followbtn,
   Searchbar,
-  SearchResult
+  SearchResult,
+  UserForm
 };

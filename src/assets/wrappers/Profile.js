@@ -44,7 +44,7 @@ const Wrapper = styled.aside`
       padding-block: 10px;
       border-radius: 20px;
       min-width: 100px;
-      border: 2px solid var(--color-primary)!important;
+      border: 2px solid var(--color-primary) !important;
     }
     & > .profile-cover {
       aspect-ratio: 1/0.2;
@@ -166,6 +166,29 @@ const Wrapper = styled.aside`
 
   .timeline {
     width: 550px;
+  }
+
+  @media screen and (max-width: 720px) {
+    .profile {
+      margin: 0;
+      position: absolute;
+      left: 0;
+      transform: translateX(-20px);
+    }
+    .timeline {
+      padding: 0;
+      margin: 0;
+      width: 500px;
+      transform: translateX(-20px);
+    }
+    .profile-container {
+      display: flex;
+      margin-left: 0;
+    }
+    .profile-intro,
+    .photo-section {
+      display: none;
+    }
   }
 `;
 
