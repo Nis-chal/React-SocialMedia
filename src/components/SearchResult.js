@@ -12,7 +12,7 @@ const SearchResult = () => {
             <Link to={`/profile/${item._id}`}key={index} >
               <div className="search-content" key={index}>
                 <img
-                  src="https://icon-library.com/images/no-user-image-icon/no-user-image-icon-21.jpg"
+                  src={item.profilePicture}
                   alt=""
                   className="profile-photo"
                 />

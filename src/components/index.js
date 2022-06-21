@@ -14,6 +14,7 @@ import Followbtn from "./Followbtn";
 import Searchbar from "./searchbar";
 import SearchResult from "./SearchResult";
 import UserForm from "./User_form";
+import FollowAction from "./FollowAction";
 export {
   Loading,
   FormRow,
@@ -30,5 +31,6 @@ export {
   Followbtn,
   Searchbar,
   SearchResult,
-  UserForm
+  UserForm,
+  FollowAction
 };

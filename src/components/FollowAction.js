@@ -1,19 +1,42 @@
 import { useAppContext } from "../context/appContext";
-const FollowAction = () =>{
-    const {
-      user,
+import { useState } from "react";
 
-      followUser,
-      buttontype,
-      unfollowUser,
-    } = useAppContext();
-    return (
-      <button
-        className="btn btn-follow follow-btn"
-        disabled={buttontype}
-        
-      >
-        unfollow
-      </button>
-    );
-}
+
+const FollowAction = ({ followinguser }) => {
+  const { followUser, buttontype, unfollowUser } = useAppContext();
+  const [followed, setFollowed] = useState(true);
+
+  const togglefollow = () => {
+    if (!followed) {
+      followUser(followinguser);
+      setFollowed(true);
+    } else {
+      unfollowUser(followinguser);
+      setFollowed(false);
+    }
+  };
+
+  return (
+    <div>
+      {followed ? (
+        <button
+          className="btn btn-follow follow-btn"
+          disabled={buttontype}
+          onClick={() => togglefollow()}
+        >
+          unfollow
+        </button>
+      ) : (
+        <button
+          className="btn btn-follow follow-btn"
+          disabled={buttontype}
+          onClick={() => togglefollow()}
+        >
+          follow
+        </button>
+      )}
+    </div>
+  );
+};
+
+export default FollowAction;

@@ -168,6 +168,13 @@ const Wrapper = styled.aside`
     width: 550px;
   }
 
+  .following-lists {
+    display: flex;
+    margin-top: 10px;
+    justify-content: space-between;
+    min-width: 400px;
+  }
+
   @media screen and (max-width: 720px) {
     .profile {
       margin: 0;

@@ -8,7 +8,7 @@ import { useState } from "react";
 import { HiLocationMarker, HiUser } from "react-icons/hi";
 import { MdDescription } from "react-icons/md";
 import { useParams } from "react-router-dom";
-import { Loading, PostCard, Followbtn ,UserForm} from "../components";
+import { Loading, PostCard, Followbtn ,UserForm,FollowAction} from "../components";
 
 const Profile = () => {
   const { userProfile, profileUser, profilePost, isLoading,followers,followings } = useAppContext();
@@ -34,7 +34,7 @@ const Profile = () => {
         <div className="profile-content">
           <div className="profile-images">
             <img
-              src="https://i.pinimg.com/originals/c5/78/d7/c578d78c35b57d5f033dbf40edc4ee27.jpg"
+              src={profileUser.profilePicture}
               alt=""
               className="profile-photo"
             />
@@ -126,20 +126,44 @@ const Profile = () => {
             <UserForm info={profileUser} />
           </div>
 
-          <div className={tab === 3 ? "" : "display-none"}>
+          <div className={tab === 2 ? "" : "display-none"}>
+            {followers.map((item) => {
+              return (
+                <div className="following-lists ">
+                  <img
+                    className="profile-photo"
+                    src={item.profilePicture}
+                    alt=""
+                  />
 
-            {followings.map((item)=>{
-              return <div className="following-lists">
-                <img className="profile-photo" src={item.profilePicture} alt="" />
-
-                <div className="following-info">
-                  <span>{item.username}</span>
-                  <div>{item.name}</div>
+                  <div className="following-info">
+                    <span>{item.username}</span>
+                    <div>{item.name}</div>
+                  </div>
+                  <FollowAction followinguser={item._id} />
                 </div>
-                
-              </div>
+              );
             })}
-            
+          </div>
+
+          <div className={tab === 3 ? "" : "display-none"}>
+            {followings.map((item) => {
+              return (
+                <div className="following-lists ">
+                  <img
+                    className="profile-photo"
+                    src={item.profilePicture}
+                    alt=""
+                  />
+
+                  <div className="following-info">
+                    <span>{item.username}</span>
+                    <div>{item.name}</div>
+                  </div>
+                  <FollowAction followinguser={item._id} />
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>
