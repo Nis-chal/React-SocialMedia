@@ -7,6 +7,7 @@ const FollowAction = ({ followinguser }) => {
   const [followed, setFollowed] = useState(true);
 
   const togglefollow = () => {
+  
     if (!followed) {
       followUser(followinguser);
       setFollowed(true);

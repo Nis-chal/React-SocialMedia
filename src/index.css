@@ -124,6 +124,9 @@ img {
 .display-none{
   display: none;
 }
+.visibility-hidden{
+  visibility: hidden;
+}
 
 @font-face {
   font-family: "MADE Soulmaze Outline Regular";

@@ -7,11 +7,26 @@ import { GoGlobe } from "react-icons/go";
 import { useState } from "react";
 import { HiLocationMarker, HiUser } from "react-icons/hi";
 import { MdDescription } from "react-icons/md";
-import { useParams } from "react-router-dom";
-import { Loading, PostCard, Followbtn ,UserForm,FollowAction} from "../components";
+import { useParams, Link } from "react-router-dom";
+import {
+  Loading,
+  PostCard,
+  Followbtn,
+  UserForm,
+  FollowAction,
+  RemoveFollwerbtn,
+} from "../components";
 
 const Profile = () => {
-  const { userProfile, profileUser, profilePost, isLoading,followers,followings } = useAppContext();
+  const {
+    user,
+    userProfile,
+    profileUser,
+    profilePost,
+    isLoading,
+    followers,
+    followings,
+  } = useAppContext();
   const { id: userId } = useParams();
 
   useEffect(() => {
@@ -130,18 +145,26 @@ const Profile = () => {
             {followers.map((item) => {
               return (
                 <div className="following-lists ">
-                  <img
-                    className="profile-photo"
-                    src={item.profilePicture}
-                    alt=""
-                  />
+                    <img
+                      className="profile-photo"
+                      src={item.profilePicture}
+                      alt=""
+                    />
 
-                  <div className="following-info">
-                    <span>{item.username}</span>
-                    <div>{item.name}</div>
+                    <Link to={`/profile/${item._id}`}>
+                    <div className="following-info">
+                      <span>{item.username}</span>
+                      <div>{item.name}</div>
+                    </div>
+                    </Link>
+                    <div
+                      className={
+                        user._id === profileUser._id ? "" : "visibility-hidden"
+                      }
+                    >
+                      <RemoveFollwerbtn followerId={item._id} />
+                    </div>
                   </div>
-                  <FollowAction followinguser={item._id} />
-                </div>
               );
             })}
           </div>
@@ -150,18 +173,26 @@ const Profile = () => {
             {followings.map((item) => {
               return (
                 <div className="following-lists ">
-                  <img
-                    className="profile-photo"
-                    src={item.profilePicture}
-                    alt=""
-                  />
+                    <img
+                      className="profile-photo"
+                      src={item.profilePicture}
+                      alt=""
+                    />
+                    <Link to={`/profile/${item._id}`}>
 
-                  <div className="following-info">
-                    <span>{item.username}</span>
-                    <div>{item.name}</div>
+                    <div className="following-info">
+                      <span>{item.username}</span>
+                      <div>{item.name}</div>
+                    </div>
+                    </Link>
+                    <div
+                      className={
+                        user._id === profileUser._id ? "" : "visibility-hidden"
+                      }
+                    >
+                      <FollowAction followinguser={item._id} />
+                    </div>
                   </div>
-                  <FollowAction followinguser={item._id} />
-                </div>
               );
             })}
           </div>

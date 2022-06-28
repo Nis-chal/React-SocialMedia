@@ -22,7 +22,7 @@ import {
   GET_PROFILE_BEGIN,
   FOLLOW_BEGIN,
   FOLLOW_SUCCESS,
-  SEARCH_END,
+ 
   SEARCH_SUCCESS
 } from "./action";
 

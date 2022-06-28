@@ -25,7 +25,7 @@ import {
   FOLLOW_BEGIN,
   FOLLOW_SUCCESS,
   SEARCH_SUCCESS,
-  SEARCH_END
+  
 } from "./action";
 
 const user = localStorage.getItem("user");
@@ -326,7 +326,17 @@ const AppProvider = ({ children }) => {
       console.log(e);
     }
   };
-
+  
+  const removeFollower = async (userId) => {
+    dispatch({ type: FOLLOW_BEGIN });
+    try {
+      
+      await authFetch.patch(`/profile/removefollower/${userId}`);
+      dispatch({ type: FOLLOW_SUCCESS });
+    } catch (e) {
+      console.log(e);
+    }
+  };
   const searchProfile = async(url)=>{
     try{
 
@@ -369,7 +379,8 @@ const AppProvider = ({ children }) => {
         userProfile,
         followUser,
         unfollowUser,
-        searchProfile
+        searchProfile,
+        removeFollower
       }}
     >
       {children}
