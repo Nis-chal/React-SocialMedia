@@ -3,6 +3,7 @@ import reducer from "./reducer";
 import axios from "axios";
 
 import {
+  LOADING_BEGIN,
   DISPLAY_ALERT,
   CLEAR_ALERT,
   SETUP_USER_BEGIN,
@@ -20,6 +21,11 @@ import {
   POSTS_BEGIN_SUCCESS,
   POSTS_UPDATE_SUCCESS,
   POSTS_DELETE_BEGIN,
+  GET_PROFILE_BEGIN,
+  FOLLOW_BEGIN,
+  FOLLOW_SUCCESS,
+  SEARCH_SUCCESS,
+  
 } from "./action";
 
 const user = localStorage.getItem("user");
@@ -42,7 +48,14 @@ const initialState = {
   likeAnimation: false,
   postInfo: "",
   ImageToEdit: "",
-  isDeleting:false
+  isDeleting: false,
+
+  profileUser:"",
+  profilePost:[],
+  buttontype:false,
+  searchList:[],
+  followers:[],
+  followings:[]
 };
 
 const AppContext = React.createContext();
@@ -260,25 +273,84 @@ const AppProvider = ({ children }) => {
       }
 
       await authFetch.patch(`/posts/updatepost/${postId}`, formData);
-      dispatch({ type: POSTS_UPDATE_SUCCESS ,payload:{isEditing:!state.isEditing}});
+      dispatch({
+        type: POSTS_UPDATE_SUCCESS,
+        payload: { isEditing: !state.isEditing },
+      });
     } catch (error) {
       dispatch({
         type: SETUP_USER_ERROR,
         payload: { msg: error.response.data.msg },
-        
       });
     }
     clearAlert();
   };
-   const deletePost = async (postId) => {
-     dispatch({ type: POSTS_DELETE_BEGIN,payload:{isDeleting:!state.isDeleting} });
-     try {
-       await authFetch.delete(`/posts/postdetail/${postId}`);
-       
-     } catch (error) {
-       logoutUser();
-     }
-   };
+  const deletePost = async (postId) => {
+    dispatch({
+      type: POSTS_DELETE_BEGIN,
+      payload: { isDeleting: !state.isDeleting },
+    });
+    try {
+      await authFetch.delete(`/posts/postdetail/${postId}`);
+    } catch (error) {
+      logoutUser();
+    }
+  };
+
+  const userProfile = async (userId) => {
+    dispatch({type:LOADING_BEGIN})
+    try {
+      const response =await authFetch.get(`/profile/${userId}`);
+      const{post,user,followings,followers} = response.data
+      dispatch({ type: GET_PROFILE_BEGIN ,payload:{post,user,followings,followers}});
+
+    } catch (error) {}
+  };
+
+  const followUser = async(userId)=>{
+    dispatch({type:FOLLOW_BEGIN})
+    try{
+      await authFetch.patch(`/profile/${userId}`)
+      dispatch({type:FOLLOW_SUCCESS})
+    }catch(e){
+      console.log(e)
+    }
+  }
+
+  const unfollowUser = async (userId) => {
+    dispatch({ type: FOLLOW_BEGIN });
+    try {
+      await authFetch.patch(`/profile/unfollow/${userId}`);
+      dispatch({ type: FOLLOW_SUCCESS });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  
+  const removeFollower = async (userId) => {
+    dispatch({ type: FOLLOW_BEGIN });
+    try {
+      
+      await authFetch.patch(`/profile/removefollower/${userId}`);
+      dispatch({ type: FOLLOW_SUCCESS });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  const searchProfile = async(url)=>{
+    try{
+
+     const res= await authFetch.get(`/profile/${url}`)
+     const {users} = res.data
+
+     dispatch({type:SEARCH_SUCCESS,payload:{users}})
+
+    }catch(e){
+      console.log(e)
+    }
+  }
+
+
 
   return (
     <AppContext.Provider
@@ -302,7 +374,13 @@ const AppProvider = ({ children }) => {
         unlikepost,
 
         postUpdate,
-        deletePost
+        deletePost,
+
+        userProfile,
+        followUser,
+        unfollowUser,
+        searchProfile,
+        removeFollower
       }}
     >
       {children}

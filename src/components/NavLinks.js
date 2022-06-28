@@ -9,7 +9,7 @@ const NavLinks = ({ toggleSidebar }) => {
 
   return (
     <Wrapper>
-      <Link to="/profile" className="profile">
+      <Link to={`/profile/${user._id}`} className="profile">
         <div>
           <img src={user.profilePicture} alt="" className="profile-photo" />
         </div>

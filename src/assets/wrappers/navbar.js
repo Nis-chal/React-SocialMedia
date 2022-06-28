@@ -28,6 +28,7 @@ const Wrapper = styled.aside`
     padding: var(--search-padding);
     display: flex;
     align-items: center;
+    position: relative;
   }
 
   .search-bar input[type="search"] {

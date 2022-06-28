@@ -34,7 +34,7 @@ const PostCard = React.memo(({ item }) => {
       [posti.profilep]: item.userid.profilePicture,
     });
     setLikCount(item.likesid.length);
-    if (item.likesid.find((like) => like._id !== user._id)) {
+    if (item.likesid.find((like) => like === user._id)) {
       setLike(true);
     } else {
       setLike(false);
@@ -82,7 +82,9 @@ const PostCard = React.memo(({ item }) => {
               />
             </div>
             <div className="ingo">
-              <h3>{item.userid.username}</h3>
+              <Link to={`/profile/${item.userid._id}`}>
+                <h3>{item.userid.username}</h3>
+              </Link>
               <small>
                 {item.location === "undefined" ? "" : `${item.location} ,`}
 

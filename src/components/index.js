@@ -1,5 +1,6 @@
 import FormRow from "./FormRow";
 import Alert from "./Alert";
+import Loading from './Loading'
 import Navbar from "./navbar";
 import BigSidebar from "./BigSidebar";
 import PostCard from "./Postcard";
@@ -9,7 +10,14 @@ import ImageSlider from "./imageSlider";
 import PostsContainer from "./PostsContainer";
 import FormInput from "./FormInput";
 import ImagePreview from "./ImagePreview";
+import Followbtn from "./Followbtn";
+import Searchbar from "./searchbar";
+import SearchResult from "./SearchResult";
+import UserForm from "./User_form";
+import FollowAction from "./FollowAction";
+import RemoveFollwerbtn from "./RemoveFollowerbtn"
 export {
+  Loading,
   FormRow,
   Alert,
   Navbar,
@@ -20,5 +28,11 @@ export {
   ImageSlider,
   PostsContainer,
   FormInput,
-  ImagePreview
+  ImagePreview,
+  Followbtn,
+  Searchbar,
+  SearchResult,
+  UserForm,
+  FollowAction,
+  RemoveFollwerbtn
 };

@@ -87,6 +87,7 @@ html {
   --color-light: hsl(252, 30%, var(--light-color-lightness));
   --color-gray: hsl(252, 15%, 65%);
   --color-gray-2: hsl(var(--primary-color-hue), 15%, 65%);
+  --color-link:#746B87;
 
   --color-primary: hsl(var(--primary-color-hue), 75%, 60%);
   --color-secondary: hsl(252, 100%, 90%);
@@ -113,6 +114,7 @@ html {
   --fw-bold: 700;
   
   --clr: #b7c9e5;
+  --color-bg:#0E1016;
 }
 img {
   width: 100%;
@@ -121,7 +123,9 @@ img {
 }
 .display-none{
   display: none;
-  background-color: rgba(255, 255, 255, 0.86);
+}
+.visibility-hidden{
+  visibility: hidden;
 }
 
 @font-face {
