@@ -15,7 +15,8 @@ import Searchbar from "./searchbar";
 import SearchResult from "./SearchResult";
 import UserForm from "./User_form";
 import FollowAction from "./FollowAction";
-import RemoveFollwerbtn from "./RemoveFollowerbtn"
+import RemoveFollwerbtn from "./RemoveFollowerbtn";
+import AddcommentForm from "./AddcommentForm";
 export {
   Loading,
   FormRow,
@@ -34,5 +35,6 @@ export {
   SearchResult,
   UserForm,
   FollowAction,
-  RemoveFollwerbtn
+  RemoveFollwerbtn,
+  AddcommentForm
 };

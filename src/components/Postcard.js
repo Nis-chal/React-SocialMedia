@@ -10,6 +10,7 @@ import React, { useState, useEffect } from "react";
 import { useAppContext } from "../context/appContext";
 import { FiEdit } from "react-icons/fi";
 import { MdDelete } from "react-icons/md";
+import {AddcommentForm} from "../components";
 
 import { Link } from "react-router-dom";
 
@@ -26,6 +27,7 @@ const PostCard = React.memo(({ item }) => {
   const [dropdown, setdropdown] = useState(false);
   const [posti, setPostI] = useState(postbio);
   const [deleteFeed, setDeleteP] = useState(false);
+  const [isComment,setComment] = useState(false);
   // Likes
   useEffect(() => {
     setPostI({
@@ -69,6 +71,10 @@ const PostCard = React.memo(({ item }) => {
       setLikCount((value) => value - 1);
     }
   };
+
+  const toggleComment =()=>{
+    setComment(!isComment)
+  }
   return (
     <Wrapper>
       <div className={deleteFeed ? "display-none" : "feed"}>
@@ -130,7 +136,7 @@ const PostCard = React.memo(({ item }) => {
               )}
             </span>
             <span>
-              <FaRegComment className="react-icons comment-icons" />{" "}
+              <FaRegComment className="react-icons comment-icons" onClick={toggleComment} />{" "}
             </span>
             <span>
               <i className="uil uil-share-alt"></i>
@@ -179,6 +185,11 @@ const PostCard = React.memo(({ item }) => {
         ) : (
           <div></div>
         )}
+      </div>
+
+      <div className={isComment?"":"display-none"}>
+
+      <AddcommentForm/>
       </div>
     </Wrapper>
   );
