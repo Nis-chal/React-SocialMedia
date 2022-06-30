@@ -26,7 +26,11 @@ const Wrapper = styled.aside`
     cursor:pointer;
 }
 
+.react-input-emoji--container{
+    background-color: transparent;
+    border: none;
+}
 
-`
+`;
 
 export default Wrapper;
