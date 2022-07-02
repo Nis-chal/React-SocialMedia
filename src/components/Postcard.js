@@ -170,7 +170,7 @@ const PostCard = React.memo(({ item }) => {
             {item.description === "undefined" ? "" : `${item.description} `}
           </p>
         </div>
-        <div className="comments text-muted">View all 277 comments</div>
+        <div className="comments text-muted">View all {item.commentsid.length} comments</div>
 
         {dropdown ? (
           <div className="edit-dropdown">
