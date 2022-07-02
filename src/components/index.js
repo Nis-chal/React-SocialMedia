@@ -17,6 +17,7 @@ import UserForm from "./User_form";
 import FollowAction from "./FollowAction";
 import RemoveFollwerbtn from "./RemoveFollowerbtn";
 import AddcommentForm from "./AddcommentForm";
+import GetAllComments from "./GetAllComments";
 export {
   Loading,
   FormRow,
@@ -36,5 +37,6 @@ export {
   UserForm,
   FollowAction,
   RemoveFollwerbtn,
-  AddcommentForm
+  AddcommentForm,
+  GetAllComments
 };

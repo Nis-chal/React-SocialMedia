@@ -10,7 +10,7 @@ import React, { useState, useEffect } from "react";
 import { useAppContext } from "../context/appContext";
 import { FiEdit } from "react-icons/fi";
 import { MdDelete } from "react-icons/md";
-import {AddcommentForm} from "../components";
+import {AddcommentForm,GetAllComments} from "../components";
 
 import { Link } from "react-router-dom";
 
@@ -186,7 +186,8 @@ const PostCard = React.memo(({ item }) => {
           <div></div>
         )}
       </div>
-
+         
+       <GetAllComments/>  
       <div className={isComment?"":"display-none"}>
 
       <AddcommentForm postId={item._id}/>
