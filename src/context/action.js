@@ -43,6 +43,7 @@ export const SEARCH_END = "SEARCH_END";
 
 export const COMMENT_SUCCESS = "COMMENT_SUCCESS";
 export const COMMENT_BEGIN = "COMMENT_BEGIN";
+export const COMMENT_ERROR = "COMMENT_ERROR";
 
 
 

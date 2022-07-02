@@ -25,6 +25,8 @@ import {
   FOLLOW_BEGIN,
   FOLLOW_SUCCESS,
   SEARCH_SUCCESS,
+  COMMENT_BEGIN,
+  COMMENT_SUCCESS
   
 } from "./action";
 
@@ -350,6 +352,17 @@ const AppProvider = ({ children }) => {
     }
   }
 
+   const commentOnPost = async ({commentInfo,postId}) => {
+     dispatch({ type: COMMENT_BEGIN });
+     try {
+       await authFetch.post(`/comment/post`,{content:commentInfo,postId});
+       dispatch({ type: COMMENT_SUCCESS });
+     } catch (e) {
+       console.log(e);
+       
+     }
+   };
+
 
 
   return (
@@ -380,7 +393,8 @@ const AppProvider = ({ children }) => {
         followUser,
         unfollowUser,
         searchProfile,
-        removeFollower
+        removeFollower,
+        commentOnPost
       }}
     >
       {children}

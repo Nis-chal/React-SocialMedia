@@ -23,7 +23,13 @@ import {
   FOLLOW_BEGIN,
   FOLLOW_SUCCESS,
  
-  SEARCH_SUCCESS
+  SEARCH_SUCCESS,
+
+  COMMENT_BEGIN,
+  COMMENT_SUCCESS,
+  COMMENT_ERROR
+
+
 } from "./action";
 
 import { initialState } from "./appContext";
@@ -204,6 +210,26 @@ const reducer = (state, action) => {
     return {
       ...state,
       searchList:action.payload.users,
+    }
+   }
+
+   if(action.type === COMMENT_BEGIN){
+    return {
+      ...state,
+      buttontype:true
+    }
+
+  }
+  if(action.type === COMMENT_SUCCESS){
+  return {
+    ...state,
+    buttontype:false
+    }
+  }
+   if(action.type === COMMENT_ERROR){
+    return {
+      ...state,
+      buttontype:false
     }
    }
 

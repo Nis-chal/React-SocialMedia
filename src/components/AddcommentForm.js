@@ -1,23 +1,25 @@
 import { RiSendPlaneFill } from "react-icons/ri";
 import { useAppContext } from "../context/appContext";
-import Wrapper from "../assets/wrappers/CommentForm"
-import {useState} from "react"
+import Wrapper from "../assets/wrappers/CommentForm";
+import { useState } from "react";
 
-const AddcommentForm = () => {
-  const { user } = useAppContext();
+const AddcommentForm = ({ postId }) => {
+  const { user, commentOnPost } = useAppContext();
   const [replys, setText] = useState("");
 
- const handleChange = (e) =>{
-  setText(e.target.value)
- }
-
+  const handleChange = (e) => {
+    setText(e.target.value);
+  };
+  const onSubmit = () => {
+    commentOnPost({ commentInfo: replys, postId });
+  };
   return (
     <Wrapper>
       <div className="comment-form">
         <form action="">
           <div className="comment-container">
             <img className="profile-photo" alt="" src={user.profilePicture} />
-         
+
             <input
               type="text"
               className="comment-input"
@@ -26,7 +28,7 @@ const AddcommentForm = () => {
               onChange={handleChange}
             />
 
-            <RiSendPlaneFill className="send-comment-icon" />
+            <RiSendPlaneFill className="send-comment-icon" onClick={onSubmit} />
           </div>
         </form>
       </div>

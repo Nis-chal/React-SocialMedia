@@ -189,7 +189,7 @@ const PostCard = React.memo(({ item }) => {
 
       <div className={isComment?"":"display-none"}>
 
-      <AddcommentForm/>
+      <AddcommentForm postId={item._id}/>
       </div>
     </Wrapper>
   );
