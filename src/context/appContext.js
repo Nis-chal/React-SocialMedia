@@ -26,8 +26,9 @@ import {
   FOLLOW_SUCCESS,
   SEARCH_SUCCESS,
   COMMENT_BEGIN,
-  COMMENT_SUCCESS
-  
+  COMMENT_SUCCESS,
+  GET_COMMENTS_BEGIN,
+  GET_COMMENTS_SUCCESS,
 } from "./action";
 
 const user = localStorage.getItem("user");
@@ -52,12 +53,13 @@ const initialState = {
   ImageToEdit: "",
   isDeleting: false,
 
-  profileUser:"",
-  profilePost:[],
-  buttontype:false,
-  searchList:[],
-  followers:[],
-  followings:[]
+  profileUser: "",
+  profilePost: [],
+  buttontype: false,
+  searchList: [],
+  followers: [],
+  followings: [],
+  commentsList: [],
 };
 
 const AppContext = React.createContext();
@@ -300,24 +302,26 @@ const AppProvider = ({ children }) => {
   };
 
   const userProfile = async (userId) => {
-    dispatch({type:LOADING_BEGIN})
+    dispatch({ type: LOADING_BEGIN });
     try {
-      const response =await authFetch.get(`/profile/${userId}`);
-      const{post,user,followings,followers} = response.data
-      dispatch({ type: GET_PROFILE_BEGIN ,payload:{post,user,followings,followers}});
-
+      const response = await authFetch.get(`/profile/${userId}`);
+      const { post, user, followings, followers } = response.data;
+      dispatch({
+        type: GET_PROFILE_BEGIN,
+        payload: { post, user, followings, followers },
+      });
     } catch (error) {}
   };
 
-  const followUser = async(userId)=>{
-    dispatch({type:FOLLOW_BEGIN})
-    try{
-      await authFetch.patch(`/profile/${userId}`)
-      dispatch({type:FOLLOW_SUCCESS})
-    }catch(e){
-      console.log(e)
+  const followUser = async (userId) => {
+    dispatch({ type: FOLLOW_BEGIN });
+    try {
+      await authFetch.patch(`/profile/${userId}`);
+      dispatch({ type: FOLLOW_SUCCESS });
+    } catch (e) {
+      console.log(e);
     }
-  }
+  };
 
   const unfollowUser = async (userId) => {
     dispatch({ type: FOLLOW_BEGIN });
@@ -328,42 +332,49 @@ const AppProvider = ({ children }) => {
       console.log(e);
     }
   };
-  
+
   const removeFollower = async (userId) => {
     dispatch({ type: FOLLOW_BEGIN });
     try {
-      
       await authFetch.patch(`/profile/removefollower/${userId}`);
       dispatch({ type: FOLLOW_SUCCESS });
     } catch (e) {
       console.log(e);
     }
   };
-  const searchProfile = async(url)=>{
-    try{
+  const searchProfile = async (url) => {
+    try {
+      const res = await authFetch.get(`/profile/${url}`);
+      const { users } = res.data;
 
-     const res= await authFetch.get(`/profile/${url}`)
-     const {users} = res.data
-
-     dispatch({type:SEARCH_SUCCESS,payload:{users}})
-
-    }catch(e){
-      console.log(e)
+      dispatch({ type: SEARCH_SUCCESS, payload: { users } });
+    } catch (e) {
+      console.log(e);
     }
-  }
+  };
 
-   const commentOnPost = async ({commentInfo,postId}) => {
-     dispatch({ type: COMMENT_BEGIN });
-     try {
-       await authFetch.post(`/comment/post`,{content:commentInfo,postId});
-       dispatch({ type: COMMENT_SUCCESS });
-     } catch (e) {
-       console.log(e);
-       
-     }
-   };
+  const commentOnPost = async ({ commentInfo, postId }) => {
+    dispatch({ type: COMMENT_BEGIN });
+    try {
+      await authFetch.post(`/comment/post`, { content: commentInfo, postId });
+      dispatch({ type: COMMENT_SUCCESS });
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
-
+  const allComments = async ({ postId }) => {
+    dispatch({ type: GET_COMMENTS_BEGIN });
+    try {
+      const response = await authFetch.get(`/comment/get/${postId}`);
+      dispatch({
+        type: GET_COMMENTS_SUCCESS,
+        payload: { comments: response.data.comment },
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   return (
     <AppContext.Provider
@@ -394,7 +405,8 @@ const AppProvider = ({ children }) => {
         unfollowUser,
         searchProfile,
         removeFollower,
-        commentOnPost
+        commentOnPost,
+        allComments,
       }}
     >
       {children}

@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 const Wrapper = styled.aside`
-  background-color: var(--post-card-color);
   padding: 2%;
   border-radius:5%;
   .AllCommentSection {
