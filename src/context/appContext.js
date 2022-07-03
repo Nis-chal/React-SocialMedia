@@ -29,6 +29,10 @@ import {
   COMMENT_SUCCESS,
   GET_COMMENTS_BEGIN,
   GET_COMMENTS_SUCCESS,
+  DELETE_COMMENT_BEGIN,
+  DELETE_COMMENT_SUCCESS,
+  DELETE_COMMENT_ERROR
+
 } from "./action";
 
 const user = localStorage.getItem("user");
@@ -376,6 +380,20 @@ const AppProvider = ({ children }) => {
     }
   };
 
+  const deleteComments = async ({ commentId }) => {
+    dispatch({ type: DELETE_COMMENT_BEGIN });
+    try {
+       await authFetch.get(`/comment/delete/${commentId}`);
+      dispatch({
+        type: DELETE_COMMENT_SUCCESS,
+      });
+    } catch (e) {
+      dispatch({
+        type: DELETE_COMMENT_ERROR,
+      });
+    }
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -407,6 +425,7 @@ const AppProvider = ({ children }) => {
         removeFollower,
         commentOnPost,
         allComments,
+        deleteComments
       }}
     >
       {children}

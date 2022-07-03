@@ -4,6 +4,8 @@ import React, { useState, useEffect } from "react";
 
 import axios from "axios";
 import moment from "moment";
+import {BiDotsVerticalRounded} from "react-icons/bi"
+import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 
 const GetAllComments = React.memo(({ postId,change }) => {
   const { token } = useAppContext();
@@ -39,6 +41,12 @@ const GetAllComments = React.memo(({ postId,change }) => {
                 <p className="comment-content">{item.content}</p>
               </div>
               <p className="comment-time">{moment(item.createdAt).fromNow()}</p>
+            </div>
+            <BiDotsVerticalRounded className="eclipse-btn"/>
+
+            <div className="comment-setting">
+              <AiFillEdit/>
+              <AiFillDelete/>
             </div>
           </div>
         );

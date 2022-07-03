@@ -6,6 +6,27 @@ const Wrapper = styled.aside`
   .AllCommentSection {
     display: flex;
     align-items: center;
+    position: relative;
+    &>.comment-setting{
+      background-color: var(--color-primary);
+     
+      padding: 2%;
+      position: absolute;
+      right: 0;
+      gap: 5px;
+      top: 15px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    & >.eclipse-btn{
+      position: absolute;
+      top: 0;
+      right: 0;
+      color:blue;
+      cursor: pointer;
+      z-index: -1;
+    }
 
     & > .profile-photo {
       width: 25px;

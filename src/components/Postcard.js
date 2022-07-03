@@ -30,7 +30,7 @@ const PostCard = React.memo(({ item }) => {
   const [isComment, setComment] = useState(false);
   const [allComment, setallComment] = useState(false);
   const [listedComment,setList] = useState(false)
-  const [commentCount, setCommentCount] = useState(item.commentsid.length);
+  const [commentCount, setCommentCount] = useState(0);
 
   const commentToggle = () => {
     
@@ -51,6 +51,7 @@ const PostCard = React.memo(({ item }) => {
       [posti.profilep]: item.userid.profilePicture,
     });
     setLikCount(item.likesid.length);
+    setCommentCount(item.commentsid.length);
     if (item.likesid.find((like) => like === user._id)) {
       setLike(true);
     } else {
@@ -90,6 +91,14 @@ const PostCard = React.memo(({ item }) => {
   const toggleComment = () => {
     setComment(!isComment);
   };
+
+  const commentAdded = ()=>{
+    setList(!listedComment)
+
+    setCommentCount((value)=>value + 1)
+    
+
+  }
   return (
     <Wrapper>
       <div className={deleteFeed ? "display-none" : "feed"}>
@@ -214,7 +223,7 @@ const PostCard = React.memo(({ item }) => {
       </div>
 
       <div className={isComment ? "" : "display-none"}>
-        <AddcommentForm postId={item._id} setLcomment={()=>{setList(!listedComment); setCommentCount(commentCount + 1) }} list={listedComment}/>
+        <AddcommentForm postId={item._id} setLcomment={commentAdded } list={listedComment}/>
       </div>
     </Wrapper>
   );

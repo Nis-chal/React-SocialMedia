@@ -2,8 +2,9 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Wrapper from "../assets/wrappers/imageSlider";
+import React from "react";
 
-const ImageSlider = ({ data }) => {
+const ImageSlider = React.memo(({ data }) => {
   const setting = {
     dots: false,
     infinite: false,
@@ -27,6 +28,6 @@ const ImageSlider = ({ data }) => {
       </div>
     </Wrapper>
   );
-};
+});
 
 export default ImageSlider;
