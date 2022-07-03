@@ -5,7 +5,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import moment from "moment";
 
-const GetAllComments = React.memo(({ postId }) => {
+const GetAllComments = React.memo(({ postId,change }) => {
   const { token } = useAppContext();
 
   const [ListOfComment, setComment] = useState([]);
@@ -21,7 +21,7 @@ const GetAllComments = React.memo(({ postId }) => {
         },
       })
       .then((res) => listOutComment({ comment: res.data.comment }));
-  }, [postId, token]);
+  }, [postId, token,change]);
 
   return (
     <Wrapper>

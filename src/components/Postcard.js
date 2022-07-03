@@ -29,6 +29,8 @@ const PostCard = React.memo(({ item }) => {
   const [deleteFeed, setDeleteP] = useState(false);
   const [isComment, setComment] = useState(false);
   const [allComment, setallComment] = useState(false);
+  const [listedComment,setList] = useState(false)
+  const [commentCount, setCommentCount] = useState(item.commentsid.length);
 
   const commentToggle = () => {
     
@@ -59,7 +61,7 @@ const PostCard = React.memo(({ item }) => {
     } else {
       setUser(false);
     }
-  }, [item.likesid, user._id]);
+  }, [item.likesid, user._id,item]);
 
   const toggledropdown = () => {
     setdropdown(!dropdown);
@@ -187,11 +189,13 @@ const PostCard = React.memo(({ item }) => {
           </p>
         </div>
         <div className="comments text-muted" onClick={commentToggle}>
-          View all {item.commentsid.length} comments
+          View all {commentCount?? item.commentsid.length} comments
         </div>
 
+        
+
         <div className={allComment ? "" : "display-none"}>
-          <GetAllComments postId={item._id}  />
+          <GetAllComments postId={item._id} change={listedComment}  />
         </div>
 
         {dropdown ? (
@@ -210,7 +214,7 @@ const PostCard = React.memo(({ item }) => {
       </div>
 
       <div className={isComment ? "" : "display-none"}>
-        <AddcommentForm postId={item._id} />
+        <AddcommentForm postId={item._id} setLcomment={()=>{setList(!listedComment); setCommentCount(commentCount + 1) }} list={listedComment}/>
       </div>
     </Wrapper>
   );

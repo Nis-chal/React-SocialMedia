@@ -2,8 +2,9 @@ import { RiSendPlaneFill } from "react-icons/ri";
 import { useAppContext } from "../context/appContext";
 import Wrapper from "../assets/wrappers/CommentForm";
 import { useState } from "react";
+import React from "react";
 
-const AddcommentForm = ({ postId }) => {
+const AddcommentForm = React.memo(({ postId, setLcomment, list }) => {
   const { user, commentOnPost } = useAppContext();
   const [replys, setText] = useState("");
 
@@ -11,7 +12,21 @@ const AddcommentForm = ({ postId }) => {
     setText(e.target.value);
   };
   const onSubmit = () => {
+    // axios
+    //   .post(
+    //     `/api/v1/comment/post`,
+    //     { content: replys, postId },
+    //     {
+    //       headers: {
+    //         Authorization: `Bearer ${token}`,
+    //       },
+    //     }
+    //   )
+    //   .then((res) => setLcomment( res.data.newComment[0]));
     commentOnPost({ commentInfo: replys, postId });
+    setLcomment()
+    setText("")
+
   };
   return (
     <Wrapper>
@@ -34,6 +49,6 @@ const AddcommentForm = ({ postId }) => {
       </div>
     </Wrapper>
   );
-};
+});
 
 export default AddcommentForm;
