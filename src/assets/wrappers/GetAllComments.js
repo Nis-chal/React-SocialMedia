@@ -12,6 +12,17 @@ const Wrapper = styled.aside`
     }
 
     & > .comment-info {
+
+      
+      &>.comment-info-content{
+        display: flex;
+        gap: 4px;
+        margin-left: 4px;
+        margin-top: 2px;
+        &>.comment-username{
+          color: var(--color-primary);
+        }
+      }
       & > .comment-content {
         margin-left: 7px;
         color: var(--color-secondary);
