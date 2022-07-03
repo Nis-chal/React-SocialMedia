@@ -2,12 +2,17 @@ import moment from "moment";
 import { BiDotsVerticalRounded } from "react-icons/bi";
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import { useState } from "react";
+import { useAppContext } from "../context/appContext";
 const SingleComment = ({ item }) => {
-
+    const {commentDelete} = useAppContext()
     const [option,setOption] = useState(false)
     const optionToggle = ()=>{
         setOption(!option)
     }
+    const deleteC = (commentId) =>{
+        commentDelete({commentId})
+    }
+
   return (
     <div className="AllCommentSection" key={item._id}>
       <img
@@ -25,8 +30,8 @@ const SingleComment = ({ item }) => {
       <BiDotsVerticalRounded className="eclipse-btn" onClick={optionToggle} />
 
       <div className={option?"comment-setting":"display-none"}>
-        <AiFillEdit />
-        <AiFillDelete />
+        <AiFillEdit className="option" />
+        <AiFillDelete className="option" onClick={()=>{commentDelete({commentId:item._id})}}/>
       </div>
     </div>
   );

@@ -8,7 +8,8 @@ const Wrapper = styled.aside`
     align-items: center;
     position: relative;
     & > .comment-setting {
-      background-color: var(--color-primary);
+      background-color: var(--post-card-color);
+      z-index: 1;
 
       padding: 2%;
       position: absolute;
@@ -17,6 +18,10 @@ const Wrapper = styled.aside`
       top: 15px;
       display: flex;
       flex-direction: column;
+
+      & > .option {
+        cursor: pointer;
+      }
     }
 
     & > .eclipse-btn {

@@ -380,10 +380,10 @@ const AppProvider = ({ children }) => {
     }
   };
 
-  const deleteComments = async ({ commentId }) => {
+  const commentDelete = async ({ commentId }) => {
     dispatch({ type: DELETE_COMMENT_BEGIN });
     try {
-       await authFetch.get(`/comment/delete/${commentId}`);
+       await authFetch.delete(`/comment/delete/${commentId}`);
       dispatch({
         type: DELETE_COMMENT_SUCCESS,
       });
@@ -425,7 +425,7 @@ const AppProvider = ({ children }) => {
         removeFollower,
         commentOnPost,
         allComments,
-        deleteComments
+        commentDelete
       }}
     >
       {children}
