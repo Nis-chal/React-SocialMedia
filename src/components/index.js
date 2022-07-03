@@ -19,6 +19,7 @@ import RemoveFollwerbtn from "./RemoveFollowerbtn";
 import AddcommentForm from "./AddcommentForm";
 import GetAllComments from "./GetAllComments";
 import ListOfComment from "./ListOfComment";
+import SingleComment from "./SingleComment";
 export {
   Loading,
   FormRow,
@@ -40,5 +41,6 @@ export {
   RemoveFollwerbtn,
   AddcommentForm,
   GetAllComments,
-  ListOfComment
+  ListOfComment,
+  SingleComment
 };

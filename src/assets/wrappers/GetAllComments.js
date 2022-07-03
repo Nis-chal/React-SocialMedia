@@ -2,14 +2,14 @@ import styled from "styled-components";
 
 const Wrapper = styled.aside`
   padding: 2%;
-  border-radius:5%;
+  border-radius: 5%;
   .AllCommentSection {
     display: flex;
     align-items: center;
     position: relative;
-    &>.comment-setting{
+    & > .comment-setting {
       background-color: var(--color-primary);
-     
+
       padding: 2%;
       position: absolute;
       right: 0;
@@ -19,13 +19,12 @@ const Wrapper = styled.aside`
       flex-direction: column;
     }
 
-    & >.eclipse-btn{
+    & > .eclipse-btn {
       position: absolute;
       top: 0;
       right: 0;
-      color:blue;
+      color: blue;
       cursor: pointer;
-      z-index: -1;
     }
 
     & > .profile-photo {
@@ -33,14 +32,12 @@ const Wrapper = styled.aside`
     }
 
     & > .comment-info {
-
-      
-      &>.comment-info-content{
+      & > .comment-info-content {
         display: flex;
         gap: 4px;
         margin-left: 4px;
         margin-top: 2px;
-        &>.comment-username{
+        & > .comment-username {
           color: var(--color-primary);
         }
       }
