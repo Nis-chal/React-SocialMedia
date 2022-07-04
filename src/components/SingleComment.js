@@ -4,7 +4,7 @@ import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import { useState } from "react";
 import { useAppContext } from "../context/appContext";
 const SingleComment = ({ item,cmtDelete }) => {
-    const {commentDelete} = useAppContext()
+    const {commentDelete,user} = useAppContext()
     const [option,setOption] = useState(false)
     const [isDelete,setDelete] = useState(false)
     const optionToggle = ()=>{
@@ -30,7 +30,10 @@ const SingleComment = ({ item,cmtDelete }) => {
         </div>
         <p className="comment-time">{moment(item.createdAt).fromNow()}</p>
       </div>
-      <BiDotsVerticalRounded className="eclipse-btn" onClick={optionToggle} />
+      {user.username === item.commentedBy.username?
+      
+      <BiDotsVerticalRounded className="eclipse-btn" onClick={optionToggle} />:""
+    }
 
       <div className={option?"comment-setting":"display-none"}>
         <AiFillEdit className="option" />
