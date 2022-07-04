@@ -3,18 +3,21 @@ import { BiDotsVerticalRounded } from "react-icons/bi";
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import { useState } from "react";
 import { useAppContext } from "../context/appContext";
-const SingleComment = ({ item }) => {
+const SingleComment = ({ item,cmtDelete }) => {
     const {commentDelete} = useAppContext()
     const [option,setOption] = useState(false)
+    const [isDelete,setDelete] = useState(false)
     const optionToggle = ()=>{
         setOption(!option)
     }
-    const deleteC = (commentId) =>{
-        commentDelete({commentId})
+    const deleteC = () =>{
+        commentDelete({ commentId: item._id });
+        setDelete(true)
+        cmtDelete()
     }
 
   return (
-    <div className="AllCommentSection" key={item._id}>
+    <div className={!isDelete?"AllCommentSection":"display-none"} key={item._id}>
       <img
         src={item.commentedBy.profilePicture}
         alt=""
@@ -31,7 +34,7 @@ const SingleComment = ({ item }) => {
 
       <div className={option?"comment-setting":"display-none"}>
         <AiFillEdit className="option" />
-        <AiFillDelete className="option" onClick={()=>{commentDelete({commentId:item._id})}}/>
+        <AiFillDelete className="option" onClick={deleteC}/>
       </div>
     </div>
   );

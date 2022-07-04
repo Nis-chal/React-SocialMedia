@@ -15,17 +15,17 @@ import { AddcommentForm, GetAllComments } from "../components";
 import { Link } from "react-router-dom";
 
 const PostCard = React.memo(({ item }) => {
-  const postbio = {
-    likec: "",
-    profilep: "",
-  };
+  // const postbio = {
+  //   likec: "",
+  //   profilep: "",
+  // };
   const { likepost, user, unlikepost, deletePost,allComments } = useAppContext();
 
   const [liked, setLike] = useState(false);
   const [likecount, setLikCount] = useState(0);
   const [isuser, setUser] = useState();
   const [dropdown, setdropdown] = useState(false);
-  const [posti, setPostI] = useState(postbio);
+  // const [posti, setPostI] = useState(postbio);
   const [deleteFeed, setDeleteP] = useState(false);
   const [isComment, setComment] = useState(false);
   const [allComment, setallComment] = useState(false);
@@ -45,11 +45,11 @@ const PostCard = React.memo(({ item }) => {
 
   // Likes
   useEffect(() => {
-    setPostI({
-      ...posti,
-      [posti.likec]: item.likesid.length,
-      [posti.profilep]: item.userid.profilePicture,
-    });
+    // setPostI({
+    //   ...posti,
+    //   [posti.likec]: item.likesid.length,
+    //   [posti.profilep]: item.userid.profilePicture,
+    // });
     setLikCount(item.likesid.length);
     setCommentCount(item.commentsid.length);
     if (item.likesid.find((like) => like === user._id)) {
@@ -99,6 +99,11 @@ const PostCard = React.memo(({ item }) => {
     
 
   }
+    const commentDeleted = () => {
+      // setList(!listedComment);
+
+      setCommentCount((value) => value - 1);
+    };
   return (
     <Wrapper>
       <div className={deleteFeed ? "display-none" : "feed"}>
@@ -204,7 +209,7 @@ const PostCard = React.memo(({ item }) => {
         
 
         <div className={allComment ? "" : "display-none"}>
-          <GetAllComments postId={item._id} change={listedComment}  />
+          <GetAllComments postId={item._id} change={listedComment} cmtDelete={commentDeleted} />
         </div>
 
         {dropdown ? (

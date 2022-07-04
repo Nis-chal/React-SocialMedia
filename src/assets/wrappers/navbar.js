@@ -13,7 +13,7 @@ const Wrapper = styled.aside`
     
   }
   .log {
-    color: var(--color-dark);
+    color: white;
   }
   nav .container {
     
