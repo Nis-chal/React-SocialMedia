@@ -31,7 +31,10 @@ import {
   GET_COMMENTS_ERROR,
   DELETE_COMMENT_BEGIN,
   DELETE_COMMENT_SUCCESS,
-  DELETE_COMMENT_ERROR
+  DELETE_COMMENT_ERROR,
+  UPDATE_COMMENT_BEGIN,
+  UPDATE_COMMENT_SUCCESS,
+  UPDATE_COMMENT_ERROR
 } from "./action";
 
 import { initialState } from "./appContext";
@@ -271,6 +274,25 @@ const reducer = (state, action) => {
       buttontype: false,
     };
   }
+
+    if (action.type === UPDATE_COMMENT_BEGIN) {
+      return {
+        ...state,
+        buttontype: true,
+      };
+    }
+    if (action.type === UPDATE_COMMENT_SUCCESS) {
+      return {
+        ...state,
+        buttontype: false,
+      };
+    }
+    if (action.type === UPDATE_COMMENT_ERROR) {
+      return {
+        ...state,
+        buttontype: false,
+      };
+    }
 
   
 

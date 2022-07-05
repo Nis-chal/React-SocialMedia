@@ -45,11 +45,17 @@ const Wrapper = styled.aside`
         & > .comment-username {
           color: var(--color-primary);
         }
-      }
-      & > .comment-content {
-        margin-left: 7px;
-        color: var(--color-secondary);
-        font-size: 12px;
+        & > .comment-content {
+          margin-left: 7px;
+          color: var(--color-secondary);
+          font-size: 12px;
+          background-color: transparent !important;
+          border: none;
+          &.underline{
+            outline: none;
+            border-bottom: 2px solid white;
+          }
+        }
       }
 
       & > .comment-time {

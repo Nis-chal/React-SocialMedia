@@ -31,7 +31,10 @@ import {
   GET_COMMENTS_SUCCESS,
   DELETE_COMMENT_BEGIN,
   DELETE_COMMENT_SUCCESS,
-  DELETE_COMMENT_ERROR
+  DELETE_COMMENT_ERROR,
+  UPDATE_COMMENT_BEGIN,
+  UPDATE_COMMENT_ERROR,
+  UPDATE_COMMENT_SUCCESS
 
 } from "./action";
 
@@ -394,6 +397,20 @@ const AppProvider = ({ children }) => {
     }
   };
 
+   const commentUpdate = async ({ commentId }) => {
+     dispatch({ type: UPDATE_COMMENT_BEGIN });
+     try {
+       await authFetch.UPDATE(`/comment/update/${commentId}`);
+       dispatch({
+         type: UPDATE_COMMENT_SUCCESS,
+       });
+     } catch (e) {
+       dispatch({
+         type: UPDATE_COMMENT_ERROR,
+       });
+     }
+   };
+
   return (
     <AppContext.Provider
       value={{
@@ -425,7 +442,8 @@ const AppProvider = ({ children }) => {
         removeFollower,
         commentOnPost,
         allComments,
-        commentDelete
+        commentDelete,
+        commentUpdate
       }}
     >
       {children}
