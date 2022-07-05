@@ -3,6 +3,8 @@ import { BiDotsVerticalRounded } from "react-icons/bi";
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import { useState } from "react";
 import { useAppContext } from "../context/appContext";
+import {FcCheckmark} from "react-icons/fc"
+import {ImCross} from  "react-icons/im"
 
 const SingleComment = ({ item,cmtDelete }) => {
   const commentStates = {
@@ -30,6 +32,14 @@ const SingleComment = ({ item,cmtDelete }) => {
      
       
     }
+    const handleChange = (e)=>{
+      setContent({...isContent,isEdited:e.target.value})
+    }
+    const removeChange = (e)=>{
+      setContent({ ...isContent, isEdited: item.content,canEdit:true});
+
+
+    }
 
   return (
     <div
@@ -51,6 +61,7 @@ const SingleComment = ({ item,cmtDelete }) => {
             className={isContent.canEdit?"comment-content":"comment-content underline"}
             value={isContent.isEdited}
             disabled={isContent.canEdit}
+            onChange={handleChange}
           />
         </div>
         <p className="comment-time">{moment(item.createdAt).fromNow()}</p>
@@ -60,6 +71,13 @@ const SingleComment = ({ item,cmtDelete }) => {
       ) : (
         ""
       )}
+
+      
+
+      <div className={!isContent.canEdit?"update-option":"display-none"}>
+        <FcCheckmark/>
+        <ImCross onClick={removeChange}/>
+      </div>
 
       <div className={option ? "comment-setting" : "display-none"}>
         <AiFillEdit className="option" name="canEdit" onClick={editToggle} />

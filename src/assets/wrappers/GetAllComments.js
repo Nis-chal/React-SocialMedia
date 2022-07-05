@@ -7,6 +7,14 @@ const Wrapper = styled.aside`
     display: flex;
     align-items: center;
     position: relative;
+
+    & > .update-option{
+      position: absolute;
+      top: 20%;
+      right: 10%;
+      display: flex;
+      gap: 5px;
+    }
     & > .comment-setting {
       background-color: var(--post-card-color);
       z-index: 1;
