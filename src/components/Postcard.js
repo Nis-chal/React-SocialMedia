@@ -10,30 +10,48 @@ import React, { useState, useEffect } from "react";
 import { useAppContext } from "../context/appContext";
 import { FiEdit } from "react-icons/fi";
 import { MdDelete } from "react-icons/md";
+import { AddcommentForm, GetAllComments } from "../components";
 
 import { Link } from "react-router-dom";
 
 const PostCard = React.memo(({ item }) => {
-  const postbio = {
-    likec: "",
-    profilep: "",
-  };
-  const { likepost, user, unlikepost, deletePost } = useAppContext();
+  // const postbio = {
+  //   likec: "",
+  //   profilep: "",
+  // };
+  const { likepost, user, unlikepost, deletePost,allComments } = useAppContext();
 
   const [liked, setLike] = useState(false);
   const [likecount, setLikCount] = useState(0);
   const [isuser, setUser] = useState();
   const [dropdown, setdropdown] = useState(false);
-  const [posti, setPostI] = useState(postbio);
+  // const [posti, setPostI] = useState(postbio);
   const [deleteFeed, setDeleteP] = useState(false);
+  const [isComment, setComment] = useState(false);
+  const [allComment, setallComment] = useState(false);
+  const [listedComment,setList] = useState(false)
+  const [commentCount, setCommentCount] = useState(0);
+
+  const commentToggle = () => {
+    
+    if(allComment){
+      
+      allComments({postId:item._id})
+      setallComment(!allComment);
+    }
+      setallComment(!allComment);
+
+  };
+
   // Likes
   useEffect(() => {
-    setPostI({
-      ...posti,
-      [posti.likec]: item.likesid.length,
-      [posti.profilep]: item.userid.profilePicture,
-    });
+    // setPostI({
+    //   ...posti,
+    //   [posti.likec]: item.likesid.length,
+    //   [posti.profilep]: item.userid.profilePicture,
+    // });
     setLikCount(item.likesid.length);
+    setCommentCount(item.commentsid.length);
     if (item.likesid.find((like) => like === user._id)) {
       setLike(true);
     } else {
@@ -44,7 +62,7 @@ const PostCard = React.memo(({ item }) => {
     } else {
       setUser(false);
     }
-  }, [item.likesid, user._id]);
+  }, [item.likesid, user._id,item]);
 
   const toggledropdown = () => {
     setdropdown(!dropdown);
@@ -69,6 +87,23 @@ const PostCard = React.memo(({ item }) => {
       setLikCount((value) => value - 1);
     }
   };
+
+  const toggleComment = () => {
+    setComment(!isComment);
+  };
+
+  const commentAdded = ()=>{
+    setList(!listedComment)
+
+    setCommentCount((value)=>value + 1)
+    
+
+  }
+    const commentDeleted = () => {
+      // setList(!listedComment);
+
+      setCommentCount((value) => value - 1);
+    };
   return (
     <Wrapper>
       <div className={deleteFeed ? "display-none" : "feed"}>
@@ -130,7 +165,10 @@ const PostCard = React.memo(({ item }) => {
               )}
             </span>
             <span>
-              <FaRegComment className="react-icons comment-icons" />{" "}
+              <FaRegComment
+                className="react-icons comment-icons"
+                onClick={toggleComment}
+              />{" "}
             </span>
             <span>
               <i className="uil uil-share-alt"></i>
@@ -164,7 +202,15 @@ const PostCard = React.memo(({ item }) => {
             {item.description === "undefined" ? "" : `${item.description} `}
           </p>
         </div>
-        <div className="comments text-muted">View all 277 comments</div>
+        <div className="comments text-muted" onClick={commentToggle}>
+          View all {commentCount?? item.commentsid.length} comments
+        </div>
+
+        
+
+        <div className={allComment ? "" : "display-none"}>
+          <GetAllComments postId={item._id} change={listedComment} cmtDelete={commentDeleted} />
+        </div>
 
         {dropdown ? (
           <div className="edit-dropdown">
@@ -179,6 +225,10 @@ const PostCard = React.memo(({ item }) => {
         ) : (
           <div></div>
         )}
+      </div>
+
+      <div className={isComment ? "" : "display-none"}>
+        <AddcommentForm postId={item._id} setLcomment={commentAdded } list={listedComment}/>
       </div>
     </Wrapper>
   );

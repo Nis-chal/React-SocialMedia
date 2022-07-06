@@ -22,8 +22,19 @@ import {
   GET_PROFILE_BEGIN,
   FOLLOW_BEGIN,
   FOLLOW_SUCCESS,
- 
-  SEARCH_SUCCESS
+  SEARCH_SUCCESS,
+  COMMENT_BEGIN,
+  COMMENT_SUCCESS,
+  COMMENT_ERROR,
+  GET_COMMENTS_BEGIN,
+  GET_COMMENTS_SUCCESS,
+  GET_COMMENTS_ERROR,
+  DELETE_COMMENT_BEGIN,
+  DELETE_COMMENT_SUCCESS,
+  DELETE_COMMENT_ERROR,
+  UPDATE_COMMENT_BEGIN,
+  UPDATE_COMMENT_SUCCESS,
+  UPDATE_COMMENT_ERROR
 } from "./action";
 
 import { initialState } from "./appContext";
@@ -38,8 +49,8 @@ const reducer = (state, action) => {
     };
   }
 
-  if(action.type === LOADING_BEGIN){
-    return {...state,isLoading:true}
+  if (action.type === LOADING_BEGIN) {
+    return { ...state, isLoading: true };
   }
 
   if (action.type === CLEAR_ALERT) {
@@ -169,45 +180,121 @@ const reducer = (state, action) => {
     };
   }
 
-  if(action.type === POSTS_DELETE_BEGIN){
+  if (action.type === POSTS_DELETE_BEGIN) {
     return {
       ...state,
-      isDeleting: action.payload.isDeleting
-    }
+      isDeleting: action.payload.isDeleting,
+    };
   }
 
-  if(action.type === GET_PROFILE_BEGIN){
+  if (action.type === GET_PROFILE_BEGIN) {
     return {
       ...state,
-      profileUser:action.payload.user,
-      profilePost:action.payload.post,
-      followings:action.payload.followings,
-      followers:action.payload.followers,
-      isLoading:false,
-
-    }
+      profileUser: action.payload.user,
+      profilePost: action.payload.post,
+      followings: action.payload.followings,
+      followers: action.payload.followers,
+      isLoading: false,
+    };
   }
-   if (action.type === FOLLOW_BEGIN) {
-     return {
-       ...state,
-      buttontype:true,
-     };
-   }
-   if (action.type === FOLLOW_SUCCESS) {
-     return {
-       ...state,
-       buttontype: false,
-     };
-   }
-
-   if(action.type === SEARCH_SUCCESS){
+  if (action.type === FOLLOW_BEGIN) {
     return {
       ...state,
-      searchList:action.payload.users,
-    }
-   }
+      buttontype: true,
+    };
+  }
+  if (action.type === FOLLOW_SUCCESS) {
+    return {
+      ...state,
+      buttontype: false,
+    };
+  }
 
-   
+  if (action.type === SEARCH_SUCCESS) {
+    return {
+      ...state,
+      searchList: action.payload.users,
+    };
+  }
+
+  if (action.type === COMMENT_BEGIN) {
+    return {
+      ...state,
+      buttontype: true,
+    };
+  }
+  if (action.type === COMMENT_SUCCESS) {
+    return {
+      ...state,
+      buttontype: false,
+    };
+  }
+  if (action.type === COMMENT_ERROR) {
+    return {
+      ...state,
+      buttontype: false,
+    };
+  }
+
+  if (action.type === GET_COMMENTS_BEGIN) {
+    return {
+      ...state,
+      buttontype: true,
+    };
+  }
+  if (action.type === GET_COMMENTS_SUCCESS) {
+    return {
+      ...state,
+      buttontype: false,
+      commentsList: action.payload.comments,
+    };
+  }
+  if (action.type === GET_COMMENTS_ERROR) {
+    return {
+      ...state,
+      buttontype: false,
+    };
+  }
+  if (action.type === DELETE_COMMENT_BEGIN) {
+    return {
+      ...state,
+      buttontype: true,
+    };
+  }
+  if (action.type === DELETE_COMMENT_SUCCESS) {
+    return {
+      ...state,
+      buttontype: false,
+    
+    };
+  }
+  if (action.type === DELETE_COMMENT_ERROR) {
+    return {
+      ...state,
+      buttontype: false,
+    };
+  }
+
+    if (action.type === UPDATE_COMMENT_BEGIN) {
+      return {
+        ...state,
+        buttontype: true,
+      };
+    }
+    if (action.type === UPDATE_COMMENT_SUCCESS) {
+      return {
+        ...state,
+        buttontype: false,
+      };
+    }
+    if (action.type === UPDATE_COMMENT_ERROR) {
+      return {
+        ...state,
+        buttontype: false,
+      };
+    }
+
+  
 
   throw new Error(`no such action: ${action.type}`);
 };
