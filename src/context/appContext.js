@@ -397,10 +397,10 @@ const AppProvider = ({ children }) => {
     }
   };
 
-   const commentUpdate = async ({ commentId }) => {
+   const commentUpdate = async ({ commentId,content }) => {
      dispatch({ type: UPDATE_COMMENT_BEGIN });
      try {
-       await authFetch.UPDATE(`/comment/update/${commentId}`);
+       await authFetch.patch(`/comment/update/${commentId}`,{content});
        dispatch({
          type: UPDATE_COMMENT_SUCCESS,
        });
