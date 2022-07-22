@@ -1,11 +1,12 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Landing, Register, ProtectedRoute, Profile } from "./pages";
+import { Landing, Register, ProtectedRoute, Profile,ErrorPage } from "./pages";
 import {
   SharedLayout,
   PostPage,
   Postedit,
   SharedLayoutv2,
 } from "./pages/dashboard";
+
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
         >
           <Route index element={<Profile />} />
         </Route>
+        <Route path="*" element={<ErrorPage/>}/>
       </Routes>
     </BrowserRouter>
   );
