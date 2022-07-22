@@ -34,8 +34,7 @@ import {
   DELETE_COMMENT_ERROR,
   UPDATE_COMMENT_BEGIN,
   UPDATE_COMMENT_ERROR,
-  UPDATE_COMMENT_SUCCESS
-
+  UPDATE_COMMENT_SUCCESS,
 } from "./action";
 
 const user = localStorage.getItem("user");
@@ -201,6 +200,8 @@ const AppProvider = ({ children }) => {
 
       formData.append("location", userlocation);
       formData.append("description", description);
+      formData.append("images", []);
+
       for (let i = 0; i < images.length; i++) {
         formData.append("images", images[i]);
       }
@@ -386,7 +387,7 @@ const AppProvider = ({ children }) => {
   const commentDelete = async ({ commentId }) => {
     dispatch({ type: DELETE_COMMENT_BEGIN });
     try {
-       await authFetch.delete(`/comment/delete/${commentId}`);
+      await authFetch.delete(`/comment/delete/${commentId}`);
       dispatch({
         type: DELETE_COMMENT_SUCCESS,
       });
@@ -397,19 +398,19 @@ const AppProvider = ({ children }) => {
     }
   };
 
-   const commentUpdate = async ({ commentId,content }) => {
-     dispatch({ type: UPDATE_COMMENT_BEGIN });
-     try {
-       await authFetch.patch(`/comment/update/${commentId}`,{content});
-       dispatch({
-         type: UPDATE_COMMENT_SUCCESS,
-       });
-     } catch (e) {
-       dispatch({
-         type: UPDATE_COMMENT_ERROR,
-       });
-     }
-   };
+  const commentUpdate = async ({ commentId, content }) => {
+    dispatch({ type: UPDATE_COMMENT_BEGIN });
+    try {
+      await authFetch.patch(`/comment/update/${commentId}`, { content });
+      dispatch({
+        type: UPDATE_COMMENT_SUCCESS,
+      });
+    } catch (e) {
+      dispatch({
+        type: UPDATE_COMMENT_ERROR,
+      });
+    }
+  };
 
   return (
     <AppContext.Provider
@@ -443,7 +444,7 @@ const AppProvider = ({ children }) => {
         commentOnPost,
         allComments,
         commentDelete,
-        commentUpdate
+        commentUpdate,
       }}
     >
       {children}

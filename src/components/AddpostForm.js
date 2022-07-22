@@ -13,6 +13,7 @@ const togglestate = {
   images: "",
   description: "",
   userlocation: "",
+  imageArray:[]
 };
 
 const AddPostForm = () => {
@@ -61,10 +62,10 @@ const AddPostForm = () => {
 
     const selectedFilesArray = Array.from(selectedFiles);
 
-    setValues({ ...value, images: selectedFilesArray });
     const imageArray = selectedFilesArray.map((file) => {
       return URL.createObjectURL(file);
     });
+    setValues({ ...value, images: selectedFilesArray,imageArray:imageArray });
     setSelectedImages(imageArray);
   };
   return (
@@ -128,6 +129,8 @@ const AddPostForm = () => {
                           (indeximage) => indeximage !== image
                         )
                       );
+
+                      // setValues({...value,images:value.images.filter((img)=> img !== img[index] )})
                     }}
                   />
                 </div>
