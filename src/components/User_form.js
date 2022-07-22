@@ -1,8 +1,12 @@
 import { FormRow } from "../components";
 import { useState } from "react";
 import Wrapper from "../assets/wrappers/editForm";
+import { useAppContext } from '../context/appContext'
 
 const UserForm = ({ info }) => {
+
+  const {profileUpdate} = useAppContext()
+
   const initialState = {
     name: info.name,
     username: info.username,
@@ -16,7 +20,7 @@ const UserForm = ({ info }) => {
 
   const picState = {
     profilePicture: info.profilePicture,
-    coverPage: info.coverPage,
+    coverPage: info.coverpage,
   };
   const [values, setValues] = useState(initialState);
   const [pic, setpic] = useState(picState);
@@ -25,6 +29,18 @@ const UserForm = ({ info }) => {
     setValues({ ...values, [e.target.name]: e.target.value });
     // formData.append([e.target.name],e.target.value)
   };
+
+  const onSubmit = (e) =>{
+    e.preventDefault()
+     const { name , username,email,location} = values
+     const {profilePicture,coverPage} = pic
+
+     const content = {name,username,email,location,profilePicture,coverPage}
+
+     profileUpdate({profileId:info.id,content})
+
+
+  }
   function FileChange (e) {
     var image =  e.target.files[0];
 
@@ -87,7 +103,7 @@ const UserForm = ({ info }) => {
           </div>
           <img alt="" className="" src={pic.coverPage} />
         </div>
-        <button className="btn btn-primary">submit</button>
+        <button className="btn btn-primary" onClick={onSubmit}>submit</button>
       </div>
     </Wrapper>
   );

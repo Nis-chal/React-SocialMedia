@@ -35,6 +35,10 @@ import {
   UPDATE_COMMENT_BEGIN,
   UPDATE_COMMENT_ERROR,
   UPDATE_COMMENT_SUCCESS,
+
+  UPDATE_PROFILE_BEGIN,
+  UPDATE_PROFILE_ERROR,
+  UPDATE_PROFILE_SUCCESS,
 } from "./action";
 
 const user = localStorage.getItem("user");
@@ -412,6 +416,22 @@ const AppProvider = ({ children }) => {
     }
   };
 
+  const profileUpdate = async ({ profileId, content }) => {
+    dispatch({ type: UPDATE_PROFILE_BEGIN });
+    try {
+      await authFetch.patch(`/profile/updateprofile/${profileId}`, { content });
+      dispatch({
+        type: UPDATE_PROFILE_SUCCESS,
+      });
+    } catch (e) {
+      dispatch({
+        type: UPDATE_PROFILE_ERROR,
+      });
+    }
+  };
+
+
+
   return (
     <AppContext.Provider
       value={{
@@ -437,6 +457,7 @@ const AppProvider = ({ children }) => {
         deletePost,
 
         userProfile,
+        profileUpdate,
         followUser,
         unfollowUser,
         searchProfile,

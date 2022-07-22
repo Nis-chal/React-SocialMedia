@@ -110,21 +110,12 @@ const Profile = () => {
                 </button>
               </div>
               <div className="profile-collection">
-                {profilePost.slice(0,6).map((item,index)=>{
+                {profilePost.length > 0? profilePost.slice(0,6).map((item,index)=>{
                   return <img src={item.images[0]} alt="" key={item._id} />;
-                })}
-                {/* <img
-                  src="https://images.unsplash.com/photo-1611643378160-39d6dd915b69?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8YW5pbWF0aW9ufGVufDB8fDB8fA%3D%3D&w=1000&q=80"
-                  alt=""
-                />
-                <img
-                  src="https://images.unsplash.com/photo-1611643378160-39d6dd915b69?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8YW5pbWF0aW9ufGVufDB8fDB8fA%3D%3D&w=1000&q=80"
-                  alt=""
-                />
-                <img
-                  src="https://images.unsplash.com/photo-1611643378160-39d6dd915b69?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8YW5pbWF0aW9ufGVufDB8fDB8fA%3D%3D&w=1000&q=80"
-                  alt=""
-                /> */}
+                })
+                :<div>No Posts Uploaded</div>              
+              }
+           
               </div>
             </div>
           </div>
