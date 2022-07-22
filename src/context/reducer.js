@@ -34,7 +34,12 @@ import {
   DELETE_COMMENT_ERROR,
   UPDATE_COMMENT_BEGIN,
   UPDATE_COMMENT_SUCCESS,
-  UPDATE_COMMENT_ERROR
+  UPDATE_COMMENT_ERROR,
+
+
+  UPDATE_PROFILE_BEGIN,
+  UPDATE_PROFILE_SUCCESS,
+  UPDATE_PROFILE_ERROR
 } from "./action";
 
 import { initialState } from "./appContext";
@@ -93,6 +98,10 @@ const reducer = (state, action) => {
       user: action.payload.user,
       userLocation: action.payload.location,
       jobLocation: action.payload.location,
+      username:action.payload.username,
+      profilePicture:action.payload.profilePicture,
+        name:action.payload.name,
+
 
       showAlert: true,
       alertType: "success",
@@ -195,6 +204,7 @@ const reducer = (state, action) => {
       followings: action.payload.followings,
       followers: action.payload.followers,
       isLoading: false,
+      
     };
   }
   if (action.type === FOLLOW_BEGIN) {
@@ -290,6 +300,37 @@ const reducer = (state, action) => {
     if (action.type === UPDATE_COMMENT_ERROR) {
       return {
         ...state,
+        buttontype: false,
+      };
+    }
+
+    if (action.type === UPDATE_PROFILE_BEGIN) {
+      return {
+        ...state,
+        buttontype: true,
+        isLoading:true
+      };
+    }
+    if (action.type === UPDATE_PROFILE_SUCCESS) {
+      return {
+        ...state,
+        buttontype: false,
+        isLoading :false,
+        // user:action.payload.users,
+        profilePicture:action.payload.profilePicture,
+        username:action.payload.username,
+        name:action.payload.name,
+
+        showAlert:true,
+        alertType:"success",
+        alertText: "profile Updated",
+      };
+    }
+    if (action.type === UPDATE_PROFILE_ERROR) {
+      return {
+        ...state,
+        isLoading :false,
+
         buttontype: false,
       };
     }

@@ -26,12 +26,13 @@ const Profile = () => {
     isLoading,
     followers,
     followings,
+    
   } = useAppContext();
   const { id: userId } = useParams();
 
   useEffect(() => {
     userProfile(userId);
-  }, [userId]);
+  }, [userId,isLoading]);
 
   const [tab, tabtoggle] = useState(1);
 
@@ -45,7 +46,7 @@ const Profile = () => {
 
   return (
     <Wrapper>
-      <div className="profile">
+      <div className="profile"  >
         <div className="profile-content">
           <div className="profile-images">
             <img

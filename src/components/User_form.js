@@ -2,12 +2,15 @@ import { FormRow } from "../components";
 import { useState } from "react";
 import Wrapper from "../assets/wrappers/editForm";
 import { useAppContext } from '../context/appContext'
+import React from "react"
 
-const UserForm = ({ info }) => {
 
-  const {profileUpdate} = useAppContext()
+const UserForm = React.memo( ({ info }) => {
+
+  const {profileUpdate,user} = useAppContext()
 
   const initialState = {
+    profileId:user._id,
     name: info.name,
     username: info.username,
     email: info.email,
@@ -17,6 +20,8 @@ const UserForm = ({ info }) => {
     coverPage: info.coverPage,
 
   };
+ 
+  
 
   const picState = {
     profilePicture: info.profilePicture,
@@ -32,12 +37,13 @@ const UserForm = ({ info }) => {
 
   const onSubmit = (e) =>{
     e.preventDefault()
-     const { name , username,email,location} = values
-     const {profilePicture,coverPage} = pic
+     const { name , username,email,location,profileId,profilePicture,coverPage} = values
+     
 
-     const content = {name,username,email,location,profilePicture,coverPage}
+     const content = {name,username,email,location,profilePicture,coverPage,profileId}
 
-     profileUpdate({profileId:info.id,content})
+     profileUpdate({content})
+
 
 
   }
@@ -107,6 +113,6 @@ const UserForm = ({ info }) => {
       </div>
     </Wrapper>
   );
-};
+});
 
 export default UserForm;

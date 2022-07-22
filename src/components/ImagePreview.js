@@ -4,13 +4,14 @@ import { TiDelete } from "react-icons/ti";
 import { RiImageAddFill } from "react-icons/ri";
 import { useAppContext } from "../context/appContext";
 import { FormInput } from "../components";
+import React from 'react'
 
 const togglestate = {
   description: "",
   location: "",
   images: "",
 };
-const ImagePreview = ({ postInfo }) => {
+const ImagePreview = React.memo(({ postInfo }) => {
   const { ImageToEdit, postUpdate, isLoading } = useAppContext();
   const [value, setValues] = useState(togglestate);
   const [filepath, setFilePath] = useState([]);
@@ -130,6 +131,6 @@ const ImagePreview = ({ postInfo }) => {
       </form>
     </Wrapper>
   );
-};
+});
 
 export default ImagePreview;

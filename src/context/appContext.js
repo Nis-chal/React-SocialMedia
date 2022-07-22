@@ -2,6 +2,7 @@ import React, { useReducer, useContext } from "react";
 import reducer from "./reducer";
 import axios from "axios";
 
+
 import {
   LOADING_BEGIN,
   DISPLAY_ALERT,
@@ -39,11 +40,14 @@ import {
   UPDATE_PROFILE_BEGIN,
   UPDATE_PROFILE_ERROR,
   UPDATE_PROFILE_SUCCESS,
+
+
 } from "./action";
 
 const user = localStorage.getItem("user");
 const token = localStorage.getItem("token");
 const userLocation = localStorage.getItem("location");
+
 
 const initialState = {
   isLoading: false,
@@ -58,6 +62,9 @@ const initialState = {
   userfeed: [],
   isSubmit: false,
 
+  username:'',
+  profilePicture:'',
+
   likeAnimation: false,
   postInfo: "",
   ImageToEdit: "",
@@ -70,6 +77,7 @@ const initialState = {
   followers: [],
   followings: [],
   commentsList: [],
+  name:'',
 };
 
 const AppContext = React.createContext();
@@ -79,13 +87,13 @@ const AppProvider = ({ children }) => {
   // axios.defaults.headers.common['Authorization'] = `Bearer ${state.token}`
   const authFetch = axios.create({
     baseURL: "/api/v1",
-    headers: {
-      Authorization: `Bearer ${state.token}`,
-    },
-
     // headers: {
+    //   Authorization: `Bearer ${state.token}`,
     //   "Content-Type": "multipart/form-data",
+
     // },
+
+    
   });
 
   // response interceptor
@@ -114,6 +122,11 @@ const AppProvider = ({ children }) => {
       if (error.response.status === 401) {
         console.log("hello");
       }
+
+      if (error.response.status === 500) {
+        console.log(error.response.data);
+      }
+
       return Promise.reject(error);
     }
   );
@@ -161,14 +174,21 @@ const AppProvider = ({ children }) => {
       const { data } = await axios.post(`/api/v1/auth/${endPoint}`, formData);
 
       const { user, token, location } = data;
+      const username = user.username
+      const profilePicture = user.profilePicture
+      const name = user.name
+      console.log(user)
 
       dispatch({
         type: SETUP_USER_SUCCESS,
         payload: {
           user,
           token,
+          username,
+          profilePicture,
           location,
           alertText,
+          name
         },
       });
 
@@ -318,9 +338,10 @@ const AppProvider = ({ children }) => {
     try {
       const response = await authFetch.get(`/profile/${userId}`);
       const { post, user, followings, followers } = response.data;
+      const {profilePicture,username}= user; 
       dispatch({
         type: GET_PROFILE_BEGIN,
-        payload: { post, user, followings, followers },
+        payload: { post, user, followings, followers ,profilePicture,username},
       });
     } catch (error) {}
   };
@@ -416,18 +437,37 @@ const AppProvider = ({ children }) => {
     }
   };
 
-  const profileUpdate = async ({ profileId, content }) => {
+  const profileUpdate = async ( {content} ) => {
     dispatch({ type: UPDATE_PROFILE_BEGIN });
+    
+    const {name,username,location,email,profilePicture,coverPage,profileId} = content
+    let formData = new FormData();
+
+      formData.append("name",name)
+      formData.append("username",username)
+      formData.append("location",location)
+      formData.append("email",email)
+      formData.append("profilePicture",profilePicture)
+      formData.append("coverPage",coverPage)
+
+      
+       
+
+
+
     try {
-      await authFetch.patch(`/profile/updateprofile/${profileId}`, { content });
+      const {data} = await authFetch.put(`/profile/updateprofile/${profileId}`,formData)
+      const {profilePicture,username,name} = data.users
       dispatch({
         type: UPDATE_PROFILE_SUCCESS,
+        payload:{profilePicture,username,name}
       });
+     
     } catch (e) {
-      dispatch({
-        type: UPDATE_PROFILE_ERROR,
-      });
+      
     }
+    clearAlert();
+
   };
 
 

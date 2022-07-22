@@ -5,17 +5,17 @@ import { Link } from "react-router-dom";
 import { useAppContext } from "../context/appContext";
 
 const NavLinks = ({ toggleSidebar }) => {
-  const { user } = useAppContext();
+  const { user,profilePicture,username,name } = useAppContext();
 
   return (
     <Wrapper>
       <Link to={`/profile/${user._id}`} className="profile">
         <div>
-          <img src={user.profilePicture} alt="" className="profile-photo" />
+          <img src={profilePicture} alt="" className="profile-photo" />
         </div>
         <div className="handle">
-          <h4>{user.name}</h4>
-          <p className="text-muted">@{user?.username}</p>
+          <h4>{name}</h4>
+          <p className="text-muted">@{username}</p>
         </div>
       </Link>
 
