@@ -8,6 +8,7 @@ import { useState } from "react";
 import { HiLocationMarker, HiUser } from "react-icons/hi";
 import { MdDescription } from "react-icons/md";
 import { useParams, Link } from "react-router-dom";
+import {FaImages} from "react-icons/fa"
 import {
   Loading,
   PostCard,
@@ -122,7 +123,12 @@ const Profile = () => {
           </div>
           <div className={tab === 5 ? "profile-posts" : "display-none"}>
             {profilePost.map((item, index) => {
-              return <img src={item.images[0]} alt="" key={item._id} />;
+              return(
+              <div className="profile-posts-content">
+                <img src={item.images[0]} alt="" key={item._id} />
+                 <FaImages className={item.images.length > 1 ? "multipleimage":"d-none"}/>
+              </div> 
+              )
             })}
           </div>
 

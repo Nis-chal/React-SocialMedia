@@ -142,9 +142,21 @@ const Wrapper = styled.aside`
     grid-template-columns: repeat(3, 1Fr);
     background-color: var(--post-card-color);
     padding: 2%;
-    & > img {
+    
+    & > .profile-posts-content{
+      position: relative;
+      
+      & > img {
       aspect-ratio: 1/1;
     }
+    & > .multipleimage{
+      position: absolute;
+      top: 7%;
+      right: 7%;
+      color:white;
+      font-size: 20px;
+    }
+  }
   }
 
   .tab {
