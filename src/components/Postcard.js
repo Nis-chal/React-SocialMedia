@@ -37,6 +37,12 @@ const PostCard = React.memo(({ item }) => {
   const [bookmarked,setbookmark] = useState(false)
   const [onAdd,setAddbookmark] = useState(false)
 
+  const [Modal,setModal] = useState(false)
+
+  const toggleModal = ()=>{
+    setModal(false)
+  }
+
   const commentToggle = () => {
     
     if(allComment){
@@ -252,7 +258,7 @@ const PostCard = React.memo(({ item }) => {
       <div className={isComment ? "" : "display-none"}>
         <AddcommentForm postId={item._id} setLcomment={commentAdded } list={listedComment}/>
       </div>
-          <BookMarkModal className="bookmarkmodal" isModal={true} image={item.images[0]}/>
+          <BookMarkModal className="bookmarkmodal" isModal={Modal} postId ={item._id} userId={item.userid._id} image={item.images[0]} toggleModal={toggleModal}/>
 
     </Wrapper>
   );

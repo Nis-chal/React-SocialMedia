@@ -41,7 +41,11 @@ import {
   UPDATE_PROFILE_SUCCESS,
   UPDATE_PROFILE_ERROR,
   EXPLORE_BEGIN,
-  EXPLORE_SUCCESS
+  EXPLORE_SUCCESS,
+
+  CREATE_COLLECTION_BEGIN,
+  CREATE_COLLECTION_SUCCESS,
+  CREATE_COLLECTION_ERROR
 } from "./action";
 
 import { initialState } from "./appContext";
@@ -357,6 +361,30 @@ const reducer = (state, action) => {
         isLoading :false,
         buttontype: false,
         explorePost:action.payload.posts
+
+      };
+    }
+
+
+    if (action.type === CREATE_COLLECTION_BEGIN) {
+      return {
+        ...state,
+        buttontype: true,
+      };
+    }
+    
+    if (action.type === CREATE_COLLECTION_SUCCESS) {
+      return {
+        ...state,
+        buttontype: false,
+
+      };
+    }
+
+    if (action.type === CREATE_COLLECTION_ERROR) {
+      return {
+        ...state,
+        buttontype: false,
 
       };
     }

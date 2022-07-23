@@ -79,7 +79,10 @@ const Wrapper = styled.aside`
    }
    
 
-  
+  .smallloading{
+    width: 20px !important;
+    height: 20px !important;
+  }
 
 
 }

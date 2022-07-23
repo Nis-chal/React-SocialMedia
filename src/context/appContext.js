@@ -43,6 +43,10 @@ import {
   EXPLORE_BEGIN,
   EXPLORE_SUCCESS,
 
+  CREATE_COLLECTION_BEGIN,
+  CREATE_COLLECTION_SUCCESS,
+  CREATE_COLLECTION_ERROR
+
 } from "./action";
 
 const user = localStorage.getItem("user");
@@ -504,6 +508,29 @@ const AppProvider = ({ children }) => {
     })
   } 
 
+  const createCollection = async({postId,usercollection,name})=>{
+
+    dispatch({type:CREATE_COLLECTION_BEGIN})
+
+    try{
+
+      let formdata = new FormData()
+      formdata.append("postId",postId)
+      formdata.append("usercollection",usercollection)
+      formdata.append("name",name)
+  
+  
+  
+      const {data}= await authFetch.post('/collection',formdata)
+      dispatch({type:CREATE_COLLECTION_SUCCESS})
+    }catch(e){
+    dispatch({type:CREATE_COLLECTION_ERROR})
+
+    }
+
+
+  }
+
 
 
   return (
@@ -540,7 +567,8 @@ const AppProvider = ({ children }) => {
         allComments,
         commentDelete,
         commentUpdate,
-        explorePage
+        explorePage,
+        createCollection
       }}
     >
       {children}
