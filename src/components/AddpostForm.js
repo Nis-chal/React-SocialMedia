@@ -19,7 +19,7 @@ const togglestate = {
 const AddPostForm = () => {
   const [value, setValues] = useState(togglestate);
   const [selectedImages, setSelectedImages] = useState([]);
-  const { createPost } = useAppContext();
+  const { createPost,profilePicture } = useAppContext();
 
   const toggleMember = () => {
     setValues({ ...value, location: !value.location });
@@ -74,7 +74,7 @@ const AddPostForm = () => {
       <form autoComplete="off" id="addform">
         <div className="create-post">
           <div>
-            <img className="profile-photo" src={irene} alt="" />
+            <img className="profile-photo" src={profilePicture} alt="" />
           </div>
           <input
             type="text"

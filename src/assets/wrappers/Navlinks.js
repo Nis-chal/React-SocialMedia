@@ -38,6 +38,12 @@ const Wrapper = styled.aside`
     border-top-left-radius: var(--card-border-radius);
     overflow: hidden;
   }
+
+  .menu-item.action{
+    border-top-left-radius: var(--card-border-radius);
+
+
+  }
   .sidebar .menu-item:hover {
     text-decoration: none;
     color: #fff;

@@ -39,7 +39,9 @@ import {
 
   UPDATE_PROFILE_BEGIN,
   UPDATE_PROFILE_SUCCESS,
-  UPDATE_PROFILE_ERROR
+  UPDATE_PROFILE_ERROR,
+  EXPLORE_BEGIN,
+  EXPLORE_SUCCESS
 } from "./action";
 
 import { initialState } from "./appContext";
@@ -153,6 +155,9 @@ const reducer = (state, action) => {
       isLoading: false,
       isSubmit: false,
       userfeed: action.payload.userfeed,
+       profilePicture:initialState.user.profilePicture,
+      username:initialState.user.username,
+      name:initialState.user.name
     };
   }
 
@@ -204,6 +209,8 @@ const reducer = (state, action) => {
       followings: action.payload.followings,
       followers: action.payload.followers,
       isLoading: false,
+     
+
       
     };
   }
@@ -332,6 +339,24 @@ const reducer = (state, action) => {
         isLoading :false,
 
         buttontype: false,
+      };
+    }
+
+     if (action.type === EXPLORE_BEGIN) {
+      return {
+        ...state,
+        isLoading :true,
+        buttontype: true,
+      };
+    }
+    
+    if (action.type === EXPLORE_SUCCESS) {
+      return {
+        ...state,
+        isLoading :false,
+        buttontype: false,
+        explorePost:action.payload.posts
+
       };
     }
 

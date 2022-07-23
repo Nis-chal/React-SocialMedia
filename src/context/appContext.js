@@ -38,15 +38,21 @@ import {
   UPDATE_COMMENT_SUCCESS,
 
   UPDATE_PROFILE_BEGIN,
-  UPDATE_PROFILE_ERROR,
   UPDATE_PROFILE_SUCCESS,
-
+  
+  EXPLORE_BEGIN,
+  EXPLORE_SUCCESS,
 
 } from "./action";
 
 const user = localStorage.getItem("user");
 const token = localStorage.getItem("token");
 const userLocation = localStorage.getItem("location");
+const profilePicture = localStorage.getItem("profilePicture");
+const username = localStorage.getItem("username");
+const name = localStorage.getItem("name");
+
+
 
 
 const initialState = {
@@ -62,8 +68,8 @@ const initialState = {
   userfeed: [],
   isSubmit: false,
 
-  username:'',
-  profilePicture:'',
+  username:username||'',
+  profilePicture:profilePicture || '',
 
   likeAnimation: false,
   postInfo: "",
@@ -77,7 +83,9 @@ const initialState = {
   followers: [],
   followings: [],
   commentsList: [],
-  name:'',
+  name:name||'',
+
+  explorePost:[]
 };
 
 const AppContext = React.createContext();
@@ -141,10 +149,16 @@ const AppProvider = ({ children }) => {
     }, 3000);
   };
 
-  const addUserToLocalStorage = ({ user, token, location }) => {
+  const addUserToLocalStorage = ({ user, token, location,profilePicture ,username,name}) => {
     localStorage.setItem("user", JSON.stringify(user));
     localStorage.setItem("token", token);
     localStorage.setItem("location", location);
+    localStorage.setItem("profilePicture", profilePicture);
+    localStorage.setItem("username", username);
+    localStorage.setItem("name", name);
+
+
+
   };
 
   const handleChange = ({ name, value }) => {
@@ -177,7 +191,6 @@ const AppProvider = ({ children }) => {
       const username = user.username
       const profilePicture = user.profilePicture
       const name = user.name
-      console.log(user)
 
       dispatch({
         type: SETUP_USER_SUCCESS,
@@ -192,7 +205,7 @@ const AppProvider = ({ children }) => {
         },
       });
 
-      addUserToLocalStorage({ user, token, location });
+      addUserToLocalStorage({ user, token, location,profilePicture });
     } catch (error) {
       //local storage later
 
@@ -209,6 +222,12 @@ const AppProvider = ({ children }) => {
     localStorage.removeItem("user");
     localStorage.removeItem("token");
     localStorage.removeItem("location");
+    localStorage.removeItem("profilePicture");
+    localStorage.removeItem("username");
+    localStorage.removeItem("name");
+
+
+
   };
 
   const logoutUser = () => {
@@ -338,10 +357,10 @@ const AppProvider = ({ children }) => {
     try {
       const response = await authFetch.get(`/profile/${userId}`);
       const { post, user, followings, followers } = response.data;
-      const {profilePicture,username}= user; 
+      
       dispatch({
         type: GET_PROFILE_BEGIN,
-        payload: { post, user, followings, followers ,profilePicture,username},
+        payload: { post, user, followings, followers },
       });
     } catch (error) {}
   };
@@ -458,10 +477,15 @@ const AppProvider = ({ children }) => {
     try {
       const {data} = await authFetch.put(`/profile/updateprofile/${profileId}`,formData)
       const {profilePicture,username,name} = data.users
+       
       dispatch({
         type: UPDATE_PROFILE_SUCCESS,
         payload:{profilePicture,username,name}
       });
+      localStorage.setItem("profilePicture", profilePicture);
+     localStorage.setItem("username", username);
+    localStorage.setItem("name", name);
+     
      
     } catch (e) {
       
@@ -469,6 +493,15 @@ const AppProvider = ({ children }) => {
     clearAlert();
 
   };
+
+  const explorePage = async ()=>{
+    const {data} =await authFetch.get("/posts/explorepost")
+    const {posts} = data
+    dispatch({
+      type:EXPLORE_SUCCESS,
+      payload:{posts}
+    })
+  } 
 
 
 
@@ -506,6 +539,7 @@ const AppProvider = ({ children }) => {
         allComments,
         commentDelete,
         commentUpdate,
+        explorePage
       }}
     >
       {children}

@@ -3,11 +3,14 @@ import { useState } from "react";
 import Wrapper from "../assets/wrappers/editForm";
 import { useAppContext } from '../context/appContext'
 import React from "react"
+import { useNavigate } from "react-router-dom";
+import {Alert} from "../components"
 
 
-const UserForm = React.memo( ({ info }) => {
-
-  const {profileUpdate,user} = useAppContext()
+const UserForm = ( ({ info}) => {
+  const navigate = useNavigate()
+  
+  const {profileUpdate,user,isLoading} = useAppContext()
 
   const initialState = {
     profileId:user._id,
@@ -43,6 +46,8 @@ const UserForm = React.memo( ({ info }) => {
      const content = {name,username,email,location,profilePicture,coverPage,profileId}
 
      profileUpdate({content})
+    //  navigate(`/profile/${profileId}`)
+     
 
 
 
@@ -65,8 +70,13 @@ const UserForm = React.memo( ({ info }) => {
 
 
   };
+
+  if(isLoading){
+    return <div></div>
+  }
   return (
     <Wrapper>
+      <Alert/>
       <div className="edit_userform">
         <FormRow
           type="text"

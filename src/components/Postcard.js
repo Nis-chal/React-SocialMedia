@@ -112,7 +112,7 @@ const PostCard = React.memo(({ item }) => {
             <div>
               <img
                 className="profile-photo"
-                src={item.userid.profilePicture}
+                src={item.userid?item.userid.profilePicture:''}
                 alt=""
               />
             </div>

@@ -30,10 +30,13 @@ const Profile = () => {
     
   } = useAppContext();
   const { id: userId } = useParams();
+  // const [toggled, istoggle] = useState(false);
 
   useEffect(() => {
     userProfile(userId);
-  }, [userId,isLoading]);
+  }, [userId, isLoading]);
+
+  
 
   const [tab, tabtoggle] = useState(1);
 
@@ -124,10 +127,14 @@ const Profile = () => {
           <div className={tab === 5 ? "profile-posts" : "display-none"}>
             {profilePost.map((item, index) => {
               return(
+                <Link to={`/user/detailpost/${item._id}`} className ="profile-posts-link">
+
+
               <div className="profile-posts-content">
                 <img src={item.images[0]} alt="" key={item._id} />
                  <FaImages className={item.images.length > 1 ? "multipleimage":"d-none"}/>
               </div> 
+                </Link>
               )
             })}
           </div>
@@ -139,7 +146,7 @@ const Profile = () => {
           </div>
 
           <div className={tab === 6 ? "" : "display-none"}>
-            <UserForm info={profileUser} />
+            <UserForm info={profileUser}  />
           </div>
 
           <div className={tab === 2 ? "" : "display-none"}>

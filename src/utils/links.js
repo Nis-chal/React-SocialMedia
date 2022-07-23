@@ -15,7 +15,7 @@ const links = [
   {
     id: 2,
     text: "Explore",
-    path: "/user/Explore",
+    path: "/profile/Explore",
     icon: <MdOutlineExplore />,
   },
   {
@@ -27,7 +27,7 @@ const links = [
   {
     id: 4,
     text: "profile",
-    path: "/profile",
+    path: `/profile`,
     icon: <ImProfile />,
   },
 ];
