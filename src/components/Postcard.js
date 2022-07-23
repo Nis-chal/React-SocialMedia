@@ -11,8 +11,10 @@ import { useAppContext } from "../context/appContext";
 import { FiEdit } from "react-icons/fi";
 import { MdDelete } from "react-icons/md";
 import { AddcommentForm, GetAllComments } from "../components";
-
+import { ChooseCollection,BookMarkModal } from "./collection";
 import { Link } from "react-router-dom";
+import { useCallback } from "react";
+import {BsFillBookmarkFill} from 'react-icons/bs'
 
 const PostCard = React.memo(({ item }) => {
   // const postbio = {
@@ -31,6 +33,9 @@ const PostCard = React.memo(({ item }) => {
   const [allComment, setallComment] = useState(false);
   const [listedComment,setList] = useState(false)
   const [commentCount, setCommentCount] = useState(0);
+  const [collectionlstvalue,setCollectiontoggle] = useState(false)
+  const [bookmarked,setbookmark] = useState(false)
+  const [onAdd,setAddbookmark] = useState(false)
 
   const commentToggle = () => {
     
@@ -42,6 +47,13 @@ const PostCard = React.memo(({ item }) => {
       setallComment(!allComment);
 
   };
+ 
+  const savepost =()=>{
+    
+    setbookmark(!bookmarked)
+    setCollectiontoggle(true)
+  }
+ 
 
   // Likes
   useEffect(() => {
@@ -107,6 +119,7 @@ const PostCard = React.memo(({ item }) => {
   return (
     <Wrapper>
       <div className={deleteFeed ? "display-none" : "feed"}>
+
         <div className="head">
           <div className="user">
             <div>
@@ -139,6 +152,7 @@ const PostCard = React.memo(({ item }) => {
           </span>
         </div>
         <div className="photo">
+
           <ImageSlider data={item} />
 
           <AiFillHeart className={liked ? `likeanimation` : "display-none"} />
@@ -175,8 +189,16 @@ const PostCard = React.memo(({ item }) => {
             </span>
           </div>
           <div className="bookmark">
+      <ChooseCollection className='collection-container' display={collectionlstvalue}  postId = {item._id}/>
+
+
             <span>
-              <BsBookmark className="react-icons" />
+              {!bookmarked?
+              
+
+              <BsBookmark className="react-icons" onClick={savepost} />:
+              <BsFillBookmarkFill className="react-icons" onClicked={savepost} />
+            }
             </span>
           </div>
         </div>
@@ -230,6 +252,8 @@ const PostCard = React.memo(({ item }) => {
       <div className={isComment ? "" : "display-none"}>
         <AddcommentForm postId={item._id} setLcomment={commentAdded } list={listedComment}/>
       </div>
+          <BookMarkModal className="bookmarkmodal" isModal={true} image={item.images[0]}/>
+
     </Wrapper>
   );
 });

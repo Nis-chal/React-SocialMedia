@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 const Wrapper = styled.aside`
   @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap");
-
+  position: relative;
   .feed {
     font-family: "Poppins", sans-serif;
 
@@ -14,6 +14,11 @@ const Wrapper = styled.aside`
     line-height: 1.5;
     color: var(--card-color);
     position: relative;
+
+     .collection-container{
+    top: 0;
+    right: 0;
+  }
   }
   .feed .head {
     display: flex;
@@ -32,6 +37,11 @@ const Wrapper = styled.aside`
     display: flex;
     overflow: hidden;
     position: relative;
+
+    & .bookmarkmodal{
+      position: absolute;
+      top:0;
+    }
 
     & > .display-none {
       display: none;
@@ -52,6 +62,17 @@ const Wrapper = styled.aside`
     align-items: center;
     font-size: 1.4rem;
     margin: 0.6rem;
+
+    & > .bookmark{
+      position: relative;
+
+
+     &> .collection-container{
+        display: none !important;
+      }
+    }
+
+    
   }
   .dot-btns {
     display: flex;
@@ -134,6 +155,8 @@ const Wrapper = styled.aside`
       opacity: 0;
     }
   }
+
+ 
 `;
 
 export default Wrapper;
