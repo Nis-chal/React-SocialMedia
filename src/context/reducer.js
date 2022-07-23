@@ -244,6 +244,7 @@ const reducer = (state, action) => {
     return {
       ...state,
       buttontype: false,
+      commentsUpdate:!initialState.commentUpdate
     };
   }
   if (action.type === COMMENT_ERROR) {

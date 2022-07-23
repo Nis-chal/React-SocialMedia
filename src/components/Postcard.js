@@ -93,9 +93,9 @@ const PostCard = React.memo(({ item }) => {
   };
 
   const commentAdded = ()=>{
-    setList(!listedComment)
-
+    
     setCommentCount((value)=>value + 1)
+    setList(!listedComment)
     
 
   }

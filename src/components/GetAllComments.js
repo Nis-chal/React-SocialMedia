@@ -7,7 +7,7 @@ import axios from "axios";
 import {SingleComment} from "../components"
 
 const GetAllComments = React.memo(({ postId,change,cmtDelete }) => {
-  const { token } = useAppContext();
+  const { token,commentUpdate } = useAppContext();
 
   const [ListOfComment, setComment] = useState([]);
 
@@ -22,11 +22,11 @@ const GetAllComments = React.memo(({ postId,change,cmtDelete }) => {
         },
       })
       .then((res) => listOutComment({ comment: res.data.comment }));
-  }, [postId, token,change]);
+  }, [postId, token,change,commentUpdate]);
 
   return (
     <Wrapper>
-      {ListOfComment.map((item) => {
+      {ListOfComment.map((item,index) => {
         return (
 
           <SingleComment item={item} key={item._id} cmtDelete= {cmtDelete}/>

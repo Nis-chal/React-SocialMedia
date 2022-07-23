@@ -85,7 +85,8 @@ const initialState = {
   commentsList: [],
   name:name||'',
 
-  explorePost:[]
+  explorePost:[],
+  commentUpdate:false
 };
 
 const AppContext = React.createContext();

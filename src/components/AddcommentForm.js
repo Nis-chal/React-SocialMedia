@@ -4,7 +4,7 @@ import Wrapper from "../assets/wrappers/CommentForm";
 import { useState } from "react";
 import React from "react";
 
-const AddcommentForm = React.memo(({ postId, setLcomment, list }) => {
+const AddcommentForm = (({ postId, setLcomment, list }) => {
   const { user, commentOnPost } = useAppContext();
   const [replys, setText] = useState("");
 

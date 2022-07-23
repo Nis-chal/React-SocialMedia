@@ -1,5 +1,13 @@
+
 import moment from "moment";
+import { useEffect } from "react";
 const ListOfComment = ({list}) => {
+
+  useEffect(()=>{
+    console.log("hello")  
+
+  },[list])
+  
 
     return (list.map((item)=>{
         return (
