@@ -22,7 +22,7 @@ const PostCard = React.memo(({ item }) => {
   //   likec: "",
   //   profilep: "",
   // };
-  const { likepost, user, unlikepost, deletePost,allComments,token} = useAppContext();
+  const { likepost, user, unlikepost, deletePost,allComments,token,removeBookmark,updateCollection} = useAppContext();
 
   const [liked, setLike] = useState(false);
   const [likecount, setLikCount] = useState(0);
@@ -39,6 +39,7 @@ const PostCard = React.memo(({ item }) => {
   const [onAdd,setAddbookmark] = useState(false)
 
   const [Modal,setModal] = useState(false)
+  const [timer,setTimer] = useState(true)
 
   const toggleModal = ()=>{
     setModal(!Modal)
@@ -69,17 +70,56 @@ const PostCard = React.memo(({ item }) => {
     setbookmark(false)
   }
  
-  const savepost =()=>{
-    
-    setbookmark(!bookmarked)
+  const saveBookmark =()=>{
+    updateCollection({postId:item._id})
+    setbookmark(true)
     // clearbookmark()
     
   }
+
+  const removeBookMark =()=>{
+    
+    removeBookmark(item._id)
+    setbookmark(false)
+  }
+
+
+
+  function bookmarkhover(){
+
+    setTimeout(
+      ()=>{
+
+        setCollectiontoggle(true)
+      }
+      ,2000)
+
+
+  }
   
+
+   
+
+
+    
+
+
+
+   
+
+
+
+   
+  
+  const bookmarkleave = ()=>{
+    setTimeout(false)
+    clearTimeout()
+
+  }
   const hovering=()=>{
     setCollectiontoggle(true)
+    
     clearTimeout(clearbookmark)
-
   }
 
   const hoverleave=()=>{
@@ -97,7 +137,7 @@ const PostCard = React.memo(({ item }) => {
           Authorization: `Bearer ${token}`,
         },
       })
-      .then((res) => setbookmark(res.data));
+      .then((res) => setbookmark(res.data.success));
 
 
     setLikCount(item.likesid.length);
@@ -154,6 +194,8 @@ const PostCard = React.memo(({ item }) => {
 
       setCommentCount((value) => value - 1);
     };
+
+
   return (
     <Wrapper>
       <div className={deleteFeed ? "display-none" : "feed"}>
@@ -227,15 +269,15 @@ const PostCard = React.memo(({ item }) => {
             </span>
           </div>
           <div className="bookmark">
-{      collectionlstvalue? <ChooseCollection className='collection-container' usercollection={item.userid._id}  display={collectionlstvalue}  postId = {item._id} hovering={hovering} hoverleave={hoverleave} isBookmark={isBookmark} notBookmark={notBookmark}/>
+{      collectionlstvalue? <ChooseCollection className='collection-container' usercollection={item.userid._id}  display={collectionlstvalue}  postId = {item._id} hovering={hovering} hoverleave={hoverleave} isBookmark={isBookmark} notBookmark={notBookmark} toggleModal = {toggleModal}/>
 :""}
 
             <span>
               {!bookmarked?
               
 
-              <BsBookmark className="react-icons" onClick={savepost} />:
-              <BsFillBookmarkFill className="react-icons" onClick={savepost} onMouseEnter={hovering} />
+              <BsBookmark className="react-icons" onClick={saveBookmark}  />:
+              <BsFillBookmarkFill className="react-icons" onClick={removeBookMark} onMouseDown={bookmarkhover} onMouseLeave={bookmarkleave}  />
             }
             </span>
           </div>

@@ -5,9 +5,9 @@ import {IoMdAddCircle} from 'react-icons/io'
 import Wrapper from '../../assets/wrappers/collection/choosecollection'
 import {SingleCollection} from '../../components/collection'
 import { useAppContext } from '../../context/appContext'
-const ChooseCollection = (({postId,display,usercollection,hovering,hoverleave,isBookmark,notBookmark}) => {
+const ChooseCollection = (({postId,display,hovering,hoverleave,toggleModal}) => {
 
-  const {collection,getCollection,buttontype,createcollection} = useAppContext()
+  const {collection} = useAppContext()
 
   const [loading,isLoading] = useState(true)
  
@@ -18,6 +18,11 @@ useEffect(()=>{
   isLoading(false)
   
 },[])
+
+const openModal = ()=>{
+  hoverleave()
+  toggleModal()
+}
  
  if(loading){
   return <div>
@@ -30,7 +35,7 @@ useEffect(()=>{
 
     <div className={display?'collection-content':'display-none'} onMouseEnter={hovering} onMouseLeave={hoverleave}>
         <div className='collection-heading'>
-            <IoMdAddCircle className='add-collection-btn'/>
+            <IoMdAddCircle className='add-collection-btn' onClick={openModal}/>
                   <h4>Create Collection</h4>
         </div>
         <hr className='underline'/>
@@ -40,7 +45,7 @@ useEffect(()=>{
 
             return (
 
-              <SingleCollection key={item._id} item={item} closeOption={hoverleave} postId={postId} collection = {collection} isBookmark={isBookmark} notBookmark={notBookmark}/>
+              <SingleCollection key={item._id} item={item} closeOption={hoverleave} postId={postId} collection = {collection} />
             )
           
 

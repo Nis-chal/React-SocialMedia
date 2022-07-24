@@ -57,6 +57,11 @@ import {
   GET_COLLECTION_ERROR,
 
 
+  REMOVE_COLLECTION_BEGIN,
+  REMOVE_COLLECTION_SUCCESS,
+  REMOVE_COLLECTION_ERROR,
+
+
 
 } from "./action";
 
@@ -449,6 +454,28 @@ const reducer = (state, action) => {
     }
 
     if (action.type === UPDATE_COLLECTION_ERROR) {
+      return {
+        ...state,
+
+      };
+    }
+
+
+    if (action.type === REMOVE_COLLECTION_BEGIN) {
+      return {
+        ...state,
+      };
+    }
+    
+    if (action.type === REMOVE_COLLECTION_SUCCESS) {
+      return {
+        ...state,
+  
+
+      };
+    }
+
+    if (action.type === REMOVE_COLLECTION_ERROR) {
       return {
         ...state,
 

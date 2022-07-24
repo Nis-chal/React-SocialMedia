@@ -55,7 +55,12 @@ import {
 
  UPDATE_COLLECTION_BEGIN,
  UPDATE_COLLECTION_ERROR,
- UPDATE_COLLECTION_SUCCESS
+ UPDATE_COLLECTION_SUCCESS,
+
+
+ REMOVE_COLLECTION_BEGIN,
+ REMOVE_COLLECTION_ERROR,
+ REMOVE_COLLECTION_SUCCESS
 
 
  
@@ -576,7 +581,7 @@ const AppProvider = ({ children }) => {
   }
 
 
-  const updateCollection = async({postId,usercollection,name})=>{
+  const updateCollection = async({postId})=>{
 
     // dispatch({type:UPDATE_COLLECTION_BEGIN})
 
@@ -584,8 +589,6 @@ const AppProvider = ({ children }) => {
 
       let formdata = new FormData()
       formdata.append("postId",postId)
-      formdata.append("usercollection",usercollection)
-      formdata.append("name",name)
   
   
   
@@ -632,22 +635,14 @@ const AppProvider = ({ children }) => {
   
     const removeBookmark = async(postId)=>{
 
-    dispatch({type:GET_COLLECTION_BEGIN})
+    dispatch({type:REMOVE_COLLECTION_BEGIN})
 
-    try{
-
-    
-  
-  
-  
-      const {data}= await authFetch.patch(`/collection/${postId}`)
-      const{collection} = data
-      console.log(collection)
-      dispatch({type:GET_COLLECTION_SUCCESS,
-      payload:{collection}
+    try{  
+     await authFetch.patch(`/collection/${postId}`)
+      dispatch({type:REMOVE_COLLECTION_SUCCESS,
       })
     }catch(e){
-    dispatch({type:GET_COLLECTION_ERROR})
+    dispatch({type:REMOVE_COLLECTION_ERROR})
 
     }
 

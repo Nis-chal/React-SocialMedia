@@ -25,7 +25,7 @@ const BookMarkModal = ({image,postId,userId,isModal,toggleModal}) => {
 
     <div className={isModal?'Modal-Content':'display-none'}>
         <div className="Modal-Content-Body">
-            <ImCross className='cross-symbol'/>
+            <ImCross className='cross-symbol' onClick ={toggleModal}/>
             <div className='heading'>
                 <p>New Collection</p>
             </div>
