@@ -40,12 +40,21 @@ import {
   UPDATE_PROFILE_BEGIN,
   UPDATE_PROFILE_SUCCESS,
   
-  EXPLORE_BEGIN,
   EXPLORE_SUCCESS,
 
   CREATE_COLLECTION_BEGIN,
   CREATE_COLLECTION_SUCCESS,
-  CREATE_COLLECTION_ERROR
+  CREATE_COLLECTION_ERROR,
+
+
+
+
+ GET_COLLECTION_BEGIN,
+ GET_COLLECTION_SUCCESS,
+ GET_COLLECTION_ERROR,
+
+
+ 
 
 } from "./action";
 
@@ -90,7 +99,8 @@ const initialState = {
   name:name||'',
 
   explorePost:[],
-  commentUpdate:false
+  commentUpdate:false,
+  collection:[]
 };
 
 const AppContext = React.createContext();
@@ -532,6 +542,31 @@ const AppProvider = ({ children }) => {
   }
 
 
+   const getCollection = async()=>{
+
+    dispatch({type:GET_COLLECTION_BEGIN})
+
+    try{
+
+    
+  
+  
+  
+      const {data}= await authFetch.get('/collection')
+      const{collection} = data
+      console.log(collection)
+      dispatch({type:GET_COLLECTION_SUCCESS,
+      payload:{collection}
+      })
+    }catch(e){
+    dispatch({type:GET_COLLECTION_ERROR})
+
+    }
+
+
+  }
+
+
 
   return (
     <AppContext.Provider
@@ -568,7 +603,8 @@ const AppProvider = ({ children }) => {
         commentDelete,
         commentUpdate,
         explorePage,
-        createCollection
+        createCollection,
+        getCollection
       }}
     >
       {children}

@@ -45,7 +45,19 @@ import {
 
   CREATE_COLLECTION_BEGIN,
   CREATE_COLLECTION_SUCCESS,
-  CREATE_COLLECTION_ERROR
+  CREATE_COLLECTION_ERROR,
+
+  UPDATE_COLLECTION_BEGIN,
+  UPDATE_COLLECTION_SUCCESS,
+  UPDATE_COLLECTION_ERROR,
+
+
+  GET_COLLECTION_BEGIN,
+  GET_COLLECTION_SUCCESS,
+  GET_COLLECTION_ERROR,
+
+
+
 } from "./action";
 
 import { initialState } from "./appContext";
@@ -388,6 +400,58 @@ const reducer = (state, action) => {
 
       };
     }
+
+
+    if (action.type === UPDATE_COLLECTION_BEGIN) {
+      return {
+        ...state,
+        buttontype: true,
+      };
+    }
+    
+    if (action.type === UPDATE_COLLECTION_SUCCESS) {
+      return {
+        ...state,
+        buttontype: false,
+        collection:action.payload.collection
+
+      };
+    }
+
+    if (action.type === UPDATE_COLLECTION_ERROR) {
+      return {
+        ...state,
+        buttontype: false,
+
+      };
+    }
+
+
+    if (action.type === GET_COLLECTION_BEGIN) {
+      return {
+        ...state,
+        buttontype: true,
+      };
+    }
+    
+    if (action.type === GET_COLLECTION_SUCCESS) {
+      return {
+        ...state,
+        buttontype: false,
+        collection:action.payload.collection
+
+      };
+    }
+
+    if (action.type === GET_COLLECTION_ERROR) {
+      return {
+        ...state,
+        buttontype: false,
+
+      };
+    }
+
+    
 
   
 

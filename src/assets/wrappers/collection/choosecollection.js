@@ -5,6 +5,7 @@ const Wrapper = styled.aside`
 
  .collection-content.display-none{
     z-index: -2;
+    display: none;
  }
 
  .collection-content{
@@ -34,6 +35,25 @@ clip-path: polygon(50% 0, 100% 1%, 100% 92%, 58% 92%, 50% 100%, 44% 93%, 0 92%, 
         height: 200px;
         padding-inline: 2%;
         overflow-y: scroll;
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+        cursor: pointer;
+        & > .single-item{
+            display: flex;
+            justify-content: space-between;
+            text-align: start;
+            align-items: center;
+
+            & > h6{
+                text-align: start;
+            }
+
+            & > img{
+                width: 40px;
+                aspect-ratio: 1/1;
+            }
+        }
     }
 
     .add-collection-btn{

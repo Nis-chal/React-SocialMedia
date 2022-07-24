@@ -40,7 +40,7 @@ const PostCard = React.memo(({ item }) => {
   const [Modal,setModal] = useState(false)
 
   const toggleModal = ()=>{
-    setModal(false)
+    setModal(!Modal)
   }
 
   const commentToggle = () => {
@@ -53,11 +53,27 @@ const PostCard = React.memo(({ item }) => {
       setallComment(!allComment);
 
   };
+  const clearbookmark = () => {
+    setTimeout(() => {
+      setCollectiontoggle(false)
+    }, 4000);
+  };
  
   const savepost =()=>{
     
     setbookmark(!bookmarked)
+    // clearbookmark()
+    
+  }
+  
+  const hovering=()=>{
     setCollectiontoggle(true)
+    clearTimeout(clearbookmark)
+
+  }
+
+  const hoverleave=()=>{
+    setCollectiontoggle(false)
   }
  
 
@@ -195,15 +211,15 @@ const PostCard = React.memo(({ item }) => {
             </span>
           </div>
           <div className="bookmark">
-      <ChooseCollection className='collection-container' display={collectionlstvalue}  postId = {item._id}/>
-
+{      collectionlstvalue? <ChooseCollection className='collection-container' usercollection={item.userid._id}  display={collectionlstvalue}  postId = {item._id} hovering={hovering} hoverleave={hoverleave}/>
+:""}
 
             <span>
               {!bookmarked?
               
 
               <BsBookmark className="react-icons" onClick={savepost} />:
-              <BsFillBookmarkFill className="react-icons" onClicked={savepost} />
+              <BsFillBookmarkFill className="react-icons" onClick={savepost} onMouseEnter={hovering} />
             }
             </span>
           </div>
@@ -237,7 +253,7 @@ const PostCard = React.memo(({ item }) => {
         
 
         <div className={allComment ? "" : "display-none"}>
-          <GetAllComments postId={item._id} change={listedComment} cmtDelete={commentDeleted} />
+          <GetAllComments postId={item._id} change={listedComment} cmtDelete={commentDeleted}  />
         </div>
 
         {dropdown ? (
