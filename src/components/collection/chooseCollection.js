@@ -3,24 +3,23 @@ import { useState } from 'react'
 import { useEffect } from 'react'
 import {IoMdAddCircle} from 'react-icons/io'
 import Wrapper from '../../assets/wrappers/collection/choosecollection'
-
+import {SingleCollection} from '../../components/collection'
 import { useAppContext } from '../../context/appContext'
-const ChooseCollection = (({postId,display,usercollection,hovering,hoverleave}) => {
+const ChooseCollection = (({postId,display,usercollection,hovering,hoverleave,isBookmark,notBookmark}) => {
 
-  const {collection,getCollection,buttontype} = useAppContext()
+  const {collection,getCollection,buttontype,createcollection} = useAppContext()
 
   const [loading,isLoading] = useState(true)
  
 
-  const clickCollection = ()=>{
-    
-  }
+ 
 useEffect(()=>{
-  getCollection()
-  // isLoading(false)
+  console.log('getcollection')
+  isLoading(false)
+  
 },[])
  
- if(buttontype){
+ if(loading){
   return <div>
    
   </div>
@@ -39,10 +38,11 @@ useEffect(()=>{
 
           {collection.map((item,index)=>{
 
-            return <div key={item._id} className="single-item">
-              <img src={item.postId[0].images[0]} alt="" />
-              <h6>{item.name}</h6>
-            </div>
+            return (
+
+              <SingleCollection key={item._id} item={item} closeOption={hoverleave} postId={postId} collection = {collection} isBookmark={isBookmark} notBookmark={notBookmark}/>
+            )
+          
 
           })}
 

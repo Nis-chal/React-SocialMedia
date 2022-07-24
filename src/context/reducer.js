@@ -85,6 +85,9 @@ const reducer = (state, action) => {
       ...initialState,
       user: null,
       token: null,
+      profilePicture:"",
+      username:"",
+      name:"",
 
       userLocation: "",
     };
@@ -118,7 +121,7 @@ const reducer = (state, action) => {
       jobLocation: action.payload.location,
       username:action.payload.username,
       profilePicture:action.payload.profilePicture,
-        name:action.payload.name,
+      name:action.payload.name,
 
 
       showAlert: true,
@@ -171,9 +174,9 @@ const reducer = (state, action) => {
       isLoading: false,
       isSubmit: false,
       userfeed: action.payload.userfeed,
-       profilePicture:initialState.user.profilePicture,
-      username:initialState.user.username,
-      name:initialState.user.name
+      //  profilePicture:initialState.user.profilePicture,
+      // username:initialState.user.username,
+      // name:initialState.user.name
     };
   }
 
@@ -402,29 +405,7 @@ const reducer = (state, action) => {
     }
 
 
-    if (action.type === UPDATE_COLLECTION_BEGIN) {
-      return {
-        ...state,
-        buttontype: true,
-      };
-    }
     
-    if (action.type === UPDATE_COLLECTION_SUCCESS) {
-      return {
-        ...state,
-        buttontype: false,
-        collection:action.payload.collection
-
-      };
-    }
-
-    if (action.type === UPDATE_COLLECTION_ERROR) {
-      return {
-        ...state,
-        buttontype: false,
-
-      };
-    }
 
 
     if (action.type === GET_COLLECTION_BEGIN) {
@@ -447,6 +428,29 @@ const reducer = (state, action) => {
       return {
         ...state,
         buttontype: false,
+
+      };
+    }
+
+
+     if (action.type === UPDATE_COLLECTION_BEGIN) {
+      return {
+        ...state,
+      };
+    }
+    
+    if (action.type === UPDATE_COLLECTION_SUCCESS) {
+      return {
+        ...state,
+      alertType: "success",
+      alertText: "BOOKMARK ADDED",
+
+      };
+    }
+
+    if (action.type === UPDATE_COLLECTION_ERROR) {
+      return {
+        ...state,
 
       };
     }

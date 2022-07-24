@@ -53,6 +53,10 @@ import {
  GET_COLLECTION_SUCCESS,
  GET_COLLECTION_ERROR,
 
+ UPDATE_COLLECTION_BEGIN,
+ UPDATE_COLLECTION_ERROR,
+ UPDATE_COLLECTION_SUCCESS
+
 
  
 
@@ -83,6 +87,7 @@ const initialState = {
 
   username:username||'',
   profilePicture:profilePicture || '',
+  name:name||'',
 
   likeAnimation: false,
   postInfo: "",
@@ -96,7 +101,6 @@ const initialState = {
   followers: [],
   followings: [],
   commentsList: [],
-  name:name||'',
 
   explorePost:[],
   commentUpdate:false,
@@ -187,10 +191,12 @@ const AppProvider = ({ children }) => {
   const setupUser = async ({ currentUser, endPoint, alertText }) => {
     dispatch({ type: SETUP_USER_BEGIN });
 
-    const { name, location, email, password, profilePicture, username } =
+    const {name, location, email, password, profilePicture, username } =
       currentUser;
 
     let formData = new FormData();
+
+
 
     formData.append("name", name);
     formData.append("username", username);
@@ -207,6 +213,7 @@ const AppProvider = ({ children }) => {
       const profilePicture = user.profilePicture
       const name = user.name
 
+      addUserToLocalStorage({ user, token, location,profilePicture,username,name });
       dispatch({
         type: SETUP_USER_SUCCESS,
         payload: {
@@ -220,7 +227,6 @@ const AppProvider = ({ children }) => {
         },
       });
 
-      addUserToLocalStorage({ user, token, location,profilePicture });
     } catch (error) {
       //local storage later
 
@@ -540,6 +546,7 @@ const AppProvider = ({ children }) => {
 
 
   }
+  
 
 
    const getCollection = async()=>{
@@ -562,6 +569,89 @@ const AppProvider = ({ children }) => {
     dispatch({type:GET_COLLECTION_ERROR})
 
     }
+
+
+
+
+  }
+
+
+  const updateCollection = async({postId,usercollection,name})=>{
+
+    // dispatch({type:UPDATE_COLLECTION_BEGIN})
+
+    try{
+
+      let formdata = new FormData()
+      formdata.append("postId",postId)
+      formdata.append("usercollection",usercollection)
+      formdata.append("name",name)
+  
+  
+  
+      const {data}= await authFetch.patch('/collection',formdata)
+      dispatch({type:UPDATE_COLLECTION_SUCCESS})
+    }catch(e){
+    // dispatch({type:UPDATE_COLLECTION_ERROR})
+
+    }
+
+    clearAlert()
+
+
+  }
+
+
+    const allCollection = async()=>{
+
+    dispatch({type:GET_COLLECTION_BEGIN})
+
+    try{
+
+    
+  
+  
+  
+      const {data}= await authFetch.get('/collection')
+      const{collection} = data
+      console.log(collection)
+      dispatch({type:GET_COLLECTION_SUCCESS,
+      payload:{collection}
+      })
+    }catch(e){
+    dispatch({type:GET_COLLECTION_ERROR})
+
+    }
+
+
+
+
+  }
+
+
+  
+    const removeBookmark = async(postId)=>{
+
+    dispatch({type:GET_COLLECTION_BEGIN})
+
+    try{
+
+    
+  
+  
+  
+      const {data}= await authFetch.patch(`/collection/${postId}`)
+      const{collection} = data
+      console.log(collection)
+      dispatch({type:GET_COLLECTION_SUCCESS,
+      payload:{collection}
+      })
+    }catch(e){
+    dispatch({type:GET_COLLECTION_ERROR})
+
+    }
+
+
 
 
   }
@@ -604,7 +694,10 @@ const AppProvider = ({ children }) => {
         commentUpdate,
         explorePage,
         createCollection,
-        getCollection
+        getCollection,
+        updateCollection,
+        allCollection,
+        removeBookmark
       }}
     >
       {children}

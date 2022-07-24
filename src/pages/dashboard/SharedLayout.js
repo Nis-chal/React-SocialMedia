@@ -1,6 +1,8 @@
 import { Navbar, BigSidebar, Recommendation } from "../../components";
 import Wrapper from "../../assets/wrappers/SharedLayout";
 import { Outlet } from "react-router-dom";
+import {AlertTwo} from "../../components/collection"
+
 const SharedLayout = () => {
   return (
     <Wrapper>
@@ -16,10 +18,13 @@ const SharedLayout = () => {
             <BigSidebar />
             <Outlet />
             <Recommendation />
+
           </div>
         </main>
         <div className="glassbg"></div>
+      <AlertTwo className="alert-container"/>
       </section>
+
     </Wrapper>
   );
 };

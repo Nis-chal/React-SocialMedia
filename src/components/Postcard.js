@@ -15,13 +15,14 @@ import { ChooseCollection,BookMarkModal } from "./collection";
 import { Link } from "react-router-dom";
 import { useCallback } from "react";
 import {BsFillBookmarkFill} from 'react-icons/bs'
+import axios from 'axios'
 
 const PostCard = React.memo(({ item }) => {
   // const postbio = {
   //   likec: "",
   //   profilep: "",
   // };
-  const { likepost, user, unlikepost, deletePost,allComments } = useAppContext();
+  const { likepost, user, unlikepost, deletePost,allComments,token} = useAppContext();
 
   const [liked, setLike] = useState(false);
   const [likecount, setLikCount] = useState(0);
@@ -58,6 +59,15 @@ const PostCard = React.memo(({ item }) => {
       setCollectiontoggle(false)
     }, 4000);
   };
+
+  const isBookmark = ()=>{
+    console.log('hello')
+    setbookmark(true)
+  }
+
+    const notBookmark = ()=>{
+    setbookmark(false)
+  }
  
   const savepost =()=>{
     
@@ -79,11 +89,17 @@ const PostCard = React.memo(({ item }) => {
 
   // Likes
   useEffect(() => {
-    // setPostI({
-    //   ...posti,
-    //   [posti.likec]: item.likesid.length,
-    //   [posti.profilep]: item.userid.profilePicture,
-    // });
+
+    
+ axios
+      .get(`/api/v1/collection/${item._id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => setbookmark(res.data));
+
+
     setLikCount(item.likesid.length);
     setCommentCount(item.commentsid.length);
     if (item.likesid.find((like) => like === user._id)) {
@@ -211,7 +227,7 @@ const PostCard = React.memo(({ item }) => {
             </span>
           </div>
           <div className="bookmark">
-{      collectionlstvalue? <ChooseCollection className='collection-container' usercollection={item.userid._id}  display={collectionlstvalue}  postId = {item._id} hovering={hovering} hoverleave={hoverleave}/>
+{      collectionlstvalue? <ChooseCollection className='collection-container' usercollection={item.userid._id}  display={collectionlstvalue}  postId = {item._id} hovering={hovering} hoverleave={hoverleave} isBookmark={isBookmark} notBookmark={notBookmark}/>
 :""}
 
             <span>
