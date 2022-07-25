@@ -3,9 +3,15 @@ import { useEffect } from "react";
 // import Title from 'react-vanilla-tilt'
 import { useAppContext } from "../context/appContext";
 import Wrapper from "../assets/wrappers/collection/collectionlst";
+import {useNavigate} from 'react-router-dom'
 
 const BookmarkPage = () => {
   const { token, allCollection, collection, isLoading } = useAppContext();
+  const navigate = useNavigate()
+  const goToCollection = (collectionId)=>{
+    navigate(`/profile/collection/${collectionId}`)
+
+  }
 
   useEffect(() => {
     //    axios
@@ -33,11 +39,9 @@ const BookmarkPage = () => {
               return (
                 <div
                   className="bookmark-body"
-                  data-tilt
-                  data-tilt-max="50"
-                  data-tilt-speed="400"
-                  data-tilt-perspective="500"
+                
                   key={item._id}
+                  onClick={()=>goToCollection(item._id)}
                 >
                   <div className="linear-gradient"></div>
 
@@ -54,11 +58,9 @@ const BookmarkPage = () => {
               return (
                 <div
                   className="bookmark-body0"
-                  data-tilt
-                  data-tilt-max="50"
-                  data-tilt-speed="400"
-                  data-tilt-perspective="500"
+               
                   key={item._id}
+                  onClick={()=>goToCollection(item._id)}
                 >
                   <div className="linear-gradient"></div>
 

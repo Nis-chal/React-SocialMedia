@@ -62,6 +62,11 @@ import {
   REMOVE_COLLECTION_ERROR,
 
 
+  SPECIFIC_COLLECTION_BEGIN,
+  SPECIFIC_COLLECTION_ERROR,
+  SPECIFIC_COLLECTION_SUCCESS
+
+
 
 } from "./action";
 
@@ -483,6 +488,31 @@ const reducer = (state, action) => {
       return {
         ...state,
 
+      };
+    }
+
+
+
+    
+    if (action.type === SPECIFIC_COLLECTION_BEGIN) {
+      return {
+        ...state,
+        buttontype:true,
+      };
+    }
+
+    if (action.type === SPECIFIC_COLLECTION_SUCCESS) {
+      return {
+        ...state,
+        buttontype:false,
+        specificCollection:action.payload.collection,
+      };
+    }
+
+    if (action.type === SPECIFIC_COLLECTION_ERROR) {
+      return {
+        ...state,
+        buttontype: false,
       };
     }
 

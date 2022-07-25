@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Landing, Register, ProtectedRoute, Profile,ErrorPage,ExplorePage,BookmarkPage } from "./pages";
+import { Landing, Register, ProtectedRoute, Profile,ErrorPage,ExplorePage,BookmarkPage,SpecificCollectionPage } from "./pages";
 import {
   SharedLayout,
   PostPage,
@@ -43,6 +43,7 @@ function App() {
           <Route index path =":id" element={<Profile />} />
           <Route path="explore" element = {<ExplorePage/>}/>
           <Route path="bookmarks" element = {<BookmarkPage/>}/>
+          <Route path = "collection/:id" element={<SpecificCollectionPage/>}/>
 
 
 

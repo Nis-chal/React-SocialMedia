@@ -60,7 +60,13 @@ import {
 
  REMOVE_COLLECTION_BEGIN,
  REMOVE_COLLECTION_ERROR,
- REMOVE_COLLECTION_SUCCESS
+ REMOVE_COLLECTION_SUCCESS,
+
+
+ 
+ SPECIFIC_COLLECTION_BEGIN,
+ SPECIFIC_COLLECTION_ERROR,
+ SPECIFIC_COLLECTION_SUCCESS
 
 
  
@@ -109,7 +115,9 @@ const initialState = {
 
   explorePost:[],
   commentUpdate:false,
-  collection:[]
+  collection:[],
+
+  specificCollection:[]
 };
 
 const AppContext = React.createContext();
@@ -652,6 +660,19 @@ const AppProvider = ({ children }) => {
   }
 
 
+  const specificBookmark = async (collectionId) => {
+    dispatch({ type: SPECIFIC_COLLECTION_BEGIN });
+
+    try {
+      const {data} = await authFetch.get(`/collection/specific/${collectionId}`);
+      const{collection} =data
+      dispatch({ type: SPECIFIC_COLLECTION_SUCCESS,payload:{collection} });
+    } catch (e) {
+      dispatch({ type: SPECIFIC_COLLECTION_ERROR });
+    }
+  };
+
+
 
   return (
     <AppContext.Provider
@@ -692,7 +713,8 @@ const AppProvider = ({ children }) => {
         getCollection,
         updateCollection,
         allCollection,
-        removeBookmark
+        removeBookmark,
+        specificBookmark
       }}
     >
       {children}
