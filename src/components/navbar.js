@@ -2,11 +2,12 @@ import Wrapper from "../assets/wrappers/navbar";
 import { useState } from "react";
 import { useAppContext } from "../context/appContext";
 import {Searchbar,SearchResult} from "../components"
-
+import {ImCross} from "react-icons/im"
 
 const Navbar = () => {
   const [showLogout, setShowLogout] = useState(false);
   const { logoutUser } = useAppContext();
+  const [shortForm, setShort] = useState(false)
   
 
   return (
@@ -14,11 +15,11 @@ const Navbar = () => {
       <nav>
         <div className="container">
           <h2 className="log">WinkleMedia</h2>
-          <Searchbar/>
+          <Searchbar />
           <div className="create">
-            <a href="#addform" className="btn btn-purple">
+            <span onClick={() => setShort(true)} className="btn btn-purple">
               Add Post
-            </a>
+            </span>
             <div className="btn-container">
               <button
                 className="profile-picture btn-none"
@@ -43,6 +44,15 @@ const Navbar = () => {
               </div>
             </div>
           </div>
+        </div>
+
+        <div className={shortForm ? "addShorts" : "display-none"}>
+          <h2>Add Shorts</h2>
+          <input type="text" placeholder="Description" />
+          <input type="file" />
+          <ImCross onClick={() => setShort(false)} className="cross-icon" />
+
+          <button className="save-btn">Submit</button>
         </div>
       </nav>
     </Wrapper>
