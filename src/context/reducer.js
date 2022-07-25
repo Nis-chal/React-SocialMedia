@@ -68,7 +68,11 @@ import {
 
   ADD_SHORTS_BEGIN,
   ADD_SHORTS_SUCCESS,
-  ADD_SHORTS_ERROR
+  ADD_SHORTS_ERROR,
+
+  LIKE_SHORTS_BEGIN,
+  LIKE_SHORTS_ERROR,
+  LIKE_SHORTS_SUCCESS
 
 
 
@@ -538,6 +542,29 @@ const reducer = (state, action) => {
     }
 
     if (action.type === ADD_SHORTS_ERROR) {
+      return {
+        ...state,
+        buttontype: false,
+      };
+    }
+
+
+    if (action.type === LIKE_SHORTS_BEGIN) {
+      return {
+        ...state,
+        buttontype: true,
+      };
+    }
+
+    if (action.type === LIKE_SHORTS_SUCCESS) {
+      return {
+        ...state,
+        buttontype: false,
+      
+      };
+    }
+
+    if (action.type === LIKE_SHORTS_ERROR) {
       return {
         ...state,
         buttontype: false,

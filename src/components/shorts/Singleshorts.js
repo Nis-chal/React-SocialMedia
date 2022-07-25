@@ -1,9 +1,49 @@
 import React, { useState, useEffect, useRef } from "react";
-import { AiFillLike, AiFillDislike } from "react-icons/ai";
+import {
+  AiFillLike,
+  AiFillDislike,
+ 
+} from "react-icons/ai";
 import { BsBookmarkFill } from "react-icons/bs";
 import { FcMusic } from "react-icons/fc";
+import { useAppContext } from "../../context/appContext";
 const Singleshorts = ({ item }) => {
+  const {addlikesShorts} = useAppContext()
+  const [isliked, setLiked] = useState(false);
+  const [isdisliked, setdisliked] = useState(false);
+
   const vidRef = useRef(null);
+
+  const onliked = ()=>{
+    setLiked(true)
+    addlikesShorts({shortid:item._id})
+    if(isdisliked){
+
+      setdisliked(false)
+    }
+  }
+
+  
+
+  const onremovelike = () => {
+      if(isliked){
+
+        setLiked(false);
+      }
+      
+    };
+
+  const ondisliked =()=>{
+    setdisliked(true)
+    if (isliked) {
+      setLiked(false);
+    }
+  }
+
+  const removedislike = ()=>{
+    setdisliked(false)
+
+  }
 
   const onentry = () => {
     vidRef.current.play();
@@ -34,17 +74,23 @@ const Singleshorts = ({ item }) => {
       </div>
 
       <div className="shorts-options">
-        <AiFillLike className="shorts-icon" />
-        <AiFillDislike className="shorts-icon" />
+        {isliked ? (
+          <AiFillLike className="shorts-icon blue" onClick={onremovelike} />
+        ) : (
+          <AiFillLike className="shorts-icon " onClick={onliked} />
+        )}
+        {isdisliked ? (
+          <AiFillDislike className="shorts-icon blue" onClick={removedislike} />
+        ) : (
+          <AiFillDislike className="shorts-icon " onClick={ondisliked} />
+        )}
         <BsBookmarkFill className="shorts-icon" />
         <div className="music-container">
           <FcMusic className="music-icon" />
         </div>
       </div>
 
-      <p className="description">
-        {item.description}
-      </p>
+      <p className="description">{item.description}</p>
     </div>
   );
 };

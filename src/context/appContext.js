@@ -65,7 +65,10 @@ import {
  
  SPECIFIC_COLLECTION_BEGIN,
  SPECIFIC_COLLECTION_ERROR,
- SPECIFIC_COLLECTION_SUCCESS
+ SPECIFIC_COLLECTION_SUCCESS,
+
+
+
 
 
  
@@ -693,6 +696,20 @@ const AppProvider = ({ children }) => {
   };
 
 
+   const addlikeShorts = async ({ shortid}) => {
+     dispatch({ type: SPECIFIC_COLLECTION_BEGIN });
+
+   
+
+     try {
+       await authFetch.post(`/shorts/upload/${shortid}`, );
+       dispatch({ type: SPECIFIC_COLLECTION_SUCCESS });
+     } catch (e) {
+       dispatch({ type: SPECIFIC_COLLECTION_ERROR });
+     }
+   };
+
+
 
   return (
     <AppContext.Provider
@@ -735,7 +752,8 @@ const AppProvider = ({ children }) => {
         allCollection,
         removeBookmark,
         specificBookmark,
-        addShorts
+        addShorts,
+        addlikeShorts
       }}
     >
       {children}

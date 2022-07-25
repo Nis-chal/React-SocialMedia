@@ -1,6 +1,6 @@
 
 import { ImProfile } from 'react-icons/im'
-import {AiOutlineHome } from 'react-icons/ai'
+import { AiOutlineHome, AiOutlinePlaySquare } from "react-icons/ai";
 import {MdOutlineExplore} from 'react-icons/md'
 
 import {IoBookmarkOutline} from 'react-icons/io5'
@@ -29,6 +29,13 @@ const links = [
     text: "profile",
     path: `/profile`,
     icon: <ImProfile />,
+  },
+
+  {
+    id: 5,
+    text: "shorts",
+    path: `/user/shorts`,
+    icon: <AiOutlinePlaySquare />,
   },
 ];
 
