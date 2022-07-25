@@ -4,10 +4,12 @@ import { useAppContext } from "../context/appContext";
 import { useEffect } from "react";
 
 const PostsContainer = () => {
-  const { getallPosts, userfeed ,isSubmit} = useAppContext();
+  const { getallPosts, userfeed ,isSubmit,getCollection} = useAppContext();
 
   useEffect(() => {
     getallPosts();
+  getCollection()
+
   }, [isSubmit]);
 
   return (

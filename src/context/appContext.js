@@ -40,8 +40,36 @@ import {
   UPDATE_PROFILE_BEGIN,
   UPDATE_PROFILE_SUCCESS,
   
-  EXPLORE_BEGIN,
   EXPLORE_SUCCESS,
+
+  CREATE_COLLECTION_BEGIN,
+  CREATE_COLLECTION_SUCCESS,
+  CREATE_COLLECTION_ERROR,
+
+
+
+
+ GET_COLLECTION_BEGIN,
+ GET_COLLECTION_SUCCESS,
+ GET_COLLECTION_ERROR,
+
+ UPDATE_COLLECTION_BEGIN,
+ UPDATE_COLLECTION_ERROR,
+ UPDATE_COLLECTION_SUCCESS,
+
+
+ REMOVE_COLLECTION_BEGIN,
+ REMOVE_COLLECTION_ERROR,
+ REMOVE_COLLECTION_SUCCESS,
+
+
+ 
+ SPECIFIC_COLLECTION_BEGIN,
+ SPECIFIC_COLLECTION_ERROR,
+ SPECIFIC_COLLECTION_SUCCESS
+
+
+ 
 
 } from "./action";
 
@@ -70,6 +98,7 @@ const initialState = {
 
   username:username||'',
   profilePicture:profilePicture || '',
+  name:name||'',
 
   likeAnimation: false,
   postInfo: "",
@@ -83,10 +112,12 @@ const initialState = {
   followers: [],
   followings: [],
   commentsList: [],
-  name:name||'',
 
   explorePost:[],
-  commentUpdate:false
+  commentUpdate:false,
+  collection:[],
+
+  specificCollection:[]
 };
 
 const AppContext = React.createContext();
@@ -173,10 +204,12 @@ const AppProvider = ({ children }) => {
   const setupUser = async ({ currentUser, endPoint, alertText }) => {
     dispatch({ type: SETUP_USER_BEGIN });
 
-    const { name, location, email, password, profilePicture, username } =
+    const {name, location, email, password, profilePicture, username } =
       currentUser;
 
     let formData = new FormData();
+
+
 
     formData.append("name", name);
     formData.append("username", username);
@@ -193,6 +226,7 @@ const AppProvider = ({ children }) => {
       const profilePicture = user.profilePicture
       const name = user.name
 
+      addUserToLocalStorage({ user, token, location,profilePicture,username,name });
       dispatch({
         type: SETUP_USER_SUCCESS,
         payload: {
@@ -206,7 +240,6 @@ const AppProvider = ({ children }) => {
         },
       });
 
-      addUserToLocalStorage({ user, token, location,profilePicture });
     } catch (error) {
       //local storage later
 
@@ -504,6 +537,141 @@ const AppProvider = ({ children }) => {
     })
   } 
 
+  const createCollection = async({postId,usercollection,name})=>{
+
+    dispatch({type:CREATE_COLLECTION_BEGIN})
+
+    try{
+
+      let formdata = new FormData()
+      formdata.append("postId",postId)
+      formdata.append("usercollection",usercollection)
+      if(name){
+        formdata.append("name",name)
+      }
+  
+  
+      const {data}= await authFetch.put('/collection',formdata)
+      dispatch({type:CREATE_COLLECTION_SUCCESS})
+    }catch(e){
+    dispatch({type:CREATE_COLLECTION_ERROR})
+
+    }
+
+
+  }
+  
+
+
+   const getCollection = async()=>{
+
+    dispatch({type:GET_COLLECTION_BEGIN})
+
+    try{
+
+    
+  
+  
+  
+      const {data}= await authFetch.get('/collection')
+      const{collection} = data
+      console.log(collection)
+      dispatch({type:GET_COLLECTION_SUCCESS,
+      payload:{collection}
+      })
+    }catch(e){
+    dispatch({type:GET_COLLECTION_ERROR})
+
+    }
+
+
+
+
+  }
+
+
+  const updateCollection = async({postId,collectionId})=>{
+
+    // dispatch({type:UPDATE_COLLECTION_BEGIN})
+
+    try{
+
+      let formdata = new FormData()
+      formdata.append("postId",postId)
+  
+  
+  
+      const {data}= await authFetch.patch(`/collection/update/${collectionId}`,formdata)
+      dispatch({type:UPDATE_COLLECTION_SUCCESS})
+    }catch(e){
+    // dispatch({type:UPDATE_COLLECTION_ERROR})
+
+    }
+
+    clearAlert()
+
+
+  }
+
+
+    const allCollection = async()=>{
+
+    dispatch({type:GET_COLLECTION_BEGIN})
+
+    try{
+
+    
+  
+  
+  
+      const {data}= await authFetch.get('/collection/all')
+      const{collection} = data
+      dispatch({type:GET_COLLECTION_SUCCESS,
+      payload:{collection}
+      })
+    }catch(e){
+    dispatch({type:GET_COLLECTION_ERROR})
+
+    }
+
+
+
+
+  }
+
+
+  
+    const removeBookmark = async(postId)=>{
+
+    dispatch({type:REMOVE_COLLECTION_BEGIN})
+
+    try{  
+     await authFetch.patch(`/collection/${postId}`)
+      dispatch({type:REMOVE_COLLECTION_SUCCESS,
+      })
+    }catch(e){
+    dispatch({type:REMOVE_COLLECTION_ERROR})
+
+    }
+
+
+
+
+  }
+
+
+  const specificBookmark = async (collectionId) => {
+    dispatch({ type: SPECIFIC_COLLECTION_BEGIN });
+
+    try {
+      const {data} = await authFetch.get(`/collection/specific/${collectionId}`);
+      const{collection} =data
+      dispatch({ type: SPECIFIC_COLLECTION_SUCCESS,payload:{collection} });
+    } catch (e) {
+      dispatch({ type: SPECIFIC_COLLECTION_ERROR });
+    }
+  };
+
 
 
   return (
@@ -540,7 +708,13 @@ const AppProvider = ({ children }) => {
         allComments,
         commentDelete,
         commentUpdate,
-        explorePage
+        explorePage,
+        createCollection,
+        getCollection,
+        updateCollection,
+        allCollection,
+        removeBookmark,
+        specificBookmark
       }}
     >
       {children}

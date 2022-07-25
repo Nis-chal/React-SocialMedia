@@ -41,7 +41,33 @@ import {
   UPDATE_PROFILE_SUCCESS,
   UPDATE_PROFILE_ERROR,
   EXPLORE_BEGIN,
-  EXPLORE_SUCCESS
+  EXPLORE_SUCCESS,
+
+  CREATE_COLLECTION_BEGIN,
+  CREATE_COLLECTION_SUCCESS,
+  CREATE_COLLECTION_ERROR,
+
+  UPDATE_COLLECTION_BEGIN,
+  UPDATE_COLLECTION_SUCCESS,
+  UPDATE_COLLECTION_ERROR,
+
+
+  GET_COLLECTION_BEGIN,
+  GET_COLLECTION_SUCCESS,
+  GET_COLLECTION_ERROR,
+
+
+  REMOVE_COLLECTION_BEGIN,
+  REMOVE_COLLECTION_SUCCESS,
+  REMOVE_COLLECTION_ERROR,
+
+
+  SPECIFIC_COLLECTION_BEGIN,
+  SPECIFIC_COLLECTION_ERROR,
+  SPECIFIC_COLLECTION_SUCCESS
+
+
+
 } from "./action";
 
 import { initialState } from "./appContext";
@@ -69,6 +95,9 @@ const reducer = (state, action) => {
       ...initialState,
       user: null,
       token: null,
+      profilePicture:"",
+      username:"",
+      name:"",
 
       userLocation: "",
     };
@@ -102,7 +131,7 @@ const reducer = (state, action) => {
       jobLocation: action.payload.location,
       username:action.payload.username,
       profilePicture:action.payload.profilePicture,
-        name:action.payload.name,
+      name:action.payload.name,
 
 
       showAlert: true,
@@ -155,9 +184,9 @@ const reducer = (state, action) => {
       isLoading: false,
       isSubmit: false,
       userfeed: action.payload.userfeed,
-       profilePicture:initialState.user.profilePicture,
-      username:initialState.user.username,
-      name:initialState.user.name
+      //  profilePicture:initialState.user.profilePicture,
+      // username:initialState.user.username,
+      // name:initialState.user.name
     };
   }
 
@@ -360,6 +389,134 @@ const reducer = (state, action) => {
 
       };
     }
+
+
+    if (action.type === CREATE_COLLECTION_BEGIN) {
+      return {
+        ...state,
+        buttontype: true,
+      };
+    }
+    
+    if (action.type === CREATE_COLLECTION_SUCCESS) {
+      return {
+        ...state,
+        buttontype: false,
+
+      };
+    }
+
+    if (action.type === CREATE_COLLECTION_ERROR) {
+      return {
+        ...state,
+        buttontype: false,
+
+      };
+    }
+
+
+    
+
+
+    if (action.type === GET_COLLECTION_BEGIN) {
+      return {
+        ...state,
+        buttontype: true,
+        isLoading:true,
+      };
+    }
+    
+    if (action.type === GET_COLLECTION_SUCCESS) {
+      return {
+        ...state,
+        buttontype: false,
+        collection:action.payload.collection,
+        isLoading:false
+
+      };
+    }
+
+    if (action.type === GET_COLLECTION_ERROR) {
+      return {
+        ...state,
+        buttontype: false,
+        isLoading:false
+
+
+      };
+    }
+
+
+     if (action.type === UPDATE_COLLECTION_BEGIN) {
+      return {
+        ...state,
+      };
+    }
+    
+    if (action.type === UPDATE_COLLECTION_SUCCESS) {
+      return {
+        ...state,
+      alertType: "success",
+      alertText: "BOOKMARK ADDED",
+
+      };
+    }
+
+    if (action.type === UPDATE_COLLECTION_ERROR) {
+      return {
+        ...state,
+
+      };
+    }
+
+
+    if (action.type === REMOVE_COLLECTION_BEGIN) {
+      return {
+        ...state,
+      };
+    }
+    
+    if (action.type === REMOVE_COLLECTION_SUCCESS) {
+      return {
+        ...state,
+  
+
+      };
+    }
+
+    if (action.type === REMOVE_COLLECTION_ERROR) {
+      return {
+        ...state,
+
+      };
+    }
+
+
+
+    
+    if (action.type === SPECIFIC_COLLECTION_BEGIN) {
+      return {
+        ...state,
+        buttontype:true,
+      };
+    }
+
+    if (action.type === SPECIFIC_COLLECTION_SUCCESS) {
+      return {
+        ...state,
+        buttontype:false,
+        specificCollection:action.payload.collection,
+      };
+    }
+
+    if (action.type === SPECIFIC_COLLECTION_ERROR) {
+      return {
+        ...state,
+        buttontype: false,
+      };
+    }
+
+    
 
   
 

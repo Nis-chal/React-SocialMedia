@@ -11,15 +11,28 @@ import { useAppContext } from "../context/appContext";
 import { FiEdit } from "react-icons/fi";
 import { MdDelete } from "react-icons/md";
 import { AddcommentForm, GetAllComments } from "../components";
-
+import { ChooseCollection, BookMarkModal } from "./collection";
 import { Link } from "react-router-dom";
+import { useCallback } from "react";
+import { BsFillBookmarkFill } from "react-icons/bs";
+import axios from "axios";
 
 const PostCard = React.memo(({ item }) => {
   // const postbio = {
   //   likec: "",
   //   profilep: "",
   // };
-  const { likepost, user, unlikepost, deletePost,allComments } = useAppContext();
+  const {
+    likepost,
+    user,
+    unlikepost,
+    deletePost,
+    allComments,
+    token,
+    removeBookmark,
+    updateCollection,
+    createCollection,
+  } = useAppContext();
 
   const [liked, setLike] = useState(false);
   const [likecount, setLikCount] = useState(0);
@@ -29,27 +42,83 @@ const PostCard = React.memo(({ item }) => {
   const [deleteFeed, setDeleteP] = useState(false);
   const [isComment, setComment] = useState(false);
   const [allComment, setallComment] = useState(false);
-  const [listedComment,setList] = useState(false)
+  const [listedComment, setList] = useState(false);
   const [commentCount, setCommentCount] = useState(0);
+  const [collectionlstvalue, setCollectiontoggle] = useState(false);
+  const [bookmarked, setbookmark] = useState(false);
+  const [onAdd, setAddbookmark] = useState(false);
+
+  const [Modal, setModal] = useState(false);
+  const [timer, setTimer] = useState(true);
+
+  const toggleModal = () => {
+    setModal(!Modal);
+  };
 
   const commentToggle = () => {
-    
-    if(allComment){
-      
-      allComments({postId:item._id})
+    if (allComment) {
+      allComments({ postId: item._id });
       setallComment(!allComment);
     }
-      setallComment(!allComment);
+    setallComment(!allComment);
+  };
+  const clearbookmark = () => {
+    setTimeout(() => {
+      setCollectiontoggle(false);
+    }, 4000);
+  };
 
+  const isBookmark = () => {
+    console.log("hello");
+    setbookmark(true);
+  };
+
+  const notBookmark = () => {
+    setbookmark(false);
+  };
+
+  const saveBookmark = () => {
+    createCollection({ postId: item._id });
+    // updateCollection({postId:item._id})
+    setbookmark(true);
+    // clearbookmark()
+  };
+
+  const removeBookMark = () => {
+    removeBookmark(item._id);
+    setbookmark(false);
+  };
+
+  function bookmarkhover() {
+    setTimeout(() => {
+      setCollectiontoggle(true);
+    }, 2000);
+  }
+
+  const bookmarkleave = () => {
+    setTimeout(false);
+    clearTimeout();
+  };
+  const hovering = () => {
+    setCollectiontoggle(true);
+
+    clearTimeout(clearbookmark);
+  };
+
+  const hoverleave = () => {
+    setCollectiontoggle(false);
   };
 
   // Likes
   useEffect(() => {
-    // setPostI({
-    //   ...posti,
-    //   [posti.likec]: item.likesid.length,
-    //   [posti.profilep]: item.userid.profilePicture,
-    // });
+    axios
+      .get(`/api/v1/collection/${item._id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => setbookmark(res.data.success));
+
     setLikCount(item.likesid.length);
     setCommentCount(item.commentsid.length);
     if (item.likesid.find((like) => like === user._id)) {
@@ -62,7 +131,7 @@ const PostCard = React.memo(({ item }) => {
     } else {
       setUser(false);
     }
-  }, [item.likesid, user._id,item]);
+  }, [item.likesid, user._id, item]);
 
   const toggledropdown = () => {
     setdropdown(!dropdown);
@@ -92,18 +161,16 @@ const PostCard = React.memo(({ item }) => {
     setComment(!isComment);
   };
 
-  const commentAdded = ()=>{
-    
-    setCommentCount((value)=>value + 1)
-    setList(!listedComment)
-    
+  const commentAdded = () => {
+    setCommentCount((value) => value + 1);
+    setList(!listedComment);
+  };
+  const commentDeleted = () => {
+    // setList(!listedComment);
 
-  }
-    const commentDeleted = () => {
-      // setList(!listedComment);
+    setCommentCount((value) => value - 1);
+  };
 
-      setCommentCount((value) => value - 1);
-    };
   return (
     <Wrapper>
       <div className={deleteFeed ? "display-none" : "feed"}>
@@ -112,7 +179,7 @@ const PostCard = React.memo(({ item }) => {
             <div>
               <img
                 className="profile-photo"
-                src={item.userid?item.userid.profilePicture:''}
+                src={item.userid ? item.userid.profilePicture : ""}
                 alt=""
               />
             </div>
@@ -175,8 +242,33 @@ const PostCard = React.memo(({ item }) => {
             </span>
           </div>
           <div className="bookmark">
+            {collectionlstvalue ? (
+              <ChooseCollection
+                className="collection-container"
+                usercollection={item.userid._id}
+                display={collectionlstvalue}
+                postId={item._id}
+                hovering={hovering}
+                hoverleave={hoverleave}
+                isBookmark={isBookmark}
+                notBookmark={notBookmark}
+                toggleModal={toggleModal}
+              />
+            ) : (
+              ""
+            )}
+
             <span>
-              <BsBookmark className="react-icons" />
+              {!bookmarked ? (
+                <BsBookmark className="react-icons" onClick={saveBookmark} />
+              ) : (
+                <BsFillBookmarkFill
+                  className="react-icons"
+                  onClick={removeBookMark}
+                  onMouseDown={bookmarkhover}
+                  onMouseLeave={bookmarkleave}
+                />
+              )}
             </span>
           </div>
         </div>
@@ -203,13 +295,15 @@ const PostCard = React.memo(({ item }) => {
           </p>
         </div>
         <div className="comments text-muted" onClick={commentToggle}>
-          View all {commentCount?? item.commentsid.length} comments
+          View all {commentCount ?? item.commentsid.length} comments
         </div>
 
-        
-
         <div className={allComment ? "" : "display-none"}>
-          <GetAllComments postId={item._id} change={listedComment} cmtDelete={commentDeleted} />
+          <GetAllComments
+            postId={item._id}
+            change={listedComment}
+            cmtDelete={commentDeleted}
+          />
         </div>
 
         {dropdown ? (
@@ -228,8 +322,20 @@ const PostCard = React.memo(({ item }) => {
       </div>
 
       <div className={isComment ? "" : "display-none"}>
-        <AddcommentForm postId={item._id} setLcomment={commentAdded } list={listedComment}/>
+        <AddcommentForm
+          postId={item._id}
+          setLcomment={commentAdded}
+          list={listedComment}
+        />
       </div>
+      <BookMarkModal
+        className="bookmarkmodal"
+        isModal={Modal}
+        postId={item._id}
+        userId={item.userid._id}
+        image={item.images[0]}
+        toggleModal={toggleModal}
+      />
     </Wrapper>
   );
 });

@@ -7,12 +7,15 @@ const Wrapper = styled.aside`
   background-repeat: no-repeat;
   background-size: cover;
   height: 100vh;
-
+  
+  
   section {
     background-color: var(--bg-color);
     height: 100vh;
     overflow: hidden;
     backdrop-filter: blur(var(--bg-blur));
+    
+     
   }
   .middle {
     height: 90vh;
@@ -38,6 +41,9 @@ const Wrapper = styled.aside`
     column-gap: 2rem;
     position: relative;
     background: hsl(255 255 255 0.4);
+
+
+   
   }
 
   @media screen and (max-width: 1200px) {
