@@ -8,6 +8,6 @@ import ExplorePage from "./ExplorePage"
 import BookmarkPage from "./BookmarkPage";
 import SpecificCollectionPage from "./SpecificCollectionPage";
 
+import ShortsPage from "./ShortsPage";
 
-
-export {Landing,Register,ProtectedRoute,Profile,ErrorPage,ExplorePage,BookmarkPage,SpecificCollectionPage}
+export {Landing,Register,ProtectedRoute,Profile,ErrorPage,ExplorePage,BookmarkPage,SpecificCollectionPage,ShortsPage}

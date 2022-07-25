@@ -1,5 +1,15 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Landing, Register, ProtectedRoute, Profile,ErrorPage,ExplorePage,BookmarkPage,SpecificCollectionPage } from "./pages";
+import {
+  Landing,
+  Register,
+  ProtectedRoute,
+  Profile,
+  ErrorPage,
+  ExplorePage,
+  BookmarkPage,
+  SpecificCollectionPage,
+  ShortsPage,
+} from "./pages";
 import {
   SharedLayout,
   PostPage,
@@ -7,7 +17,6 @@ import {
   SharedLayoutv2,
 } from "./pages/dashboard";
 import Postdetail from "./pages/dashboard/post-detail";
-
 
 function App() {
   return (
@@ -29,6 +38,8 @@ function App() {
           <Route path="add-job" element={<Landing />} />
 
           <Route path="detailpost/:id" element={<Postdetail />} />
+          <Route path="shorts" element={<ShortsPage />} />
+
           {/* <Route path="/profile" element={<Profile />} /> */}
         </Route>
 
@@ -40,15 +51,12 @@ function App() {
             </ProtectedRoute>
           }
         >
-          <Route index path =":id" element={<Profile />} />
-          <Route path="explore" element = {<ExplorePage/>}/>
-          <Route path="bookmarks" element = {<BookmarkPage/>}/>
-          <Route path = "collection/:id" element={<SpecificCollectionPage/>}/>
-
-
-
+          <Route index path=":id" element={<Profile />} />
+          <Route path="explore" element={<ExplorePage />} />
+          <Route path="bookmarks" element={<BookmarkPage />} />
+          <Route path="collection/:id" element={<SpecificCollectionPage />} />
         </Route>
-        <Route path="*" element={<ErrorPage/>}/>
+        <Route path="*" element={<ErrorPage />} />
       </Routes>
     </BrowserRouter>
   );

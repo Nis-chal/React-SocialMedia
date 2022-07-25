@@ -53,8 +53,7 @@ import {
  GET_COLLECTION_SUCCESS,
  GET_COLLECTION_ERROR,
 
- UPDATE_COLLECTION_BEGIN,
- UPDATE_COLLECTION_ERROR,
+
  UPDATE_COLLECTION_SUCCESS,
 
 
@@ -551,7 +550,7 @@ const AppProvider = ({ children }) => {
       }
   
   
-      const {data}= await authFetch.put('/collection',formdata)
+     await authFetch.put('/collection',formdata)
       dispatch({type:CREATE_COLLECTION_SUCCESS})
     }catch(e){
     dispatch({type:CREATE_COLLECTION_ERROR})
@@ -601,7 +600,7 @@ const AppProvider = ({ children }) => {
   
   
   
-      const {data}= await authFetch.patch(`/collection/update/${collectionId}`,formdata)
+      await authFetch.patch(`/collection/update/${collectionId}`,formdata)
       dispatch({type:UPDATE_COLLECTION_SUCCESS})
     }catch(e){
     // dispatch({type:UPDATE_COLLECTION_ERROR})
