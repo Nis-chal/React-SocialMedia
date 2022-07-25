@@ -417,6 +417,7 @@ const reducer = (state, action) => {
       return {
         ...state,
         buttontype: true,
+        isLoading:true,
       };
     }
     
@@ -424,7 +425,8 @@ const reducer = (state, action) => {
       return {
         ...state,
         buttontype: false,
-        collection:action.payload.collection
+        collection:action.payload.collection,
+        isLoading:false
 
       };
     }
@@ -433,6 +435,8 @@ const reducer = (state, action) => {
       return {
         ...state,
         buttontype: false,
+        isLoading:false
+
 
       };
     }

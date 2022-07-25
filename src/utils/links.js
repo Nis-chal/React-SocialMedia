@@ -21,7 +21,7 @@ const links = [
   {
     id: 3,
     text: "bookmarks",
-    path: "bookmarks",
+    path: "/profile/bookmarks",
     icon: <IoBookmarkOutline />,
   },
   {

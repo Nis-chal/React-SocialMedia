@@ -538,11 +538,12 @@ const AppProvider = ({ children }) => {
       let formdata = new FormData()
       formdata.append("postId",postId)
       formdata.append("usercollection",usercollection)
-      formdata.append("name",name)
+      if(name){
+        formdata.append("name",name)
+      }
   
   
-  
-      const {data}= await authFetch.post('/collection',formdata)
+      const {data}= await authFetch.put('/collection',formdata)
       dispatch({type:CREATE_COLLECTION_SUCCESS})
     }catch(e){
     dispatch({type:CREATE_COLLECTION_ERROR})
@@ -581,7 +582,7 @@ const AppProvider = ({ children }) => {
   }
 
 
-  const updateCollection = async({postId})=>{
+  const updateCollection = async({postId,collectionId})=>{
 
     // dispatch({type:UPDATE_COLLECTION_BEGIN})
 
@@ -592,7 +593,7 @@ const AppProvider = ({ children }) => {
   
   
   
-      const {data}= await authFetch.patch('/collection',formdata)
+      const {data}= await authFetch.patch(`/collection/update/${collectionId}`,formdata)
       dispatch({type:UPDATE_COLLECTION_SUCCESS})
     }catch(e){
     // dispatch({type:UPDATE_COLLECTION_ERROR})
@@ -615,9 +616,8 @@ const AppProvider = ({ children }) => {
   
   
   
-      const {data}= await authFetch.get('/collection')
+      const {data}= await authFetch.get('/collection/all')
       const{collection} = data
-      console.log(collection)
       dispatch({type:GET_COLLECTION_SUCCESS,
       payload:{collection}
       })

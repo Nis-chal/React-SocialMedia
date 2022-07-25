@@ -2,11 +2,11 @@ import React from 'react'
 import { useAppContext } from '../../context/appContext'
 
 const SingleCollection = ({item,closeOption,postId}) => {
-  const {updateCollection} = useAppContext()
+  const {updateCollection,createCollection} = useAppContext()
 
      const clickCollection = (e)=>{
         e.preventDefault()
-    updateCollection({name:item.name,postId})
+    updateCollection({name:item.name,postId,collectionId:item._id})
     closeOption()
 
   }
