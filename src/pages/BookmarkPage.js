@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useAppContext } from "../context/appContext";
 import Wrapper from "../assets/wrappers/collection/collectionlst";
 import {useNavigate} from 'react-router-dom'
+import {Loading} from '../components'
 
 const BookmarkPage = () => {
   const { token, allCollection, collection, isLoading } = useAppContext();
@@ -28,7 +29,7 @@ const BookmarkPage = () => {
   }, []);
 
   if (isLoading) {
-    return <div>non</div>;
+    return <Loading/>
   }
 
   return (
