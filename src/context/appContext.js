@@ -672,6 +672,27 @@ const AppProvider = ({ children }) => {
   };
 
 
+  const addShorts = async ({description,video}) => {
+    dispatch({ type: SPECIFIC_COLLECTION_BEGIN });
+
+
+  
+
+    let formdata = new FormData()
+    formdata.append("description", description)
+    formdata.append("video",video)
+
+    try {
+      await authFetch.post(
+        `/shorts/upload`,formdata
+      );
+      dispatch({ type: SPECIFIC_COLLECTION_SUCCESS, });
+    } catch (e) {
+      dispatch({ type: SPECIFIC_COLLECTION_ERROR });
+    }
+  };
+
+
 
   return (
     <AppContext.Provider
@@ -713,7 +734,8 @@ const AppProvider = ({ children }) => {
         updateCollection,
         allCollection,
         removeBookmark,
-        specificBookmark
+        specificBookmark,
+        addShorts
       }}
     >
       {children}

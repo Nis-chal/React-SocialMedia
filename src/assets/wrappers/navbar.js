@@ -128,6 +128,7 @@ const Wrapper = styled.aside`
       padding-block: 10px;
       color: white;
       width: 100%;
+      cursor: pointer;
 
     }
 

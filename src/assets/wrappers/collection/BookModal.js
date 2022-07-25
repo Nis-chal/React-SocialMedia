@@ -74,6 +74,7 @@ const Wrapper = styled.aside`
     border: none;
     padding-block: 10px;
     color: white;
+    cursor: pointer;
   }
 
    }

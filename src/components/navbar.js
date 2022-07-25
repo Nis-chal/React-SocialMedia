@@ -3,11 +3,35 @@ import { useState } from "react";
 import { useAppContext } from "../context/appContext";
 import {Searchbar,SearchResult} from "../components"
 import {ImCross} from "react-icons/im"
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const [showLogout, setShowLogout] = useState(false);
-  const { logoutUser } = useAppContext();
+  const { logoutUser,addShorts } = useAppContext();
   const [shortForm, setShort] = useState(false)
+  const [description,SetDescription] = useState("")
+  const [video,setValues] = useState('');
+
+  const navigate = useNavigate()
+
+  const handleChange=(e)=>{
+
+    SetDescription(e.target.value)
+
+  }
+
+     const FileChange =  (e) => {
+       var image =  e.target.files[0];
+
+       setValues(image );
+     };
+
+  const submit = (e)=>{
+    addShorts({description,video})
+    navigate('/user/shorts')
+    setShort(false)
+
+  }
   
 
   return (
@@ -48,11 +72,11 @@ const Navbar = () => {
 
         <div className={shortForm ? "addShorts" : "display-none"}>
           <h2>Add Shorts</h2>
-          <input type="text" placeholder="Description" />
-          <input type="file" />
+          <input type="text" placeholder="Description" onChange={handleChange}  value={description}/>
+          <input type="file" onChange={FileChange} />
           <ImCross onClick={() => setShort(false)} className="cross-icon" />
 
-          <button className="save-btn">Submit</button>
+          <button onClick={submit} className="save-btn">Submit</button>
         </div>
       </nav>
     </Wrapper>

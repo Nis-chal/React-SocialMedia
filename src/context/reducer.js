@@ -64,7 +64,11 @@ import {
 
   SPECIFIC_COLLECTION_BEGIN,
   SPECIFIC_COLLECTION_ERROR,
-  SPECIFIC_COLLECTION_SUCCESS
+  SPECIFIC_COLLECTION_SUCCESS,
+
+  ADD_SHORTS_BEGIN,
+  ADD_SHORTS_SUCCESS,
+  ADD_SHORTS_ERROR
 
 
 
@@ -510,6 +514,30 @@ const reducer = (state, action) => {
     }
 
     if (action.type === SPECIFIC_COLLECTION_ERROR) {
+      return {
+        ...state,
+        buttontype: false,
+      };
+    }
+
+
+       
+    if (action.type === ADD_SHORTS_BEGIN) {
+      return {
+        ...state,
+        buttontype: true,
+      };
+    }
+
+    if (action.type === ADD_SHORTS_SUCCESS) {
+      return {
+        ...state,
+        buttontype: false,
+        specificCollection: action.payload.collection,
+      };
+    }
+
+    if (action.type === ADD_SHORTS_ERROR) {
       return {
         ...state,
         buttontype: false,
