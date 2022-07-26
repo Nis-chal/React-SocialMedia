@@ -718,18 +718,43 @@ const AppProvider = ({ children }) => {
      }
    };
 
-   const likeanddislike = async({shortid})=>{
+   const unlikeShorts = async({shortid})=>{
 
      dispatch({ type: LIKE_SHORTS_BEGIN });
 
      try {
-       await authFetch.get(`/shorts/${shortid}`);
+       await authFetch.patch(`/shorts/${shortid}/unlike`);
        dispatch({ type: LIKE_SHORTS_SUCCESS });
      } catch (e) {
        dispatch({ type: LIKE_SHORTS_ERROR });
      }
 
    }
+
+
+   const  dislikeShorts = async ({ shortid }) => {
+     dispatch({ type: LIKE_SHORTS_BEGIN });
+
+     try {
+       await authFetch.patch(`/shorts/${shortid}/dislike`);
+       dispatch({ type: LIKE_SHORTS_SUCCESS });
+     } catch (e) {
+       dispatch({ type: LIKE_SHORTS_ERROR });
+     }
+   };
+
+
+   
+   const undislikeShorts = async ({ shortid }) => {
+     dispatch({ type: LIKE_SHORTS_BEGIN });
+
+     try {
+       await authFetch.patch(`/shorts/${shortid}/undislike`);
+       dispatch({ type: LIKE_SHORTS_SUCCESS });
+     } catch (e) {
+       dispatch({ type: LIKE_SHORTS_ERROR });
+     }
+   };
 
 
 
@@ -775,7 +800,12 @@ const AppProvider = ({ children }) => {
         removeBookmark,
         specificBookmark,
         addShorts,
-        addlikeShorts
+        addlikeShorts,
+
+        unlikeShorts,
+
+        dislikeShorts,
+        undislikeShorts,
       }}
     >
       {children}

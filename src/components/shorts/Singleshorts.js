@@ -9,7 +9,7 @@ import { FcMusic } from "react-icons/fc";
 import { useAppContext } from "../../context/appContext";
 import axios from "axios";
 const Singleshorts = ({ item }) => {
-  const {addlikeShorts,token} = useAppContext()
+  const {addlikeShorts,token,unlikeShorts,dislikeShorts,undislikeShorts} = useAppContext()
   const [isliked, setLiked] = useState(false);
   const [isdisliked, setdisliked] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -32,6 +32,7 @@ const Singleshorts = ({ item }) => {
   const onremovelike = () => {
       if(isliked){
         setlcount(lcount-1)
+        unlikeShorts({shortid:item._id})
 
         setLiked(false);
       }
@@ -40,15 +41,17 @@ const Singleshorts = ({ item }) => {
 
   const ondisliked =()=>{
     setdisliked(true)
+    dislikeShorts({shortid:item._id})
     if (isliked) {
       setLiked(false);
-        setlcount(lcount - 1);
+      setlcount(lcount - 1);
 
     }
   }
 
   const removedislike = ()=>{
     setdisliked(false)
+    undislikeShorts({shortid:item._id})
 
   }
 
@@ -72,7 +75,7 @@ const Singleshorts = ({ item }) => {
       }
     ).then((res)=>{
       setLiked(res.data.islike)
-      setdisliked(res.data.isdisliked)
+      setdisliked(res.data.isdislike)
       setlcount(item.likesid.length)
       setLoading(false)
     });
