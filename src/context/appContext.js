@@ -68,6 +68,15 @@ import {
  SPECIFIC_COLLECTION_SUCCESS,
 
 
+ ADD_SHORTS_BEGIN,
+ ADD_SHORTS_SUCCESS,
+ ADD_SHORTS_ERROR,
+
+ LIKE_SHORTS_BEGIN,
+ LIKE_SHORTS_SUCCESS,
+ LIKE_SHORTS_ERROR
+
+
 
 
 
@@ -676,7 +685,7 @@ const AppProvider = ({ children }) => {
 
 
   const addShorts = async ({description,video}) => {
-    dispatch({ type: SPECIFIC_COLLECTION_BEGIN });
+    dispatch({ type: ADD_SHORTS_BEGIN });
 
 
   
@@ -689,25 +698,38 @@ const AppProvider = ({ children }) => {
       await authFetch.post(
         `/shorts/upload`,formdata
       );
-      dispatch({ type: SPECIFIC_COLLECTION_SUCCESS, });
+      dispatch({ type: ADD_SHORTS_SUCCESS, });
     } catch (e) {
-      dispatch({ type: SPECIFIC_COLLECTION_ERROR });
+      dispatch({ type: ADD_SHORTS_ERROR });
     }
   };
 
 
    const addlikeShorts = async ({ shortid}) => {
-     dispatch({ type: SPECIFIC_COLLECTION_BEGIN });
+     dispatch({ type: LIKE_SHORTS_BEGIN });
 
    
 
      try {
-       await authFetch.post(`/shorts/upload/${shortid}`, );
-       dispatch({ type: SPECIFIC_COLLECTION_SUCCESS });
+       await authFetch.patch(`/shorts/${shortid}`, );
+       dispatch({ type: LIKE_SHORTS_SUCCESS });
      } catch (e) {
-       dispatch({ type: SPECIFIC_COLLECTION_ERROR });
+       dispatch({ type: LIKE_SHORTS_ERROR });
      }
    };
+
+   const likeanddislike = async({shortid})=>{
+
+     dispatch({ type: LIKE_SHORTS_BEGIN });
+
+     try {
+       await authFetch.get(`/shorts/${shortid}`);
+       dispatch({ type: LIKE_SHORTS_SUCCESS });
+     } catch (e) {
+       dispatch({ type: LIKE_SHORTS_ERROR });
+     }
+
+   }
 
 
 

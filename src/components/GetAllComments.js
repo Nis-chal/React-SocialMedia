@@ -24,6 +24,8 @@ const GetAllComments = React.memo(({ postId,change,cmtDelete }) => {
       .then((res) => listOutComment({ comment: res.data.comment }));
   }, [postId, token,change,commentUpdate]);
 
+ 
+
   return (
     <Wrapper>
       {ListOfComment.map((item,index) => {

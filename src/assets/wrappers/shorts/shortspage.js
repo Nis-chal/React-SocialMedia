@@ -13,7 +13,7 @@ const Wrapper = styled.aside`
       justify-content: center;
       position: relative;
 
-      & > .description{
+      & > .description {
         position: absolute;
         bottom: 13%;
         width: 40%;
@@ -44,13 +44,11 @@ const Wrapper = styled.aside`
         right: 50px;
         bottom: 30%;
 
-        & > .shorts-icon.blue{
-          color:blue;
-
+        & > .shorts-icon.blue {
+          color: #4287f5;
         }
         & > .shorts-icon {
           margin-left: 8px;
-
         }
 
         & > .music-container {

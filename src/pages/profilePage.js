@@ -34,7 +34,7 @@ const Profile = () => {
 
   useEffect(() => {
     userProfile(userId);
-  }, [userId, isLoading]);
+  }, [userId]);
 
   
 

@@ -7,16 +7,19 @@ import {
 import { BsBookmarkFill } from "react-icons/bs";
 import { FcMusic } from "react-icons/fc";
 import { useAppContext } from "../../context/appContext";
+import axios from "axios";
 const Singleshorts = ({ item }) => {
-  const {addlikesShorts} = useAppContext()
+  const {addlikeShorts,token} = useAppContext()
   const [isliked, setLiked] = useState(false);
   const [isdisliked, setdisliked] = useState(false);
+  const [loading, setLoading] = useState(true);
+
 
   const vidRef = useRef(null);
 
   const onliked = ()=>{
     setLiked(true)
-    addlikesShorts({shortid:item._id})
+    addlikeShorts({shortid:item._id})
     if(isdisliked){
 
       setdisliked(false)
@@ -53,6 +56,29 @@ const Singleshorts = ({ item }) => {
     vidRef.current.pause();
   };
 
+
+  useEffect(()=>{
+    axios.get(
+      `/api/v1/shorts/${item._id}`,
+
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    ).then((res)=>{
+      setLiked(res.data.islike)
+      setdisliked(res.data.isdisliked)
+      setLoading(false)
+    });
+
+  },[token,item._id])
+
+
+   if (loading) {
+     return <div></div>;
+   }
+
   return (
     <div className="hello">
       <video
@@ -62,6 +88,7 @@ const Singleshorts = ({ item }) => {
         onMouseEnter={onentry}
         onMouseLeave={onleave}
         src={item.video}
+        
       />
 
       <div className="user-info">
