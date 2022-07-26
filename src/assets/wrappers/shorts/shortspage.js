@@ -38,17 +38,36 @@ const Wrapper = styled.aside`
       & > .shorts-options {
         display: flex;
         font-size: 25px;
-        gap: 30px;
+        gap: 20px;
         flex-direction: column;
         position: absolute;
         right: 50px;
         bottom: 30%;
+        & > .like-section {
+          margin-left: 8px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          text-align: center;
+          & > .count {
+            font-size: 14px;
+            margin-right: 3px;
+          }
+
+          & > .shorts-icon.blue {
+            color: #4287f5;
+          }
+        }
 
         & > .shorts-icon.blue {
           color: #4287f5;
         }
         & > .shorts-icon {
           margin-left: 8px;
+        }
+
+        & > .shorts-icon:last-of-type{
+          font-size: 23px;
         }
 
         & > .music-container {

@@ -13,6 +13,7 @@ const Singleshorts = ({ item }) => {
   const [isliked, setLiked] = useState(false);
   const [isdisliked, setdisliked] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [lcount,setlcount] = useState(0)
 
 
   const vidRef = useRef(null);
@@ -30,6 +31,7 @@ const Singleshorts = ({ item }) => {
 
   const onremovelike = () => {
       if(isliked){
+        setlcount(lcount-1)
 
         setLiked(false);
       }
@@ -40,6 +42,8 @@ const Singleshorts = ({ item }) => {
     setdisliked(true)
     if (isliked) {
       setLiked(false);
+        setlcount(lcount - 1);
+
     }
   }
 
@@ -69,6 +73,7 @@ const Singleshorts = ({ item }) => {
     ).then((res)=>{
       setLiked(res.data.islike)
       setdisliked(res.data.isdisliked)
+      setlcount(item.likesid.length)
       setLoading(false)
     });
 
@@ -101,17 +106,20 @@ const Singleshorts = ({ item }) => {
       </div>
 
       <div className="shorts-options">
-        {isliked ? (
-          <AiFillLike className="shorts-icon blue" onClick={onremovelike} />
-        ) : (
-          <AiFillLike className="shorts-icon " onClick={onliked} />
-        )}
+        <div className="like-section">
+          {isliked ? (
+            <AiFillLike className="shorts-icon blue" onClick={onremovelike} />
+          ) : (
+            <AiFillLike className="shorts-icon " onClick={onliked} />
+          )}
+          <div className="count">{lcount}</div>
+        </div>
         {isdisliked ? (
           <AiFillDislike className="shorts-icon blue" onClick={removedislike} />
         ) : (
           <AiFillDislike className="shorts-icon " onClick={ondisliked} />
         )}
-        <BsBookmarkFill className="shorts-icon" />
+        <BsBookmarkFill className="shorts-icon " />
         <div className="music-container">
           <FcMusic className="music-icon" />
         </div>
