@@ -43,7 +43,7 @@ const Landing = () =>{
           <ul className="d-flex navbar-link">
             <li>Get Started</li>
             <li className="logo">
-              <span className="circle-border">N</span> <span>NOK'S MEDIA</span>
+              <span className="circle-border">N</span> <span>WINKLE'S MEDIA</span>
             </li>
             <li>About</li>
           </ul>
@@ -147,7 +147,7 @@ const Landing = () =>{
 
         </div>
           <p className="five-p">
-Matt’Studio specialises in creating responsive mobile apps, web & mobile design, data design and much more. Our aim is to make the product as user friendly as possible, so that user anyone can find anything within their finger reach. Yet at the same time we are not forgetting about the stunning visuals which will allows to enjoy the application and please every eye.          
+Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque optio provident laboriosam eligendi nisi accusamus deleniti vero dolorum quidem neque consequuntur omnis, ratione ea nobis magni eius reiciendis dignissimos voluptate molestias distinctio obcaecati. Minima architecto nesciunt dolorem provident numquam adipisci quas, obcaecati vero possimus veniam soluta sed est, commodi, voluptatibus rerum eum. Quia!         
 </p>
 <p className="five-p">We often help start ups to get their first site live! Don’t be shy send a question!</p>
 
@@ -175,7 +175,7 @@ Matt’Studio specialises in creating responsive mobile apps, web & mobile desig
 
         </div>
 
-        <p className="six-p">Matt’Studio officially founded in April 2021, as an advertising agency. Mainly creating Web & Mobile products of various scope, although the studio is freshly opened – Mateusz the owner has 8+ years of experience within UX / UI area, and has worked for big clients such as Samsung, CocaCola, 4F, Ikea, P&G, Wealth & lots more – Mateusz also, achieved Samsung design awards in years 2018-2019.</p>
+        <p className="six-p">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aspernatur veniam sint omnis labore soluta, optio laborum beatae libero modi facere magni nobis ullam dolore quasi cumque voluptatibus sit blanditiis atque in? Illo earum, deleniti voluptatum architecto, neque odio vel laudantium facere consectetur aperiam qui?</p>
         <p className="six-p">Numerous of contacts allow to push the business above the boundaries. We work everyday and we want to make sure that our clients are satisfied as possible with the final result.</p>
       </section>
 

@@ -1,13 +1,14 @@
 import { useState } from "react";
 import { useAppContext } from "../context/appContext";
 
-const RemoveFollowerbtn = ({ followerId }) => {
+const RemoveFollowerbtn = ({ followerId,clicked }) => {
   const [followed, setFollowed] = useState(true);
   const { buttontype, removeFollower } = useAppContext();
 
   const togglefollow = () => {
     removeFollower(followerId);
     setFollowed(false);
+    clicked()
   };
 
   return (

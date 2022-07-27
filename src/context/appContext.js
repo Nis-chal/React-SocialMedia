@@ -2,7 +2,6 @@ import React, { useReducer, useContext } from "react";
 import reducer from "./reducer";
 import axios from "axios";
 
-
 import {
   LOADING_BEGIN,
   DISPLAY_ALERT,
@@ -22,7 +21,7 @@ import {
   POSTS_BEGIN_SUCCESS,
   POSTS_UPDATE_SUCCESS,
   POSTS_DELETE_BEGIN,
-  GET_PROFILE_BEGIN,
+  POSTS_DELETE_SUCCESS,
   FOLLOW_BEGIN,
   FOLLOW_SUCCESS,
   SEARCH_SUCCESS,
@@ -36,51 +35,32 @@ import {
   UPDATE_COMMENT_BEGIN,
   UPDATE_COMMENT_ERROR,
   UPDATE_COMMENT_SUCCESS,
-
   UPDATE_PROFILE_BEGIN,
   UPDATE_PROFILE_SUCCESS,
-  
   EXPLORE_SUCCESS,
-
   CREATE_COLLECTION_BEGIN,
   CREATE_COLLECTION_SUCCESS,
   CREATE_COLLECTION_ERROR,
-
-
-
-
- GET_COLLECTION_BEGIN,
- GET_COLLECTION_SUCCESS,
- GET_COLLECTION_ERROR,
-
-
- UPDATE_COLLECTION_SUCCESS,
-
-
- REMOVE_COLLECTION_BEGIN,
- REMOVE_COLLECTION_ERROR,
- REMOVE_COLLECTION_SUCCESS,
-
-
- 
- SPECIFIC_COLLECTION_BEGIN,
- SPECIFIC_COLLECTION_ERROR,
- SPECIFIC_COLLECTION_SUCCESS,
-
-
- ADD_SHORTS_BEGIN,
- ADD_SHORTS_SUCCESS,
- ADD_SHORTS_ERROR,
-
- LIKE_SHORTS_BEGIN,
- LIKE_SHORTS_SUCCESS,
- LIKE_SHORTS_ERROR
-
-
-
-
-
- 
+  GET_COLLECTION_BEGIN,
+  GET_COLLECTION_SUCCESS,
+  GET_COLLECTION_ERROR,
+  UPDATE_COLLECTION_SUCCESS,
+  REMOVE_COLLECTION_BEGIN,
+  REMOVE_COLLECTION_ERROR,
+  REMOVE_COLLECTION_SUCCESS,
+  SPECIFIC_COLLECTION_BEGIN,
+  SPECIFIC_COLLECTION_ERROR,
+  SPECIFIC_COLLECTION_SUCCESS,
+  ADD_SHORTS_BEGIN,
+  ADD_SHORTS_SUCCESS,
+  ADD_SHORTS_ERROR,
+  LIKE_SHORTS_BEGIN,
+  LIKE_SHORTS_SUCCESS,
+  LIKE_SHORTS_ERROR,
+  SPECIFIC_PROFILE_SUCCESS,
+  DELETE_SHORTS_BEGIN,
+  DELETE_SHORTS_SUCCESS,
+  DELETE_SHORTS_ERROR,
 
 } from "./action";
 
@@ -90,9 +70,6 @@ const userLocation = localStorage.getItem("location");
 const profilePicture = localStorage.getItem("profilePicture");
 const username = localStorage.getItem("username");
 const name = localStorage.getItem("name");
-
-
-
 
 const initialState = {
   isLoading: false,
@@ -107,9 +84,9 @@ const initialState = {
   userfeed: [],
   isSubmit: false,
 
-  username:username||'',
-  profilePicture:profilePicture || '',
-  name:name||'',
+  username: username || "",
+  profilePicture: profilePicture || "",
+  name: name || "",
 
   likeAnimation: false,
   postInfo: "",
@@ -124,11 +101,12 @@ const initialState = {
   followings: [],
   commentsList: [],
 
-  explorePost:[],
-  commentUpdate:false,
-  collection:[],
+  explorePost: [],
+  commentUpdate: false,
+  collection: [],
 
-  specificCollection:[]
+  specificCollection: [],
+  usershort: [],
 };
 
 const AppContext = React.createContext();
@@ -143,8 +121,6 @@ const AppProvider = ({ children }) => {
     //   "Content-Type": "multipart/form-data",
 
     // },
-
-    
   });
 
   // response interceptor
@@ -192,16 +168,20 @@ const AppProvider = ({ children }) => {
     }, 3000);
   };
 
-  const addUserToLocalStorage = ({ user, token, location,profilePicture ,username,name}) => {
+  const addUserToLocalStorage = ({
+    user,
+    token,
+    location,
+    profilePicture,
+    username,
+    name,
+  }) => {
     localStorage.setItem("user", JSON.stringify(user));
     localStorage.setItem("token", token);
     localStorage.setItem("location", location);
     localStorage.setItem("profilePicture", profilePicture);
     localStorage.setItem("username", username);
     localStorage.setItem("name", name);
-
-
-
   };
 
   const handleChange = ({ name, value }) => {
@@ -215,12 +195,10 @@ const AppProvider = ({ children }) => {
   const setupUser = async ({ currentUser, endPoint, alertText }) => {
     dispatch({ type: SETUP_USER_BEGIN });
 
-    const {name, location, email, password, profilePicture, username } =
+    const { name, location, email, password, profilePicture, username } =
       currentUser;
 
     let formData = new FormData();
-
-
 
     formData.append("name", name);
     formData.append("username", username);
@@ -233,11 +211,18 @@ const AppProvider = ({ children }) => {
       const { data } = await axios.post(`/api/v1/auth/${endPoint}`, formData);
 
       const { user, token, location } = data;
-      const username = user.username
-      const profilePicture = user.profilePicture
-      const name = user.name
+      const username = user.username;
+      const profilePicture = user.profilePicture;
+      const name = user.name;
 
-      addUserToLocalStorage({ user, token, location,profilePicture,username,name });
+      addUserToLocalStorage({
+        user,
+        token,
+        location,
+        profilePicture,
+        username,
+        name,
+      });
       dispatch({
         type: SETUP_USER_SUCCESS,
         payload: {
@@ -247,10 +232,9 @@ const AppProvider = ({ children }) => {
           profilePicture,
           location,
           alertText,
-          name
+          name,
         },
       });
-
     } catch (error) {
       //local storage later
 
@@ -270,13 +254,11 @@ const AppProvider = ({ children }) => {
     localStorage.removeItem("profilePicture");
     localStorage.removeItem("username");
     localStorage.removeItem("name");
-
-
-
   };
 
   const logoutUser = () => {
     dispatch({ type: LOGOUT_USER });
+    dispatch({type:CLEAR_VALUES})
     removeFromLocalStorage();
   };
 
@@ -392,20 +374,24 @@ const AppProvider = ({ children }) => {
     });
     try {
       await authFetch.delete(`/posts/postdetail/${postId}`);
+      dispatch({
+        type: POSTS_DELETE_SUCCESS,
+      });
     } catch (error) {
       logoutUser();
     }
+    clearAlert()
   };
 
   const userProfile = async (userId) => {
     dispatch({ type: LOADING_BEGIN });
     try {
       const response = await authFetch.get(`/profile/${userId}`);
-      const { post, user, followings, followers } = response.data;
-      
+      const { post, user, followings, followers, short } = response.data;
+
       dispatch({
-        type: GET_PROFILE_BEGIN,
-        payload: { post, user, followings, followers },
+        type: SPECIFIC_PROFILE_SUCCESS,
+        payload: { post, user, followings, followers, short },
       });
     } catch (error) {}
   };
@@ -501,268 +487,220 @@ const AppProvider = ({ children }) => {
     }
   };
 
-  const profileUpdate = async ( {content} ) => {
+  const profileUpdate = async ({ content }) => {
     dispatch({ type: UPDATE_PROFILE_BEGIN });
-    
-    const {name,username,location,email,profilePicture,coverPage,profileId} = content
+
+    const {
+      name,
+      username,
+      location,
+      email,
+      profilePicture,
+      coverPage,
+      profileId,
+    } = content;
     let formData = new FormData();
 
-      formData.append("name",name)
-      formData.append("username",username)
-      formData.append("location",location)
-      formData.append("email",email)
-      formData.append("profilePicture",profilePicture)
-      formData.append("coverPage",coverPage)
-
-      
-       
-
-
+    formData.append("name", name);
+    formData.append("username", username);
+    formData.append("location", location);
+    formData.append("email", email);
+    formData.append("profilePicture", profilePicture);
+    formData.append("coverPage", coverPage);
 
     try {
-      const {data} = await authFetch.put(`/profile/updateprofile/${profileId}`,formData)
-      const {profilePicture,username,name} = data.users
-       
+      const { data } = await authFetch.patch(
+        `/profile/updateprofile/${profileId}`,
+        formData
+      );
+      const { profilePicture, username, name } = data.users;
+      localStorage.setItem("profilePicture", profilePicture);
+      localStorage.setItem("username", username);
+      localStorage.setItem("name", name);
+
       dispatch({
         type: UPDATE_PROFILE_SUCCESS,
-        payload:{profilePicture,username,name}
+        payload: { profilePicture, username, name },
       });
-      localStorage.setItem("profilePicture", profilePicture);
-     localStorage.setItem("username", username);
-    localStorage.setItem("name", name);
-     
-     
-    } catch (e) {
       
-    }
+    } catch (e) {}
     clearAlert();
-
   };
 
-  const explorePage = async ()=>{
-    const {data} =await authFetch.get("/posts/explorepost")
-    const {posts} = data
+  const explorePage = async () => {
+    const { data } = await authFetch.get("/posts/explorepost");
+    const { posts } = data;
     dispatch({
-      type:EXPLORE_SUCCESS,
-      payload:{posts}
-    })
-  } 
+      type: EXPLORE_SUCCESS,
+      payload: { posts },
+    });
+  };
 
-  const createCollection = async({postId,usercollection,name})=>{
+  const createCollection = async ({ postId, usercollection, name }) => {
+    dispatch({ type: CREATE_COLLECTION_BEGIN });
 
-    dispatch({type:CREATE_COLLECTION_BEGIN})
-
-    try{
-
-      let formdata = new FormData()
-      formdata.append("postId",postId)
-      formdata.append("usercollection",usercollection)
-      if(name){
-        formdata.append("name",name)
+    try {
+      let formdata = new FormData();
+      formdata.append("postId", postId);
+      formdata.append("usercollection", usercollection);
+      if (name) {
+        formdata.append("name", name);
       }
-  
-  
-     await authFetch.put('/collection',formdata)
-      dispatch({type:CREATE_COLLECTION_SUCCESS})
-    }catch(e){
-    dispatch({type:CREATE_COLLECTION_ERROR})
 
+      await authFetch.put("/collection", formdata);
+      dispatch({ type: CREATE_COLLECTION_SUCCESS });
+    } catch (e) {
+      dispatch({ type: CREATE_COLLECTION_ERROR });
     }
 
+    clearAlert();
+  };
 
-  }
-  
+  const getCollection = async () => {
+    dispatch({ type: GET_COLLECTION_BEGIN });
 
-
-   const getCollection = async()=>{
-
-    dispatch({type:GET_COLLECTION_BEGIN})
-
-    try{
-
-    
-  
-  
-  
-      const {data}= await authFetch.get('/collection')
-      const{collection} = data
-      console.log(collection)
-      dispatch({type:GET_COLLECTION_SUCCESS,
-      payload:{collection}
-      })
-    }catch(e){
-    dispatch({type:GET_COLLECTION_ERROR})
-
+    try {
+      const { data } = await authFetch.get("/collection");
+      const { collection } = data;
+      console.log(collection);
+      dispatch({ type: GET_COLLECTION_SUCCESS, payload: { collection } });
+    } catch (e) {
+      dispatch({ type: GET_COLLECTION_ERROR });
     }
+  };
 
-
-
-
-  }
-
-
-  const updateCollection = async({postId,collectionId})=>{
-
+  const updateCollection = async ({ postId, collectionId }) => {
     // dispatch({type:UPDATE_COLLECTION_BEGIN})
 
-    try{
+    try {
+      let formdata = new FormData();
+      formdata.append("postId", postId);
 
-      let formdata = new FormData()
-      formdata.append("postId",postId)
-  
-  
-  
-      await authFetch.patch(`/collection/update/${collectionId}`,formdata)
-      dispatch({type:UPDATE_COLLECTION_SUCCESS})
-    }catch(e){
-    // dispatch({type:UPDATE_COLLECTION_ERROR})
-
+      await authFetch.patch(`/collection/update/${collectionId}`, formdata);
+      dispatch({ type: UPDATE_COLLECTION_SUCCESS });
+    } catch (e) {
+      // dispatch({type:UPDATE_COLLECTION_ERROR})
     }
 
-    clearAlert()
+    clearAlert();
+  };
 
+  const allCollection = async () => {
+    dispatch({ type: GET_COLLECTION_BEGIN });
 
-  }
-
-
-    const allCollection = async()=>{
-
-    dispatch({type:GET_COLLECTION_BEGIN})
-
-    try{
-
-    
-  
-  
-  
-      const {data}= await authFetch.get('/collection/all')
-      const{collection} = data
-      dispatch({type:GET_COLLECTION_SUCCESS,
-      payload:{collection}
-      })
-    }catch(e){
-    dispatch({type:GET_COLLECTION_ERROR})
-
+    try {
+      const { data } = await authFetch.get("/collection/all");
+      const { collection } = data;
+      dispatch({ type: GET_COLLECTION_SUCCESS, payload: { collection } });
+    } catch (e) {
+      dispatch({ type: GET_COLLECTION_ERROR });
     }
+  };
 
+  const removeBookmark = async (postId) => {
+    dispatch({ type: REMOVE_COLLECTION_BEGIN });
 
-
-
-  }
-
-
-  
-    const removeBookmark = async(postId)=>{
-
-    dispatch({type:REMOVE_COLLECTION_BEGIN})
-
-    try{  
-     await authFetch.patch(`/collection/${postId}`)
-      dispatch({type:REMOVE_COLLECTION_SUCCESS,
-      })
-    }catch(e){
-    dispatch({type:REMOVE_COLLECTION_ERROR})
-
+    try {
+      await authFetch.patch(`/collection/${postId}`);
+      dispatch({ type: REMOVE_COLLECTION_SUCCESS });
+    } catch (e) {
+      dispatch({ type: REMOVE_COLLECTION_ERROR });
     }
-
-
-
-
-  }
-
+  };
 
   const specificBookmark = async (collectionId) => {
     dispatch({ type: SPECIFIC_COLLECTION_BEGIN });
 
     try {
-      const {data} = await authFetch.get(`/collection/specific/${collectionId}`);
-      const{collection} =data
-      dispatch({ type: SPECIFIC_COLLECTION_SUCCESS,payload:{collection} });
+      const { data } = await authFetch.get(
+        `/collection/specific/${collectionId}`
+      );
+      const { collection } = data;
+      dispatch({ type: SPECIFIC_COLLECTION_SUCCESS, payload: { collection } });
     } catch (e) {
       dispatch({ type: SPECIFIC_COLLECTION_ERROR });
     }
   };
 
-
-  const addShorts = async ({description,video}) => {
+  const addShorts = async ({ description, video }) => {
     dispatch({ type: ADD_SHORTS_BEGIN });
 
-
-  
-
-    let formdata = new FormData()
-    formdata.append("description", description)
-    formdata.append("video",video)
+    let formdata = new FormData();
+    formdata.append("description", description);
+    formdata.append("video", video);
 
     try {
-      await authFetch.post(
-        `/shorts/upload`,formdata
-      );
-      dispatch({ type: ADD_SHORTS_SUCCESS, });
+      await authFetch.post(`/shorts/upload`, formdata);
+      dispatch({ type: ADD_SHORTS_SUCCESS });
     } catch (e) {
       dispatch({ type: ADD_SHORTS_ERROR });
+    }
+    clearAlert()
+  };
+
+  const addlikeShorts = async ({ shortid }) => {
+    dispatch({ type: LIKE_SHORTS_BEGIN });
+
+    try {
+      await authFetch.patch(`/shorts/${shortid}`);
+      dispatch({ type: LIKE_SHORTS_SUCCESS });
+    } catch (e) {
+      dispatch({ type: LIKE_SHORTS_ERROR });
+    }
+  };
+
+  const unlikeShorts = async ({ shortid }) => {
+    dispatch({ type: LIKE_SHORTS_BEGIN });
+
+    try {
+      await authFetch.patch(`/shorts/${shortid}/unlike`);
+      dispatch({ type: LIKE_SHORTS_SUCCESS });
+    } catch (e) {
+      dispatch({ type: LIKE_SHORTS_ERROR });
+    }
+  };
+
+  const dislikeShorts = async ({ shortid }) => {
+    dispatch({ type: LIKE_SHORTS_BEGIN });
+
+    try {
+      await authFetch.patch(`/shorts/${shortid}/dislike`);
+      dispatch({ type: LIKE_SHORTS_SUCCESS });
+    } catch (e) {
+      dispatch({ type: LIKE_SHORTS_ERROR });
+    }
+  };
+
+  const undislikeShorts = async ({ shortid }) => {
+    dispatch({ type: LIKE_SHORTS_BEGIN });
+
+    try {
+      await authFetch.patch(`/shorts/${shortid}/undislike`);
+      dispatch({ type: LIKE_SHORTS_SUCCESS });
+    } catch (e) {
+      dispatch({ type: LIKE_SHORTS_ERROR });
     }
   };
 
 
-   const addlikeShorts = async ({ shortid}) => {
-     dispatch({ type: LIKE_SHORTS_BEGIN });
+  const deleteShorts = async (shortid ) => {
+    dispatch({ type: DELETE_SHORTS_BEGIN });
 
-   
-
-     try {
-       await authFetch.patch(`/shorts/${shortid}`, );
-       dispatch({ type: LIKE_SHORTS_SUCCESS });
-     } catch (e) {
-       dispatch({ type: LIKE_SHORTS_ERROR });
-     }
-   };
-
-   const unlikeShorts = async({shortid})=>{
-
-     dispatch({ type: LIKE_SHORTS_BEGIN });
-
-     try {
-       await authFetch.patch(`/shorts/${shortid}/unlike`);
-       dispatch({ type: LIKE_SHORTS_SUCCESS });
-     } catch (e) {
-       dispatch({ type: LIKE_SHORTS_ERROR });
-     }
-
-   }
-
-
-   const  dislikeShorts = async ({ shortid }) => {
-     dispatch({ type: LIKE_SHORTS_BEGIN });
-
-     try {
-       await authFetch.patch(`/shorts/${shortid}/dislike`);
-       dispatch({ type: LIKE_SHORTS_SUCCESS });
-     } catch (e) {
-       dispatch({ type: LIKE_SHORTS_ERROR });
-     }
-   };
-
-
-   
-   const undislikeShorts = async ({ shortid }) => {
-     dispatch({ type: LIKE_SHORTS_BEGIN });
-
-     try {
-       await authFetch.patch(`/shorts/${shortid}/undislike`);
-       dispatch({ type: LIKE_SHORTS_SUCCESS });
-     } catch (e) {
-       dispatch({ type: LIKE_SHORTS_ERROR });
-     }
-   };
-
-
+    try {
+      await authFetch.delete(`/shorts/${shortid}`);
+      dispatch({ type: DELETE_SHORTS_SUCCESS });
+    } catch (e) {
+      dispatch({ type: DELETE_SHORTS_ERROR });
+    }
+    clearAlert()
+  };
 
   return (
     <AppContext.Provider
       value={{
         ...state,
         displayAlert,
+        deleteShorts,
 
         setupUser,
 

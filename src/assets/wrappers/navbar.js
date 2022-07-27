@@ -137,6 +137,7 @@ const Wrapper = styled.aside`
       background-color: transparent;
       border-radius: 50px;
       height: 30px;
+      color: white;
       backdrop-filter: blur(40px);
     }
   }

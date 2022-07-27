@@ -5,6 +5,10 @@ const Wrapper = styled.aside`
     overflow-y: scroll;
     height: 90vh;
 
+    .fill-color {
+      color: yellow;
+    }
+
     & > .hello {
       background-color: var(--post-card-color);
       display: flex;
@@ -12,6 +16,23 @@ const Wrapper = styled.aside`
       flex-direction: column;
       justify-content: center;
       position: relative;
+
+      & .dot {
+        position: absolute;
+        top: 6%;
+        right: 11%;
+      }
+
+      & .delete-icon {
+        color: white;
+        position: absolute;
+        top: 10%;
+        right: 10%;
+        font-size: 25px;
+        background-color: var(--post-card-color);
+        backdrop-filter: blur(20px);
+        padding: 0.2%;
+      }
 
       & > .description {
         position: absolute;
@@ -66,7 +87,7 @@ const Wrapper = styled.aside`
           margin-left: 8px;
         }
 
-        & > .shorts-icon:last-of-type{
+        & > .shorts-icon:last-of-type {
           font-size: 23px;
         }
 

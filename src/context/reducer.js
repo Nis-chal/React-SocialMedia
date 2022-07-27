@@ -8,17 +8,23 @@ import {
   LOGOUT_USER,
   HANDLE_CHANGE,
   CLEAR_VALUES,
+
   CREATE_POST_BEGIN,
   CREATE_POST_SUCCESS,
   CREATE_POST_ERROR,
+
   GET_POSTS_BEGIN,
   GET_POSTS_SUCCESS,
+
   GET_LIKEPOSTS_BEGIN,
   GET_LIKEPOSTS_SUCCESS,
+
   POSTS_DETAIL_BEGIN,
   POSTS_BEGIN_SUCCESS,
   POSTS_UPDATE_SUCCESS,
+
   POSTS_DELETE_BEGIN,
+  POSTS_DELETE_SUCCESS,
   GET_PROFILE_BEGIN,
   FOLLOW_BEGIN,
   FOLLOW_SUCCESS,
@@ -72,7 +78,14 @@ import {
 
   LIKE_SHORTS_BEGIN,
   LIKE_SHORTS_ERROR,
-  LIKE_SHORTS_SUCCESS
+  LIKE_SHORTS_SUCCESS,
+
+
+  SPECIFIC_PROFILE_SUCCESS,
+
+  DELETE_SHORTS_BEGIN,
+  DELETE_SHORTS_SUCCESS,
+  DELETE_SHORTS_ERROR
 
 
 
@@ -238,6 +251,15 @@ const reducer = (state, action) => {
     };
   }
 
+    if (action.type === POSTS_DELETE_SUCCESS) {
+      return {
+        ...state,
+        showAlert: true,
+        alertType: "success",
+        alertText: "POST DELETE SUCCESS",
+      };
+    }
+
   if (action.type === GET_PROFILE_BEGIN) {
     return {
       ...state,
@@ -251,6 +273,19 @@ const reducer = (state, action) => {
       
     };
   }
+
+
+   if (action.type === SPECIFIC_PROFILE_SUCCESS) {
+     return {
+       ...state,
+       profileUser: action.payload.user,
+       profilePost: action.payload.post,
+       followings: action.payload.followings,
+       followers: action.payload.followers,
+       usershort: action.payload.short,
+       isLoading: false,
+     };
+   }
   if (action.type === FOLLOW_BEGIN) {
     return {
       ...state,
@@ -403,6 +438,9 @@ const reducer = (state, action) => {
       return {
         ...state,
         buttontype: true,
+        showAlert: true,
+        alertType: "danger",
+        alertText: "Collection Created",
       };
     }
     
@@ -529,22 +567,22 @@ const reducer = (state, action) => {
     if (action.type === ADD_SHORTS_BEGIN) {
       return {
         ...state,
-        buttontype: true,
       };
     }
 
     if (action.type === ADD_SHORTS_SUCCESS) {
       return {
         ...state,
-        buttontype: false,
         specificCollection: action.payload.collection,
+        showAlert: true,
+        alertType: "success",
+        alertText: "Shorts Deleted",
       };
     }
 
     if (action.type === ADD_SHORTS_ERROR) {
       return {
         ...state,
-        buttontype: false,
       };
     }
 
@@ -568,6 +606,28 @@ const reducer = (state, action) => {
       return {
         ...state,
         buttontype: false,
+      };
+    }
+
+
+    if (action.type === DELETE_SHORTS_BEGIN) {
+      return {
+        ...state,
+      };
+    }
+
+    if (action.type === DELETE_SHORTS_SUCCESS) {
+      return {
+        ...state,
+        showAlert: true,
+        alertType: "success",
+        alertText: "Post Deleted",
+      };
+    }
+
+    if (action.type === DELETE_SHORTS_ERROR) {
+      return {
+        ...state,
       };
     }
 

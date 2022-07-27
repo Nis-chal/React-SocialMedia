@@ -9,18 +9,19 @@ const Wrapper = styled.aside`
 
     width: 550px;
     background-color: var(--color-bg);
-
+    
     & .search-content {
       display: flex;
       margin-block: 5px;
       gap: 4%;
       margin: 10px;
     }
-
+    
     & > .search-info {
       display: flex;
       flex-direction: column;
       gap: 2%;
+      color:var(--grey-100);
     }
   }
 `;

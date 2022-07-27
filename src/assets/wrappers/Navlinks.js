@@ -39,10 +39,8 @@ const Wrapper = styled.aside`
     overflow: hidden;
   }
 
-  .menu-item.action{
+  .menu-item.action {
     border-top-left-radius: var(--card-border-radius);
-
-
   }
   .sidebar .menu-item:hover {
     text-decoration: none;
@@ -68,7 +66,6 @@ const Wrapper = styled.aside`
   .sidebar .menu-item:hover {
     opacity: 0.7;
   }
-  
 
   @keyframes shiny-btn1 {
     0% {
@@ -99,6 +96,7 @@ const Wrapper = styled.aside`
   .sidebar h3 {
     margin-left: 1.5rem;
     font-size: 1rem;
+    color: var(--color-secondary);
   }
 
   @media screen and (max-width: 1200px) {

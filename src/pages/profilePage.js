@@ -9,6 +9,7 @@ import { HiLocationMarker, HiUser } from "react-icons/hi";
 import { MdDescription } from "react-icons/md";
 import { useParams, Link } from "react-router-dom";
 import {FaImages} from "react-icons/fa"
+
 import {
   Loading,
   PostCard,
@@ -16,7 +17,10 @@ import {
   UserForm,
   FollowAction,
   RemoveFollwerbtn,
+  Followerlst
 } from "../components";
+
+import Singleshorts2 from "../components/shorts/Singleshorts2";
 
 const Profile = () => {
   const {
@@ -27,15 +31,22 @@ const Profile = () => {
     isLoading,
     followers,
     followings,
+    usershort,
+    
     
   } = useAppContext();
   const { id: userId } = useParams();
   // const [toggled, istoggle] = useState(false);
+  const [reload,setReload] = useState(false)
 
   useEffect(() => {
     userProfile(userId);
-  }, [userId]);
+  }, [userId,reload]);
 
+
+  const toreload = ()=>{
+    setReload(!reload)
+  }
   
 
   const [tab, tabtoggle] = useState(1);
@@ -50,7 +61,7 @@ const Profile = () => {
 
   return (
     <Wrapper>
-      <div className="profile"  >
+      <div className="profile">
         <div className="profile-content">
           <div className="profile-images">
             <img
@@ -59,11 +70,7 @@ const Profile = () => {
               className="profile-photo"
             />
 
-            <img
-              src={profileUser.coverpage}
-              alt=""
-              className="profile-cover"
-            />
+            <img src={profileUser.coverpage} alt="" className="profile-cover" />
             <span className="profile-username">{profileUser.username}</span>
             <Followbtn items={profileUser} clicked={() => ontoggle(6)} />
           </div>
@@ -86,6 +93,13 @@ const Profile = () => {
                 className={tab === 3 ? "tab active" : "tab"}
               >
                 following
+              </button>
+
+              <button
+                onClick={() => ontoggle(7)}
+                className={tab === 7 ? "tab active" : "tab"}
+              >
+                Shorts
               </button>
             </div>
           </div>
@@ -115,27 +129,33 @@ const Profile = () => {
                 </button>
               </div>
               <div className="profile-collection">
-                {profilePost.length > 0? profilePost.slice(0,6).map((item,index)=>{
-                  return <img src={item.images[0]} alt="" key={item._id} />;
-                })
-                :<div>No Posts Uploaded</div>              
-              }
-           
+                {profilePost.length > 0 ? (
+                  profilePost.slice(0, 6).map((item, index) => {
+                    return <img src={item.images[0]} alt="" key={item._id} />;
+                  })
+                ) : (
+                  <div>No Posts Uploaded</div>
+                )}
               </div>
             </div>
           </div>
           <div className={tab === 5 ? "profile-posts" : "display-none"}>
             {profilePost.map((item, index) => {
-              return(
-                <Link to={`/user/detailpost/${item._id}`} className ="profile-posts-link">
-
-
-              <div className="profile-posts-content">
-                <img src={item.images[0]} alt="" key={item._id} />
-                 <FaImages className={item.images.length > 1 ? "multipleimage":"d-none"}/>
-              </div> 
+              return (
+                <Link
+                  to={`/user/detailpost/${item._id}`}
+                  className="profile-posts-link"
+                >
+                  <div className="profile-posts-content">
+                    <img src={item.images[0]} alt="" key={item._id} />
+                    <FaImages
+                      className={
+                        item.images.length > 1 ? "multipleimage" : "d-none"
+                      }
+                    />
+                  </div>
                 </Link>
-              )
+              );
             })}
           </div>
 
@@ -145,62 +165,68 @@ const Profile = () => {
             })}
           </div>
 
-          <div className={tab === 6 ? "" : "display-none"}>
-            <UserForm info={profileUser}  />
+          <div className={tab === 7 ? "timeline" : "display-none"}>
+            {usershort.map((item, index) => {
+              return <Singleshorts2 item={item} index={item} key={index} />;
+            })}
           </div>
 
-          <div className={tab === 2 ? "" : "display-none"}>
+          <div className={tab === 6 ? "" : "display-none"}>
+            <UserForm info={profileUser} reload={toreload} />
+          </div>
+
+          <div className={tab === 2 ? "userlst" : "display-none"}>
             {followers.map((item) => {
               return (
-                <div className="following-lists ">
-                    <img
-                      className="profile-photo"
-                      src={item.profilePicture}
-                      alt=""
-                    />
+                // <div className="following-lists ">
+                //   <img
+                //     className="profile-photo"
+                //     src={item.profilePicture}
+                //     alt=""
+                //   />
 
-                    <Link to={`/profile/${item._id}`}>
-                    <div className="following-info">
-                      <span>{item.username}</span>
-                      <div>{item.name}</div>
-                    </div>
-                    </Link>
-                    <div
-                      className={
-                        user._id === profileUser._id ? "" : "visibility-hidden"
-                      }
-                    >
-                      <RemoveFollwerbtn followerId={item._id} />
-                    </div>
-                  </div>
+                //   <Link to={`/profile/${item._id}`}>
+                //     <div className="following-info">
+                //       <span>{item.username}</span>
+                //       <div>{item.name}</div>
+                //     </div>
+                //   </Link>
+                //   <div
+                //     className={
+                //       user._id === profileUser._id ? "" : "visibility-hidden"
+                //     }
+                //   >
+                //     <RemoveFollwerbtn followerId={item._id} />
+                //   </div>
+                // </div>
+                <Followerlst item={item} profileUser = {profileUser}/>
               );
             })}
           </div>
 
-          <div className={tab === 3 ? "" : "display-none"}>
+          <div className={tab === 3 ? "userlst" : "display-none"}>
             {followings.map((item) => {
               return (
                 <div className="following-lists ">
-                    <img
-                      className="profile-photo"
-                      src={item.profilePicture}
-                      alt=""
-                    />
-                    <Link to={`/profile/${item._id}`}>
-
+                  <img
+                    className="profile-photo"
+                    src={item.profilePicture}
+                    alt=""
+                  />
+                  <Link to={`/profile/${item._id}`}>
                     <div className="following-info">
-                      <span>{item.username}</span>
-                      <div>{item.name}</div>
+                      <span className="white-font">{item.username}</span>
+                      <div className="white-font">{item.name}</div>
                     </div>
-                    </Link>
-                    <div
-                      className={
-                        user._id === profileUser._id ? "" : "visibility-hidden"
-                      }
-                    >
-                      <FollowAction followinguser={item._id} />
-                    </div>
+                  </Link>
+                  <div
+                    className={
+                      user._id === profileUser._id ? "" : "visibility-hidden"
+                    }
+                  >
+                    <FollowAction followinguser={item._id} />
                   </div>
+                </div>
               );
             })}
           </div>

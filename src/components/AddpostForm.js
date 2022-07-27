@@ -70,7 +70,6 @@ const AddPostForm = () => {
   };
   return (
     <Wrapper>
-      <Alert />
       <form autoComplete="off" id="addform">
         <div className="create-post">
           <div>

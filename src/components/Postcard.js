@@ -13,7 +13,6 @@ import { MdDelete } from "react-icons/md";
 import { AddcommentForm, GetAllComments } from "../components";
 import { ChooseCollection, BookMarkModal } from "./collection";
 import { Link } from "react-router-dom";
-import { useCallback } from "react";
 import { BsFillBookmarkFill } from "react-icons/bs";
 import axios from "axios";
 
@@ -30,7 +29,6 @@ const PostCard = React.memo(({ item }) => {
     allComments,
     token,
     removeBookmark,
-    updateCollection,
     createCollection,
   } = useAppContext();
 
@@ -46,10 +44,8 @@ const PostCard = React.memo(({ item }) => {
   const [commentCount, setCommentCount] = useState(0);
   const [collectionlstvalue, setCollectiontoggle] = useState(false);
   const [bookmarked, setbookmark] = useState(false);
-  const [onAdd, setAddbookmark] = useState(false);
 
   const [Modal, setModal] = useState(false);
-  const [timer, setTimer] = useState(true);
 
   const toggleModal = () => {
     setModal(!Modal);
@@ -131,7 +127,7 @@ const PostCard = React.memo(({ item }) => {
     } else {
       setUser(false);
     }
-  }, [item.likesid, user._id, item]);
+  }, [item.likesid, user._id, item,token]);
 
   const toggledropdown = () => {
     setdropdown(!dropdown);
@@ -185,7 +181,7 @@ const PostCard = React.memo(({ item }) => {
             </div>
             <div className="ingo">
               <Link to={`/profile/${item.userid._id}`}>
-                <h3>{item.userid.username}</h3>
+                <h3 className="white-font">{item.userid.username}</h3>
               </Link>
               <small>
                 {item.location === "undefined" ? "" : `${item.location} ,`}
