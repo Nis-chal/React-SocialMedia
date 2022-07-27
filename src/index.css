@@ -160,6 +160,10 @@ code {
     monospace;
 }
 
+.white-font{
+  color: var(--grey-100);
+}
+
 .form {
   width: 90vw;
   max-width: var(--fixed-width);

@@ -7,7 +7,7 @@ import {useNavigate} from 'react-router-dom'
 import {Loading} from '../components'
 
 const BookmarkPage = () => {
-  const { token, allCollection, collection, isLoading } = useAppContext();
+  const {  allCollection, collection, isLoading } = useAppContext();
   const navigate = useNavigate()
   const goToCollection = (collectionId)=>{
     navigate(`/profile/collection/${collectionId}`)

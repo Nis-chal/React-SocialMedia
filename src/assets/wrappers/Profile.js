@@ -1,6 +1,11 @@
 import styled from "styled-components";
 
 const Wrapper = styled.aside`
+
+.userlst{
+  padding: 2%;
+  background-color: var(--post-card-color);
+}
   .profile {
     background-color: var(--post-card-color);
     display: flex;

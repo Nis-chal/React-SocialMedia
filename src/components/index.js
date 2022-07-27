@@ -20,6 +20,7 @@ import AddcommentForm from "./AddcommentForm";
 import GetAllComments from "./GetAllComments";
 import ListOfComment from "./ListOfComment";
 import SingleComment from "./SingleComment";
+import Followerlst from "./followerlst";
 export {
   Loading,
   FormRow,
@@ -42,5 +43,6 @@ export {
   AddcommentForm,
   GetAllComments,
   ListOfComment,
-  SingleComment
+  SingleComment,
+  Followerlst
 };

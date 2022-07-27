@@ -21,12 +21,15 @@ const Wrapper = styled.aside`
     padding: var(--card-padding);
     border-radius: var(--card-border-radius);
     margin-bottom: 0.7rem;
+    cursor: pointer;
   }
 
   .right .request .info {
     display: flex;
     gap: 1rem;
     margin-bottom: 1rem;
+    align-items:center;
+    height: 50px;
   }
   .right .request .action {
     display: flex;

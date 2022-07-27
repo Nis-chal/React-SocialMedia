@@ -1,5 +1,5 @@
 import { FormRow } from "../components";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Wrapper from "../assets/wrappers/editForm";
 import { useAppContext } from '../context/appContext'
 import React from "react"
@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import {Alert} from "../components"
 
 
-const UserForm = ( ({ info}) => {
+const UserForm = ( ({ info,reload}) => {
   const navigate = useNavigate()
   
   const {profileUpdate,user,isLoading} = useAppContext()
@@ -39,19 +39,21 @@ const UserForm = ( ({ info}) => {
   };
 
   const onSubmit = (e) =>{
-    e.preventDefault()
      const { name , username,email,location,profileId,profilePicture,coverPage} = values
      
 
      const content = {name,username,email,location,profilePicture,coverPage,profileId}
 
      profileUpdate({content})
-    //  navigate(`/profile/${profileId}`)
+     reload()
+
      
 
 
 
   }
+
+
   function FileChange (e) {
     var image =  e.target.files[0];
 
