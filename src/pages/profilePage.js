@@ -32,6 +32,7 @@ const Profile = () => {
     followers,
     followings,
     usershort,
+    profilePicture
     
     
   } = useAppContext();
@@ -41,7 +42,7 @@ const Profile = () => {
 
   useEffect(() => {
     userProfile(userId);
-  }, [userId,reload]);
+  }, [userId,profilePicture]);
 
 
   const toreload = ()=>{

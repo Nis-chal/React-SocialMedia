@@ -7,12 +7,12 @@ import {Loading} from '../../components'
 
 const BookMarkModal = ({image,postId,userId,isModal,toggleModal}) => {
     
-    const {createCollection,buttontype} = useAppContext()
+    const {createCollection,buttontype,user} = useAppContext()
     const [success,setsuccess] = useState(false)
     const [name,setName] = useState('')
 
     const submit =()=>{
-        createCollection({postId,usercollection:userId,name})
+        createCollection({postId,usercollection:user._id,name})
        toggleModal()
     }
 

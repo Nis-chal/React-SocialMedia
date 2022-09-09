@@ -16,7 +16,7 @@ const SingleCollection = ({item,closeOption,postId}) => {
 
   return (
     <div  className="single-item" onClick={clickCollection}>
-              <img src={item.postId[0].images[0]} alt="" />
+              <img src={item.postId[0]?.images[0]} alt="" />
               <h6>{item.name}</h6>
             </div>
   )

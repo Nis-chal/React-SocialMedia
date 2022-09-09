@@ -61,7 +61,6 @@ import {
   DELETE_SHORTS_BEGIN,
   DELETE_SHORTS_SUCCESS,
   DELETE_SHORTS_ERROR,
-
 } from "./action";
 
 const user = localStorage.getItem("user");
@@ -258,7 +257,7 @@ const AppProvider = ({ children }) => {
 
   const logoutUser = () => {
     dispatch({ type: LOGOUT_USER });
-    dispatch({type:CLEAR_VALUES})
+    dispatch({ type: CLEAR_VALUES });
     removeFromLocalStorage();
   };
 
@@ -380,7 +379,7 @@ const AppProvider = ({ children }) => {
     } catch (error) {
       logoutUser();
     }
-    clearAlert()
+    clearAlert();
   };
 
   const userProfile = async (userId) => {
@@ -522,7 +521,6 @@ const AppProvider = ({ children }) => {
         type: UPDATE_PROFILE_SUCCESS,
         payload: { profilePicture, username, name },
       });
-      
     } catch (e) {}
     clearAlert();
   };
@@ -543,11 +541,10 @@ const AppProvider = ({ children }) => {
       let formdata = new FormData();
       formdata.append("postId", postId);
       formdata.append("usercollection", usercollection);
-      if (name) {
-        formdata.append("name", name);
-      }
 
-      await authFetch.put("/collection", formdata);
+      formdata.append("name", name);
+
+      await authFetch.post("/collection", formdata);
       dispatch({ type: CREATE_COLLECTION_SUCCESS });
     } catch (e) {
       dispatch({ type: CREATE_COLLECTION_ERROR });
@@ -635,7 +632,7 @@ const AppProvider = ({ children }) => {
     } catch (e) {
       dispatch({ type: ADD_SHORTS_ERROR });
     }
-    clearAlert()
+    clearAlert();
   };
 
   const addlikeShorts = async ({ shortid }) => {
@@ -682,8 +679,7 @@ const AppProvider = ({ children }) => {
     }
   };
 
-
-  const deleteShorts = async (shortid ) => {
+  const deleteShorts = async (shortid) => {
     dispatch({ type: DELETE_SHORTS_BEGIN });
 
     try {
@@ -692,7 +688,7 @@ const AppProvider = ({ children }) => {
     } catch (e) {
       dispatch({ type: DELETE_SHORTS_ERROR });
     }
-    clearAlert()
+    clearAlert();
   };
 
   return (
