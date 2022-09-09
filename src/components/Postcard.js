@@ -17,10 +17,7 @@ import { BsFillBookmarkFill } from "react-icons/bs";
 import axios from "axios";
 
 const PostCard = React.memo(({ item }) => {
-  // const postbio = {
-  //   likec: "",
-  //   profilep: "",
-  // };
+
   const {
     likepost,
     user,
@@ -74,7 +71,7 @@ const PostCard = React.memo(({ item }) => {
   };
 
   const saveBookmark = () => {
-    createCollection({ postId: item._id });
+    createCollection({ postId: item._id ,name:"All",usercollection:user._id });
     // updateCollection({postId:item._id})
     setbookmark(true);
     // clearbookmark()

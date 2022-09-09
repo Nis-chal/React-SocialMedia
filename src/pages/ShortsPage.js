@@ -10,7 +10,6 @@ import { useNavigate } from "react-router-dom";
 const ShortsPage = () => {
   const { token } = useAppContext();
   const [lstshorts, setShorts] = useState([]);
-  const [option,setoption] = useState(false)
   const [loading,setLoading] = useState(true)
   const navigate = useNavigate();
 
@@ -28,8 +27,8 @@ const ShortsPage = () => {
         }
       )
       .then((res) => {
-        setLoading(false)
         setShorts(res.data.shorts)});
+        setLoading(false)
   }, [token,lstshorts]);
 
   if(loading){

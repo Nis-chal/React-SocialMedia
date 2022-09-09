@@ -438,9 +438,7 @@ const reducer = (state, action) => {
       return {
         ...state,
         buttontype: true,
-        showAlert: true,
-        alertType: "danger",
-        alertText: "Collection Created",
+       
       };
     }
     
@@ -448,7 +446,9 @@ const reducer = (state, action) => {
       return {
         ...state,
         buttontype: false,
-
+        showAlert: true,
+        alertType: "success",
+        alertText: "Collection Created",
       };
     }
 
@@ -573,7 +573,7 @@ const reducer = (state, action) => {
     if (action.type === ADD_SHORTS_SUCCESS) {
       return {
         ...state,
-        specificCollection: action.payload.collection,
+
         showAlert: true,
         alertType: "success",
         alertText: "Shorts Deleted",
